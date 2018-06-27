@@ -1,0 +1,11 @@
+@import "bootstrap/bootstrap";
+@import "constants";
+
+body {
+  font-family: $primary_fonts;
+  background: $primary_background;
+}
+
+.title {
+  font-size: 32px;
+}
