@@ -1,15 +1,16 @@
-//Fonts
-@font-face {
-  font-family: 'Custom-Fonts';
-  src: url('assets/fonts/custom-fonts.woff') format('woff');
-}
-
 $primary_fonts: 'Custom-Fonts';
 
 // Colors
 $white_color: #FFFFFF;
 
+$primary_color: #6D7ED8;
+
 $primary_background: #F2F3F6;
 $secondary_background: $white_color;
 
 $card_background: $white_color;
+
+// Widths
+$desktop: 1024px;
+$tablet: 768px;
+$mobile: 425px;

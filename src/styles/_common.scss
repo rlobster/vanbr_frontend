@@ -1,8 +1,15 @@
 body {
     font-family: $primary_fonts;
     background: $primary_background;
+    padding-bottom: 20px;
 }
 
 .title {
     font-size: 32px;
+}
+
+.btn-custom {
+  color: $white_color;
+  background-color: $primary_color;
+  border-color: $primary_color;
 }

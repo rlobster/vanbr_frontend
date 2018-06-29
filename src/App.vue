@@ -1,19 +1,19 @@
 <template>
   <div id="app">
-    <header>
-      <span>Vue.js PWA</span>
-    </header>
-<main>
-    <img src="./assets/logo.png" alt="Vue.js PWA">
-      <router-view></router-view>
-</main>
+    <Navbar></Navbar>
+    <main>
+          <router-view></router-view>
+    </main>
 </div>
 </template>
 
 <script>
-export default {
-  name: 'app',
-};
+  import Navbar from '@/components/Navbar';
+
+  export default {
+    name: 'app',
+    components: { Navbar },
+  };
 </script>
 
 <style lang="scss">
