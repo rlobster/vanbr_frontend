@@ -1,8 +1,10 @@
 <template>
   <div class="home">
-    <div class="title text-center">Home</div>
+    <div class="title text-center">Home welcome</div>
     <router-link :to='Routes.Login'>Go to Login</router-link>
     <router-link :to='Routes.Register'>Go to Register</router-link>
+    <router-link :to='Routes.Booking'>Book a Ride</router-link>
+
   </div>
 </template>
 

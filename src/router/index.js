@@ -6,6 +6,7 @@ import Login from '@/layouts/Login';
 
 // Import all the Rider Layouts
 import Register from '@/layouts/rider/Register';
+import Booking from '@/layouts/rider/Booking';
 
 import Routes from './routes';
 
@@ -26,6 +27,11 @@ const routes = [
     path: Routes.Register,
     name: 'Register',
     component: Register,
+  },
+  {
+    path: Routes.Booking,
+    name: 'Booking',
+    component: Booking,
   },
 ];
 

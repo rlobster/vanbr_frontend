@@ -1,9 +1,13 @@
 <template>
   <div id="app">
-    <main>
+    <header>
+      <span>Vue.js PWA</span>
+    </header>
+<main>
+    <img src="./assets/logo.png" alt="Vue.js PWA">
       <router-view></router-view>
-    </main>
-  </div>
+</main>
+</div>
 </template>
 
 <script>
