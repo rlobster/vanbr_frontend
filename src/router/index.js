@@ -3,6 +3,7 @@ import Router from 'vue-router';
 
 import Home from '@/layouts/Home'; // Home Layout
 import Login from '@/layouts/Login';
+import Pricing from '@/layouts/Pricing';
 
 // Import all the Rider Layouts
 import Register from '@/layouts/rider/Register';
@@ -17,6 +18,11 @@ const routes = [
     path: Routes.Home,
     name: 'Home',
     component: Home,
+  },
+  {
+    path: Routes.Pricing,
+    name: 'Pricing',
+    component: Pricing,
   },
   {
     path: Routes.Login,
