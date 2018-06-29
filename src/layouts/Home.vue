@@ -4,7 +4,8 @@
     <router-link :to='Routes.Login'>Go to Login</router-link>
     <router-link :to='Routes.Register'>Go to Register</router-link>
     <router-link :to='Routes.Booking'>Book a Ride</router-link>
-
+    <router-link :to='Routes.Booking'>Give Feedback</router-link>
+    <router-link :to='Routes.Ride'>View Ride Info</router-link>
   </div>
 </template>
 

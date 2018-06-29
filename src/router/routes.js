@@ -6,6 +6,7 @@ const Routes = {
   Profile: '/profile',
   Booking: '/booking',
   History: '/history',
+  Ride: '/ride',
 };
 
 export default Routes;

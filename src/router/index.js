@@ -8,6 +8,7 @@ import Pricing from '@/layouts/Pricing';
 // Import all the Rider Layouts
 import Register from '@/layouts/rider/Register';
 import Booking from '@/layouts/rider/Booking';
+import Ride from '@/layouts/rider/Ride';
 
 import Routes from './routes';
 
@@ -38,6 +39,11 @@ const routes = [
     path: Routes.Booking,
     name: 'Booking',
     component: Booking,
+  },
+  {
+    path: Routes.Ride,
+    name: 'Ride',
+    component: Ride,
   },
 ];
 
