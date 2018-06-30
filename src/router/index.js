@@ -13,6 +13,9 @@ import Booking from '@/layouts/rider/Booking';
 import Ride from '@/layouts/rider/Ride';
 import Payment from '@/layouts/rider/Payment';
 
+// Import all Driver Layouts
+import Status from '@/layouts/driver/Status';
+
 import Routes from './routes';
 
 Vue.use(Router);
@@ -62,6 +65,12 @@ const routes = [
     path: Routes.Payment,
     name: 'Payment',
     component: Payment,
+  },
+  // Driver Routes
+  {
+    path: Routes.Status,
+    name: 'Status',
+    component: Status,
   },
 ];
 

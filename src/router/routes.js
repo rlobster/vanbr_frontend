@@ -9,6 +9,8 @@ const Routes = {
   Ride: '/ride',
   Feedback: '/feedback',
   Payment: '/payment',
+  // Driver Routes
+  Status: '/driver/status',
 };
 
 export default Routes;

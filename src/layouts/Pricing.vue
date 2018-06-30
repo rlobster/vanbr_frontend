@@ -32,6 +32,13 @@
                 <div>$0.20</div>
               </div>
             </div>
+            <div class="main-app-section-sm car-details">
+              <router-link :to="Routes.Booking">
+                <button class="btn btn-custom btn-block">
+                  Book Now
+                </button>
+              </router-link>
+            </div>
           </Card>
         </div>
         <div class="col-md main-app-section-sm">
@@ -64,6 +71,13 @@
                 <div>Per minute:</div>
                 <div>$0.20</div>
               </div>
+              <div class="main-app-section-sm car-details">
+                <router-link :to="Routes.Booking">
+                  <button class="btn btn-custom btn-block">
+                    Book Now
+                  </button>
+                </router-link>
+              </div>
             </div>
           </Card>
         </div>
@@ -72,11 +86,17 @@
 </template>
 
 <script>
+  import Routes from '@/router/routes';
   import Card from '@/components/Card';
 
   export default {
     name: 'Pricing',
     components: { Card },
+    data() {
+      return {
+        Routes,
+      };
+    },
   };
 </script>
 

@@ -90,11 +90,16 @@
     font-size: 18px;
     height: 100%;
     width: 80px;
-  }
 
-  .nav-menus a:hover {
-    background: #F8F8F8;
-    text-decoration: none;
+    &:hover {
+      background: #F8F8F8;
+      text-decoration: none;
+    }
+
+    &.active {
+      background: #FAFAFA;
+      text-decoration: none;
+    }
   }
 
   .nav-bars {
@@ -110,7 +115,7 @@
     right: -100%;
     padding: 4px 20px;
     background-color: $white_color;
-    transition: 0.6s all ease;
+    transition: 0.4s all ease;
 
     &.active {
       right: 0;

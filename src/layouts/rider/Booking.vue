@@ -1,5 +1,5 @@
 <template>
-    <div class="booking container main-app-section-md">
+    <div class="booking container main-app-section-sm">
       <Card class="mx-auto">
         <div class="title text-center">Book a Ride</div>
         <form name="book">
@@ -15,8 +15,8 @@
             <label for="car">Select Car:</label>
             <select id="car" class="form-control">
               <option disabled="" selected>Select Type</option>
-              <option value="van">Mini Van (4 Seats)</option>
-              <option value="sedan">Sedan (6 Seats)</option>
+              <option value="sedan">Sedan (4 Seats)</option>
+              <option value="van">Mini Van (6 Seats)</option>
             </select>
           </div>
           <div class="form-group main-app-section-md">
