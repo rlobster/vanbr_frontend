@@ -1,7 +1,7 @@
 <template>
-    <div class="register container main-app-section-sm">
+    <div class="profile container main-app-section-sm">
       <Card class="mx-auto">
-        <div class="title text-center">Register</div>
+        <div class="title text-center">Edit Profile</div>
         <form>
           <div class="form-group main-app-section-xs">
             <label for="name">Name:</label>
@@ -23,17 +23,8 @@
             <label for="email">Email:</label>
             <input type="text" class="form-control" placeholder="Email" id="email"/>
           </div>
-          <div class="form-group main-app-section-xs">
-            <label for="password">Password:</label>
-            <input type="text" class="form-control" placeholder="Password" id="password"/>
-            <input type="checkbox" id="password-check" class="main-app-section-xs"/>
-            <label for="password-check">Show/Hide Password</label>
-          </div>
           <div class="form-group main-app-section-sm">
             <button type="submit" class="btn btn-custom btn-block">Submit</button>
-          </div>
-          <div class="main-app-section-xs">
-            <router-link :to="Routes.Login">Already have an account?</router-link>
           </div>
         </form>
       </Card>
@@ -41,17 +32,11 @@
 </template>
 
 <script>
-  import Routes from '@/router/routes';
   import Card from '@/components/Card';
 
   export default {
-    name: 'Register',
+    name: 'Profile',
     components: { Card },
-    data() {
-      return {
-        Routes,
-      };
-    },
   };
 </script>
 

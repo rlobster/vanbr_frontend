@@ -9,11 +9,18 @@
               <div class="ride-info">
                 <div class="subtitle text-secondary">My Ride</div>
                 <div class="main-app-section-xs">
-                  <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span>
-                </div>
-                <div class="main-app-section-xs">
-                  <p><strong>Seats</strong>: 10</p>
-                  <p><strong>Cost</strong>: $25</p>
+                  <div class="d-flex justify-content-between">
+                    <div><strong>Seats</strong>:</div>
+                    <div>10</div>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <div><strong>Driver</strong>:</div>
+                    <div>John Doe</div>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <div><strong>Car No</strong>:</div>
+                    <div>ABC XY 1234</div>
+                  </div>
                 </div>
               </div>
           </div>
@@ -45,7 +52,8 @@
 
 <style lang="scss" scoped>
   .ride-info {
-    margin-left: 30px;
+    margin: 0 30px;
+    width: 100%
   }
   .logo {
     border-radius: 50%;

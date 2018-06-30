@@ -28,16 +28,16 @@
       <MobileTablet class="nav-slide" :class="{'active': isActive}">
         <div class="nav-slide-menus">
           <router-link :to="Routes.Pricing" class="d-flex align-items-center justify-content-left">
-            <div class="nav-menu p-2">Pricing</div>
+            <div class="nav-menu p-2" @click="toggleNav">Pricing</div>
           </router-link>
           <router-link :to="Routes.Booking" class="d-flex align-items-center justify-content-left">
-            <div class="nav-menu p-2">Book</div>
+            <div class="nav-menu p-2" @click="toggleNav">Book</div>
           </router-link>
           <router-link :to="Routes.History" class="d-flex align-items-center justify-content-left">
-            <div class="nav-menu p-2">History</div>
+            <div class="nav-menu p-2" @click="toggleNav">History</div>
           </router-link>
           <router-link :to="Routes.Profile" class="d-flex align-items-center justify-content-left">
-            <div class="nav-menu p-2">Profile</div>
+            <div class="nav-menu p-2" @click="toggleNav">Profile</div>
           </router-link>
         </div>
       </MobileTablet>
@@ -90,7 +90,6 @@
     font-size: 18px;
     height: 100%;
     width: 80px;
-    color: $primary_color;
   }
 
   .nav-menus a:hover {

@@ -1,16 +1,34 @@
 <template>
-  <div>
-    <div class="title text-center">Login</div>
-    <router-link :to='Routes.Home'>Go to Home</router-link>
-    <router-link :to='Routes.Register'>Go to Register</router-link>
+  <div class="login container main-app-section-sm">
+    <Card class="mx-auto">
+      <div class="title text-center">Login</div>
+      <form>
+        <div class="form-group main-app-section-xs">
+          <label for="email">Email:</label>
+          <input type="email" id="email" class="form-control" placeholder="Email"/>
+        </div>
+        <div class="form-group main-app-section-xs">
+          <label for="password">Password:</label>
+          <input type="email" id="password" class="form-control" placeholder="Password"/>
+        </div>
+        <div class="form-group main-app-section-md">
+          <button type="submit" class="btn btn-custom btn-block">Login</button>
+        </div>
+        <div class="main-app-section-xs">
+          <router-link :to="Routes.Register">Don't have an account?</router-link>
+        </div>
+      </form>
+    </Card>
   </div>
 </template>
 
 <script>
   import Routes from '@/router/routes';
+  import Card from '@/components/Card';
 
   export default {
     name: 'Login',
+    components: { Card },
     data() {
       return {
         Routes,

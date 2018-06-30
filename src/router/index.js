@@ -5,6 +5,7 @@ import Home from '@/layouts/Home'; // Home Layout
 import Login from '@/layouts/Login';
 import Pricing from '@/layouts/Pricing';
 import Feedback from '@/layouts/Feedback';
+import Profile from '@/layouts/Profile';
 
 // Import all the Rider Layouts
 import Register from '@/layouts/rider/Register';
@@ -36,6 +37,11 @@ const routes = [
     path: Routes.Register,
     name: 'Register',
     component: Register,
+  },
+  {
+    path: Routes.Profile,
+    name: 'Profile',
+    component: Profile,
   },
   {
     path: Routes.Feedback,

@@ -12,7 +12,7 @@
             <input type="text" class="form-control" name="from" id="to">
           </div>
           <div class="form-group main-app-section-xs">
-            <label for="car">Select Car</label>
+            <label for="car">Select Car:</label>
             <select id="car" class="form-control">
               <option disabled="" selected>Select Type</option>
               <option value="van">Mini Van (4 Seats)</option>

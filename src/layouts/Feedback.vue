@@ -3,12 +3,34 @@
       <Card class="mx-auto">
         <div class="title text-center">Give Feedback</div>
         <form name="book">
-          <div class="form-group main-app-section-xs">
-            <label for="from">Driver/ Rider Name</label>
-            <input type="text" class="form-control" name="name" id="name">
+          <div class="form-group main-app-section-sm p-2">
+            <div class="d-flex justify-content-between">
+              <div><strong>Source</strong>:</div>
+              <div>ABC</div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div><strong>Destination</strong>:</div>
+              <div>XYZ</div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div><strong>Rider</strong>:</div>
+              <div>John Doe</div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div><strong>Driver</strong>:</div>
+              <div>Will Smith</div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div><strong>Date</strong>:</div>
+              <div>1 Jan 2020, 12:30:00 PM</div>
+            </div>
           </div>
-          <div class="form-group main-app-section-xs">
-            <label for="to">Feedback</label>
+          <div class="form-group main-app-section-sm">
+            <label for="rating">Rating</label>
+            <star-rating id="rating" :show-rating="false"></star-rating>
+          </div>
+          <div class="form-group main-app-section-sm">
+            <label for="feedback">Feedback</label>
             <textarea row="4" class="form-control" name="feedback" id="feedback">
             </textarea>
           </div>
@@ -23,10 +45,11 @@
 <script>
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
+  import StarRating from 'vue-star-rating';
 
   export default {
     name: 'Payment',
-    components: { Card },
+    components: { Card, StarRating },
     data() {
       return {
         Routes,
