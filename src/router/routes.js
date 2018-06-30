@@ -7,6 +7,8 @@ const Routes = {
   Booking: '/booking',
   History: '/history',
   Ride: '/ride',
+  Feedback: '/feedback',
+  Payment: '/payment',
 };
 
 export default Routes;
