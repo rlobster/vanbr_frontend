@@ -11,6 +11,8 @@ const Routes = {
   Payment: '/payment',
   // Driver Routes
   Status: '/driver/status',
+  // Admin Routes
+  Admin: '/admin',
 };
 
 export default Routes;

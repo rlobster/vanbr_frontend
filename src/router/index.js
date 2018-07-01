@@ -16,6 +16,9 @@ import Payment from '@/layouts/rider/Payment';
 // Import all Driver Layouts
 import Status from '@/layouts/driver/Status';
 
+// Import all Admin Layouts
+import Admin from '@/layouts/admin/Admin';
+
 import Routes from './routes';
 
 Vue.use(Router);
@@ -71,6 +74,12 @@ const routes = [
     path: Routes.Status,
     name: 'Status',
     component: Status,
+  },
+  // Admin Routes
+  {
+    path: Routes.Admin,
+    name: 'Admin',
+    component: Admin,
   },
 ];
 
