@@ -1,5 +1,5 @@
 <template>
-    <div class="pricing container main-app-section-sm">
+    <div class="pricing container">
       <div class="row">
         <div class="col-md main-app-section-sm">
           <Card class="mx-auto">

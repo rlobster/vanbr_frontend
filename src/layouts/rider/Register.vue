@@ -12,7 +12,7 @@
             <input type="date" class="form-control" id="dob"/>
           </div>
           <div class="form-group main-app-section-xs">
-            <label for="name">Gender:</label>
+            <label>Gender:</label>
             <select class="form-control">
               <option value="M">Male</option>
               <option value="F">Female</option>

@@ -1,32 +1,34 @@
 <template>
     <div class="pricing container main-app-section-sm">
       <div class="row">
-        <div class="col-md main-app-section-sm">
+        <div class="col-md">
           <Card class="mx-auto">
             <div class="title text-center">Invoice</div>
 
             <div class="main-app-section-sm">
-              <p>Ride from <strong>XYZ</strong> to <strong>ABC</strong></p>
-              <p>Kilometers: 5</p>
-              <p>Time: 10 minute</p>
+              <div>Ride from <strong>XYZ</strong> to <strong>ABC</strong></div>
+              <div>Kilometers: <strong>5</strong></div>
+              <div>Time: <strong>10 minute</strong></div>
 
-              <div class="d-flex justify-content-between car-details">
+              <hr />
+
+              <div class="d-flex justify-content-between">
                 <div>Per Kilometers:</div>
                 <div>$4.00</div>
               </div>
-              <div class="d-flex justify-content-between car-details">
+              <div class="d-flex justify-content-between">
                 <div>Per Minute:</div>
                 <div>$2.00</div>
               </div>
-              <div class="d-flex justify-content-between car-details">
+              <div class="d-flex justify-content-between">
                 <div>Vanbr charge:</div>
                 <div>$2.5</div>
               </div>
-              <div class="d-flex justify-content-between car-details">
+              <div class="d-flex justify-content-between">
                 <div>Service charge:</div>
                 <div>$2.5</div>
               </div>
-              <div class="d-flex justify-content-between car-details">
+              <div class="d-flex justify-content-between">
                 <div>13% tax:</div>
                 <div>$1.45</div>
               </div>
@@ -57,7 +59,6 @@
 
   .car-details {
     font-size: 18px;
-    padding: 4px 20px;
   }
 
 </style>
