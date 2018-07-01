@@ -13,6 +13,7 @@ const Routes = {
   Status: '/driver/status',
   // Admin Routes
   Admin: '/admin',
+  Users: '/admin/users',
 };
 
 export default Routes;

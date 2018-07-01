@@ -18,6 +18,7 @@ import Status from '@/layouts/driver/Status';
 
 // Import all Admin Layouts
 import Admin from '@/layouts/admin/Admin';
+import Users from '@/layouts/admin/Users';
 
 import Routes from './routes';
 
@@ -80,6 +81,11 @@ const routes = [
     path: Routes.Admin,
     name: 'Admin',
     component: Admin,
+  },
+  {
+    path: Routes.Users,
+    name: 'Users',
+    component: Users,
   },
 ];
 

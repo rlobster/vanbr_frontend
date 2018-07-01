@@ -1,19 +1,23 @@
 <template>
   <div class="admin container">
     <div class="row">
-      <div class="col-md main-app-section-sm">
-        <Card class="card">
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <img src="@/assets/users.svg" class="icons"/>
-            </div>
-            <div>
-              <div class="subtitle text-secondary">Users</div>
-              <div class="title">100</div>
-            </div>
-          </div>
-        </Card>
-      </div>
+
+        <div class="col-md main-app-section-sm">
+          <router-link :to="Routes.Users">
+            <Card class="card">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <img src="@/assets/users.svg" class="icons"/>
+                </div>
+                <div>
+                  <div class="subtitle text-secondary">Users</div>
+                  <div class="title text-dark">100</div>
+                </div>
+              </div>
+            </Card>
+          </router-link>
+        </div>
+
       <div class="col-md main-app-section-sm">
         <Card class="card">
           <div class="d-flex justify-content-between align-items-center">
@@ -82,14 +86,25 @@
 
 <script>
   import Card from '@/components/Card';
+  import Routes from '@/router/routes';
 
   export default {
     name: 'Admin',
     components: { Card },
+    data() {
+      return {
+        Routes,
+      };
+    },
   };
 </script>
 
 <style lang="scss" scoped>
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+  }
   .card {
     width: 280px;
     height: 120px;
