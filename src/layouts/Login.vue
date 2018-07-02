@@ -43,7 +43,7 @@
             email: 'abc@abc.abc',
             password: 'abc123',
           };
-          const response = await axios.post('http://vanbr.ca:81/login', data);
+          const response = await axios.post('http://vanbr.ca/api/rider/login', data);
           console.log(response);
         } catch (e) {
           console.log(e);
