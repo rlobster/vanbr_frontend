@@ -6,6 +6,7 @@ import Login from '@/layouts/Login';
 import Pricing from '@/layouts/Pricing';
 import Feedback from '@/layouts/Feedback';
 import Profile from '@/layouts/Profile';
+import History from '@/layouts/History';
 
 // Import all the Rider Layouts
 import Register from '@/layouts/rider/Register';
@@ -69,6 +70,11 @@ const routes = [
     path: Routes.Payment,
     name: 'Payment',
     component: Payment,
+  },
+  {
+    path: Routes.History,
+    name: 'History',
+    component: History,
   },
   // Driver Routes
   {
