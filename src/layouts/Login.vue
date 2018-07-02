@@ -12,7 +12,7 @@
           <input type="email" id="password" class="form-control" placeholder="Password"/>
         </div>
         <div class="form-group main-app-section-md">
-          <button type="submit" class="btn btn-custom btn-block">Login</button>
+          <button type="submit" class="btn btn-custom btn-block" @click="login">Login</button>
         </div>
         <div class="main-app-section-xs">
           <router-link :to="Routes.Register">Don't have an account?</router-link>
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
 
@@ -33,6 +34,21 @@
       return {
         Routes,
       };
+    },
+    methods: {
+      async login(event) {
+        event.preventDefault();
+        try {
+          const data = {
+            email: 'abc@abc.abc',
+            password: 'abc123',
+          };
+          const response = await axios.post('http://vanbr.ca:81/login', data);
+          console.log(response);
+        } catch (e) {
+          console.log(e);
+        }
+      },
     },
   };
 </script>
