@@ -23,7 +23,6 @@
 </template>
 
 <script>
-  import axios from 'axios';
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
 
@@ -45,8 +44,9 @@
             email: this.email,
             password: this.password,
           };
-          const response = await axios.post('http://vanbr.ca/api/rider/login', data);
+          const response = await this.axios.post('http://vanbr.ca/api/rider/login', data);
           localStorage.setItem('token', response.data.token);
+          this.axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           this.$router.push(Routes.Home);
         } catch (e) {
           console.warn(e);

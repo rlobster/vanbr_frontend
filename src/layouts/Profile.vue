@@ -33,7 +33,6 @@
 </template>
 
 <script>
-  import axios from 'axios';
   import Card from '@/components/Card';
   import Routes from '@/router/routes';
 
@@ -44,9 +43,7 @@
       async logout(event) {
         event.preventDefault();
         try {
-          const token = localStorage.getItem('token');
-          axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-          await axios.post('http://vanbr.ca/api/rider/logout');
+          await this.axios.post('http://vanbr.ca/api/rider/logout');
           localStorage.removeItem('token');
           this.$router.push(Routes.Login);
         } catch (e) {
@@ -63,7 +60,7 @@
             dob: '1996-09-09',
             gender: 'Female',
           };
-          const responseData = await axios.post('http://vanbr.ca/api/rider/profile', data);
+          const responseData = await this.axios.post('http://vanbr.ca/api/rider/profile', data);
           console.log(responseData);
         } catch (e) {
           console.log(e);
