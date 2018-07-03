@@ -5,11 +5,11 @@
       <form>
         <div class="form-group main-app-section-xs">
           <label for="email">Email:</label>
-          <input type="email" id="email" class="form-control" placeholder="Email"/>
+          <input type="email" id="email" class="form-control" placeholder="Email" v-model="email"/>
         </div>
         <div class="form-group main-app-section-xs">
           <label for="password">Password:</label>
-          <input type="email" id="password" class="form-control" placeholder="Password"/>
+          <input type="password" id="password" class="form-control" placeholder="Password" v-model="password"/>
         </div>
         <div class="form-group main-app-section-md">
           <button type="submit" class="btn btn-custom btn-block" @click="login">Login</button>
@@ -33,6 +33,8 @@
     data() {
       return {
         Routes,
+        email: '',
+        password: '',
       };
     },
     methods: {
@@ -40,13 +42,14 @@
         event.preventDefault();
         try {
           const data = {
-            email: 'abc@abc.abc',
-            password: 'abc123',
+            email: this.email,
+            password: this.password,
           };
           const response = await axios.post('http://vanbr.ca/api/rider/login', data);
-          console.log(response);
+          localStorage.setItem('token', response.data.token);
+          this.$router.push(Routes.Home);
         } catch (e) {
-          console.log(e);
+          console.warn(e);
         }
       },
     },

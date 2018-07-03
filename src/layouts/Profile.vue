@@ -25,7 +25,7 @@
           </div>
           <div class="form-group main-app-section-sm">
             <button type="submit" class="btn btn-custom btn-block" @click="profile">Submit</button>
-            <button type="submit" class="btn btn-secondary btn-block" @click="logout">Logout</button>            
+            <button type="submit" class="btn btn-secondary btn-block" @click="logout">Logout</button>
           </div>
         </form>
       </Card>
@@ -35,6 +35,7 @@
 <script>
   import axios from 'axios';
   import Card from '@/components/Card';
+  import Routes from '@/router/routes';
 
   export default {
     name: 'Profile',
@@ -43,8 +44,11 @@
       async logout(event) {
         event.preventDefault();
         try {
-          const response = await axios.post('http://vanbr.ca/api/rider/logout');
-          console.log(response);
+          const token = localStorage.getItem('token');
+          axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+          await axios.post('http://vanbr.ca/api/rider/logout');
+          localStorage.removeItem('token');
+          this.$router.push(Routes.Login);
         } catch (e) {
           console.log(e);
         }
