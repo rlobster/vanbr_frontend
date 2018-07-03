@@ -35,7 +35,7 @@
             </textarea>
           </div>
           <div class="form-group main-app-section-md">
-            <button class="btn btn-custom btn-block">Submit</button>
+            <button class="btn btn-custom btn-block" @click="feedback">Submit</button>
           </div>
         </form>
       </Card>
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
   import StarRating from 'vue-star-rating';
@@ -54,6 +55,22 @@
       return {
         Routes,
       };
+    },
+    methods: {
+      async feedback(event) {
+        event.preventDefault();
+        try {
+          const data = {
+            ride_id: '1',
+            rider_ratings: '5',
+            rider_comments: 'lorem ipsum qqwerty ffjfjf',
+          };
+          const response = await axios.post('http://vanbr.ca/api/rider/feedback', data);
+          console.log(response);
+        } catch (e) {
+          console.log(e);
+        }
+      },
     },
   };
 </script>

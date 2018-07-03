@@ -24,7 +24,8 @@
             <input type="text" class="form-control" placeholder="Email" id="email"/>
           </div>
           <div class="form-group main-app-section-sm">
-            <button type="submit" class="btn btn-custom btn-block">Submit</button>
+            <button type="submit" class="btn btn-custom btn-block" @click="profile">Submit</button>
+            <button type="submit" class="btn btn-secondary btn-block" @click="logout">Logout</button>            
           </div>
         </form>
       </Card>
@@ -32,11 +33,39 @@
 </template>
 
 <script>
+  import axios from 'axios';
   import Card from '@/components/Card';
 
   export default {
     name: 'Profile',
     components: { Card },
+    methods: {
+      async logout(event) {
+        event.preventDefault();
+        try {
+          const response = await axios.post('http://vanbr.ca/api/rider/logout');
+          console.log(response);
+        } catch (e) {
+          console.log(e);
+        }
+      },
+      async profile(event) {
+        event.preventDefault();
+        try {
+          const data = {
+            name: 'John Snow',
+            email: 'abc@abc.abc',
+            mobile_no: '9999999999',
+            dob: '1996-09-09',
+            gender: 'Female',
+          };
+          const responseData = await axios.post('http://vanbr.ca/api/rider/profile', data);
+          console.log(responseData);
+        } catch (e) {
+          console.log(e);
+        }
+      },
+    },
   };
 </script>
 

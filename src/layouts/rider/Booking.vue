@@ -20,7 +20,7 @@
             </select>
           </div>
           <div class="form-group main-app-section-md">
-            <button class="btn btn-custom btn-block">Book</button>
+            <button class="btn btn-custom btn-block" @click="book">Book</button>
           </div>
         </form>
       </Card>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
 
@@ -38,6 +39,26 @@
       return {
         Routes,
       };
+    },
+    methods: {
+      async book(event) {
+        event.preventDefault();
+        try {
+          const data = {
+            name: 'abc def',
+            mobile_no: '9090909090',
+            email: 'abc@abc.def',
+            relationship: 'Friend',
+            car_id: '1',
+            starting_point: 'IIM',
+            destination: 'lorem ipsum qqwerty ffjfjf',
+          };
+          const response = await axios.post('http://vanbr.ca/api/rider/book-ride', data);
+          console.log(response);
+        } catch (e) {
+          console.log(e);
+        }
+      },
     },
   };
 </script>

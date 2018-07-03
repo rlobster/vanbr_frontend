@@ -30,7 +30,7 @@
             <label for="password-check">Show/Hide Password</label>
           </div>
           <div class="form-group main-app-section-sm">
-            <button type="submit" class="btn btn-custom btn-block">Submit</button>
+            <button type="submit" class="btn btn-custom btn-block" @click="signup">Submit</button>
           </div>
           <div class="main-app-section-xs">
             <router-link :to="Routes.Login">Already have an account?</router-link>
@@ -41,6 +41,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
 
@@ -51,6 +52,25 @@
       return {
         Routes,
       };
+    },
+    methods: {
+      async signup(event) {
+        event.preventDefault();
+        try {
+          const data = {
+            email: 'abc@abc.def',
+            password: 'abc123',
+            name: 'John Snow',
+            mobile_no: '9090909090',
+            dob: '1996-04-06',
+            gender: 'Male',
+          };
+          const response = await axios.post('http://vanbr.ca/api/rider/signup', data);
+          console.log(response);
+        } catch (e) {
+          console.log(e);
+        }
+      },
     },
   };
 </script>

@@ -36,6 +36,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
 
@@ -46,6 +47,19 @@
       return {
         Routes,
       };
+    },
+    mounted() {
+      this.getRide();
+    },
+    methods: {
+      async getRide() {
+        try {
+          const response = axios.get('http://vanbr.ca/api/rider/get-single-ride?ride_id=1');
+          console.log(response);
+        } catch (e) {
+          console.log(e);
+        }
+      },
     },
   };
 </script>
