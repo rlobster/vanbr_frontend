@@ -38,6 +38,9 @@
     data() {
       return {
         Routes,
+        from: '',
+        to: '',
+        carType: '',
       };
     },
     methods: {
