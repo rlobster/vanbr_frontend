@@ -11,8 +11,10 @@ const Routes = {
   Feedback: '/feedback',
   Payment: '/payment',
   // Driver Routes
+  DriverLogin: '/driver/login',
   Status: '/driver/status',
   // Admin Routes
+  AdminLogin: '/admin/login',
   Admin: '/admin',
   Users: '/admin/users',
 };

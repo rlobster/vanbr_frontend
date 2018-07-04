@@ -39,7 +39,7 @@ const routes = [
   },
   {
     path: Routes.Login,
-    name: 'Login',
+    name: 'RiderLogin',
     component: Login,
   },
   {
@@ -51,57 +51,133 @@ const routes = [
     path: Routes.Profile,
     name: 'Profile',
     component: Profile,
+    meta: {
+      requiresAuth: true,
+      type: 'Rider',
+    },
   },
   {
     path: Routes.Feedback,
     name: 'Feedback',
     component: Feedback,
+    meta: {
+      requiresAuth: true,
+      type: 'Rider',
+    },
   },
   {
     path: Routes.Booking,
     name: 'Booking',
     component: Booking,
+    meta: {
+      requiresAuth: true,
+      type: 'Rider',
+    },
   },
   {
     path: Routes.Ride,
     name: 'Ride',
     component: Ride,
+    meta: {
+      requiresAuth: true,
+      type: 'Rider',
+    },
   },
   {
     path: Routes.Payment,
     name: 'Payment',
     component: Payment,
+    meta: {
+      requiresAuth: true,
+      type: 'Rider',
+    },
   },
   {
     path: Routes.History,
     name: 'History',
     component: History,
+    meta: {
+      requiresAuth: true,
+      type: 'Rider',
+    },
   },
   {
     path: Routes.HistoryDetail,
     name: 'HistoryDetail',
     component: HistoryDetail,
+    meta: {
+      requiresAuth: true,
+      type: 'Rider',
+    },
   },
   // Driver Routes
   {
     path: Routes.Status,
-    name: 'Status',
+    name: 'DriverStatus',
     component: Status,
+    meta: {
+      requiresAuth: true,
+      type: 'Driver',
+    },
+  },
+  {
+    path: Routes.DriverLogin,
+    name: 'DriverLogin',
+    component: Login,
   },
   // Admin Routes
+  {
+    path: Routes.AdminLogin,
+    name: 'AdminLogin',
+    component: Login,
+  },
   {
     path: Routes.Admin,
     name: 'Admin',
     component: Admin,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
+    },
   },
   {
     path: Routes.Users,
     name: 'Users',
     component: Users,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
+    },
   },
 ];
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      next({ name: 'RiderLogin' });
+      return;
+    }
+
+    const decodedToken = JSON.parse(window.atob(token.split('.')[1].replace('-', '+').replace('_', '/')));
+
+    if (decodedToken.type === to.meta.type) {
+      next();
+    } else if (to.meta.type === 'Driver') {
+      next({ name: 'DriverLogin' });
+    } else if (to.meta.type === 'Admin') {
+      next({ name: 'AdminLogin' });
+    } else {
+      next({ name: 'RiderLogin' });
+    }
+  }
+  next();
+});
+
+export default router;

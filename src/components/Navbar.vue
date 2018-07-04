@@ -19,6 +19,9 @@
           <router-link :to="Routes.Profile" class="d-flex align-items-center justify-content-center">
             <div class="nav-menu p-2">Profile</div>
           </router-link>
+          <router-link :to="Routes.Login" class="d-flex align-items-center justify-content-center" v-if="authStatus">
+            <div class="nav-menu p-2" @click="logout">Logout</div>
+          </router-link>
         </div>
       </Desktop>
       <MobileTablet class="d-flex ml-auto align-items-center">
@@ -38,6 +41,9 @@
           </router-link>
           <router-link :to="Routes.Profile" class="d-flex align-items-center justify-content-left">
             <div class="nav-menu p-2" @click="toggleNav">Profile</div>
+          </router-link>
+          <router-link :to="Routes.Login" class="d-flex align-items-center justify-content-left" v-if="authStatus">
+            <div class="nav-menu p-2" @click="logoutHandler">Logout</div>
           </router-link>
         </div>
       </MobileTablet>
@@ -62,6 +68,27 @@
     methods: {
       toggleNav() {
         this.isActive = !this.isActive;
+      },
+      async logout() {
+        try {
+          await this.axios.post('http://vanbr.ca/api/rider/logout');
+          localStorage.removeItem('token');
+          this.$router.push(Routes.Login);
+        } catch (e) {
+          console.log(e);
+        }
+      },
+      logoutHandler() {
+        this.toggleNav();
+        this.logout();
+      },
+    },
+    computed: {
+      authStatus() {
+        if (localStorage.getItem('token')) {
+          return true;
+        }
+        return false;
       },
     },
   };
