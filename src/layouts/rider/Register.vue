@@ -5,15 +5,19 @@
         <form>
           <div class="form-group main-app-section-xs">
             <label for="name">Name:</label>
-            <input type="text" class="form-control" placeholder="Name" id="name"/>
+            <input type="text" class="form-control" placeholder="Name" v-model="name" id="name"/>
           </div>
           <div class="form-group main-app-section-xs">
             <label for="dob">Date of Birth:</label>
-            <input type="date" class="form-control" id="dob"/>
+            <input type="date" class="form-control" id="dob" v-model="dob"/>
+          </div>
+          <div class="form-group main-app-section-xs">
+            <label for="dob">Mobile Number:</label>
+            <input type="number" class="form-control" id="mobile" v-model="mobile_no"/>
           </div>
           <div class="form-group main-app-section-xs">
             <label>Gender:</label>
-            <select class="form-control">
+            <select v-model="gender" class="form-control">
               <option value="M">Male</option>
               <option value="F">Female</option>
               <option value="O">Other</option>
@@ -21,11 +25,11 @@
           </div>
           <div class="form-group main-app-section-xs">
             <label for="email">Email:</label>
-            <input type="text" class="form-control" placeholder="Email" id="email"/>
+            <input type="text" class="form-control" placeholder="Email" id="email" v-model="email"/>
           </div>
           <div class="form-group main-app-section-xs">
             <label for="password">Password:</label>
-            <input type="text" class="form-control" placeholder="Password" id="password"/>
+            <input type="password" class="form-control" v-model="password" placeholder="Password" id="password"/>
             <input type="checkbox" id="password-check" class="main-app-section-xs"/>
             <label for="password-check">Show/Hide Password</label>
           </div>
@@ -41,7 +45,7 @@
 </template>
 
 <script>
-  import axios from 'axios';
+
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
 
@@ -51,6 +55,12 @@
     data() {
       return {
         Routes,
+        name: '',
+        dob: '',
+        gender: '',
+        mobile_no: '',
+        email: '',
+        password: '',
       };
     },
     methods: {
@@ -58,12 +68,12 @@
         event.preventDefault();
         try {
           const data = {
-            email: 'abc@abc.def',
-            password: 'abc123',
-            name: 'John Snow',
-            mobile_no: '9090909090',
-            dob: '1996-04-06',
-            gender: 'Male',
+            email: this.email,
+            password: this.password,
+            name: this.name,
+            mobile_no: this.mobile_no,
+            dob: this.dob,
+            gender: this.gender,
           };
           const response = await axios.post('http://vanbr.ca/api/rider/signup', data);
           localStorage.setItem('token', response.data.token);
