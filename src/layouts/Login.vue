@@ -47,7 +47,7 @@
           const response = await this.axios.post('http://vanbr.ca/api/rider/login', data);
           localStorage.setItem('token', response.data.token);
           this.axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          this.$router.push(Routes.Home);
+          this.$router.push(Routes.Booking);
         } catch (e) {
           console.warn(e);
         }

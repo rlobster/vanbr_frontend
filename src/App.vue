@@ -13,6 +13,12 @@
   export default {
     name: 'app',
     components: { Navbar },
+    created() {
+      const token = localStorage.getItem('token');
+      if (token) {
+        this.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      }
+    },
   };
 </script>
 
