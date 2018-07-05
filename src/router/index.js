@@ -171,7 +171,15 @@ router.beforeEach((to, from, next) => {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      next({ name: 'RiderLogin' });
+      if (to.meta.type === 'Rider') {
+        next({ name: 'RiderLogin' });
+      } else if (to.meta.type === 'Driver') {
+        next({ name: 'DriverLogin' });
+      } else if (to.meta.type === 'Admin') {
+        next({ name: 'AdminLogin' });
+      } else {
+        next({ name: 'Home' });
+      }
       return;
     }
 
