@@ -62,8 +62,8 @@
       async logout(event) {
         event.preventDefault();
         try {
-          await this.axios.post('http://vanbr.ca/api/rider/logout');
           localStorage.removeItem('token');
+          await this.axios.post('http://vanbr.ca/api/rider/logout');
           this.$router.push(Routes.Login);
         } catch (e) {
           console.log(e);
