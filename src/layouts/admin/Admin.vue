@@ -19,16 +19,18 @@
         </div>
 
       <div class="col-md main-app-section-sm">
-        <Card class="card">
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <img src="@/assets/add-user.svg" class="icons-sm"/>
+        <router-link :to="Routes.AddDriver">
+          <Card class="card">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <img src="@/assets/add-user.svg" class="icons-sm"/>
+              </div>
+              <div>
+                <div class="subtitle text-secondary">Add Driver</div>
+              </div>
             </div>
-            <div>
-              <div class="subtitle text-secondary">Add Driver</div>
-            </div>
-          </div>
-        </Card>
+          </Card>
+        </router-link>
       </div>
       <div class="col-md main-app-section-sm">
         <Card class="card">

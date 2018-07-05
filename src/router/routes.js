@@ -17,6 +17,7 @@ const Routes = {
   AdminLogin: '/admin/login',
   Admin: '/admin',
   Users: '/admin/users',
+  AddDriver: '/admin/add/driver',
 };
 
 export default Routes;

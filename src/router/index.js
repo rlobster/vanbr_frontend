@@ -21,6 +21,7 @@ import Status from '@/layouts/driver/Status';
 // Import all Admin Layouts
 import Admin from '@/layouts/admin/Admin';
 import Users from '@/layouts/admin/Users';
+import AddDriver from '@/layouts/admin/AddDriver';
 
 import Routes from './routes';
 
@@ -144,6 +145,15 @@ const routes = [
     path: Routes.Users,
     name: 'Users',
     component: Users,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
+    },
+  },
+  {
+    path: Routes.AddDriver,
+    name: 'AddDriver',
+    component: AddDriver,
     meta: {
       requiresAuth: true,
       type: 'Admin',
