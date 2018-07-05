@@ -65,7 +65,7 @@
         complete: false,
         stripeOptions: {
           name: 'Vanbr',
-          currency: 'csd',
+          currency: 'cad',
         },
       };
     },
