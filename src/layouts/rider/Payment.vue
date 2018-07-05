@@ -36,8 +36,15 @@
                 <div><strong>Total</strong></div>
                 <div><strong>$12.45</strong></div>
               </div>
+              <StripeCard class='stripe-card'
+                    :class='{ complete }'
+                    stripe='pk_test_8wgmvT01TU27qZFaMbAny3UF'
+                    :options='stripeOptions'
+                    @change='complete = $event.complete'
+              />
               <div class="form-group main-app-section-md">
-                <button class="btn btn-custom btn-block">Pay</button>
+                <!--<button class="btn btn-custom btn-block">Pay</button>-->
+                <button class='pay-with-stripe btn btn-custom btn-block' @click='pay' :disabled='!complete'>Pay with credit card</button>
               </div>
             </div>
           </Card>
@@ -47,11 +54,36 @@
 </template>
 
 <script>
+  import { Card as StripeCard, createToken } from 'vue-stripe-elements-plus';
   import Card from '@/components/Card';
 
   export default {
     name: 'Payment',
-    components: { Card },
+    components: { Card, StripeCard },
+    data() {
+      return {
+        complete: false,
+        stripeOptions: {
+          name: 'Vanbr',
+          currency: 'csd',
+        },
+      };
+    },
+
+    methods: {
+      pay() {
+        createToken().then(data => this.endRide(data.token));
+      },
+      endRide(token) {
+        const data = {
+          token,
+          ride_id: 1,
+          cost: 10.5,
+        };
+        const response = this.axios.post('http://vanbr.ca/api/rider/end-ride', data);
+        console.log(response);
+      },
+    },
   };
 </script>
 

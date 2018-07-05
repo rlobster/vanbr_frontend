@@ -18,9 +18,9 @@
           <div class="form-group main-app-section-xs">
             <label>Gender:</label>
             <select v-model="gender" class="form-control">
-              <option value="M">Male</option>
-              <option value="F">Female</option>
-              <option value="O">Other</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
             </select>
           </div>
           <div class="form-group main-app-section-xs">
