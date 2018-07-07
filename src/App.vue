@@ -18,6 +18,15 @@
       if (token) {
         this.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
       }
+      this.$socket.emit('join', 'Yess');
+    },
+    sockets: {
+      connect() {
+        console.log('socket connected');
+      },
+      customEmit(val) {
+        console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)', val);
+      },
     },
   };
 </script>
