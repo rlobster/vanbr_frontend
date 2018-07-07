@@ -1,11 +1,11 @@
 <template>
     <div class="profile container main-app-section-sm">
       <Card class="mx-auto">
-        <div class="title text-center">Edit Profile</div>
+        <div class="title text-center">My Profile</div>
         <form>
-          <div class="form-group main-app-section-xs">
-            <label for="name">Name:</label>
-            <input v-model="name" type="text" class="form-control" placeholder="Name" id="name"/>
+          <div class="d-flex justify-content-between car-details">
+            <div>Name:</div>
+            <div v-bind="name"></div>
           </div>
           <div class="form-group main-app-section-xs">
             <label for="dob">Date of Birth:</label>
@@ -27,9 +27,6 @@
             <label for="email">Email:</label>
             <input type="text" v-model="email" class="form-control" placeholder="Email" id="email"/>
           </div>
-          <div class="form-group main-app-section-sm">
-            <button type="submit" class="btn btn-custom btn-block" @click="profile">Submit</button>
-          </div>
         </form>
       </Card>
     </div>
@@ -40,7 +37,7 @@
   import Routes from '@/router/routes';
 
   export default {
-    name: 'Profile',
+    name: 'ProfileView',
     components: { Card },
     data() {
       return {
@@ -55,17 +52,12 @@
       };
     },
     mounted() {
-      if (this.$route.name === 'Profile') {
-        this.api = 'rider';
-      } else if (this.$route.name === 'ProfileView') {
-        this.api = 'driver';
-      }
       this.getProfile();
     },
     methods: {
       async getProfile() {
         try {
-          const profile = await this.axios.get(`http://vanbr.ca/api/${this.api}/profile`);
+          const profile = await this.axios.get('http://vanbr.ca/api/driver/profile');
           console.log(profile);
           this.id = profile.data.data.user.id;
           this.name = profile.data.data.name;
@@ -74,22 +66,6 @@
           this.dob = profile.data.data.dob;
           this.mobile_no = profile.data.data.mobile_no;
           this.role = profile.data.data.user.role;
-        } catch (e) {
-          console.log(e);
-        }
-      },
-      async profile(event) {
-        event.preventDefault();
-        try {
-          const data = {
-            name: this.name,
-            email: this.email,
-            mobile_no: this.mobile_no,
-            dob: this.dob,
-            gender: this.gender,
-          };
-          const responseData = await this.axios.post('http://vanbr.ca/api/rider/profile', data);
-          console.log(responseData);
         } catch (e) {
           console.log(e);
         }

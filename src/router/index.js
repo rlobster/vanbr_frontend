@@ -17,11 +17,13 @@ import Payment from '@/layouts/rider/Payment';
 
 // Import all Driver Layouts
 import Status from '@/layouts/driver/Status';
+import ProfileView from '@/layouts/driver/ProfileView';
 
 // Import all Admin Layouts
 import Admin from '@/layouts/admin/Admin';
 import Users from '@/layouts/admin/Users';
 import AddDriver from '@/layouts/admin/AddDriver';
+import Email from '@/layouts/admin/Email';
 
 import Routes from './routes';
 
@@ -122,6 +124,15 @@ const routes = [
     },
   },
   {
+    path: Routes.ProfileView,
+    name: 'ProfileView',
+    component: ProfileView,
+    meta: {
+      requiresAuth: true,
+      type: 'Driver',
+    },
+  },
+  {
     path: Routes.DriverLogin,
     name: 'DriverLogin',
     component: Login,
@@ -154,6 +165,15 @@ const routes = [
     path: Routes.AddDriver,
     name: 'AddDriver',
     component: AddDriver,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
+    },
+  },
+  {
+    path: Routes.Email,
+    name: 'Email',
+    component: Email,
     meta: {
       requiresAuth: true,
       type: 'Admin',

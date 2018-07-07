@@ -1,24 +1,28 @@
 <template>
     <div class="main-app-section-sm container">
-      <router-link :to="Routes.HistoryDetail">
+
         <Card class="mx-auto">
           <div class="title">History</div>
           <div class="history-card">
+            <router-link :to="Routes.HistoryDetail">
             <span>May 15, 2018</span>
             <span>10:13 AM</span>
             <span class="history-card-detail">$40.44</span>
-            <router-link :to='Routes.HistoryDetail'><a class="history-card-detail">></a></router-link>
+            </router-link>
           </div>
           <div class="history-card">
+            <router-link :to="Routes.HistoryDetail">
             <span>May 15, 2018</span>
             <span>10:13 AM</span>
             <span class="history-card-detail">$40.44</span>
-            <router-link :to='Routes.HistoryDetail'><a class="history-card-detail">></a></router-link>
+            </router-link>
           </div>
           <div class="history-card">
-            <span>May 15, 2018</span>
-            <span>10:13 AM</span>
-            <span class="history-card-detail">$40.44</span>
+            <router-link :to="Routes.HistoryDetail">
+              <span>May 15, 2018</span>
+              <span>10:13 AM</span>
+              <span class="history-card-detail">$40.44</span>
+            </router-link>
           </div>
         </Card>
       </router-link>

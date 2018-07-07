@@ -71,6 +71,7 @@
         </Card>
       </div>
       <div class="col-md main-app-section-sm">
+        <router-link :to="Routes.Email">
         <Card class="card">
           <div class="d-flex justify-content-between align-items-center">
             <div>
@@ -81,6 +82,7 @@
             </div>
           </div>
         </Card>
+        </router-link>
       </div>
     </div>
   </div>

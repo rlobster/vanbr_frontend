@@ -5,6 +5,7 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import VueSocketio from 'vue-socket.io';
+import vuetable from 'vuetable-2';
 
 import App from './App';
 import router from './router';
@@ -19,6 +20,8 @@ Vue.use(VueGoogleMaps, {
   },
 });
 Vue.use(VueSocketio, 'http://localhost:3000');
+Vue.use(vuetable);
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

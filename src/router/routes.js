@@ -13,11 +13,13 @@ const Routes = {
   // Driver Routes
   DriverLogin: '/driver/login',
   Status: '/driver/status',
+  ProfileView: '/driver/profile',
   // Admin Routes
   AdminLogin: '/admin/login',
   Admin: '/admin',
   Users: '/admin/users',
   AddDriver: '/admin/add/driver',
+  Email: '/admin/email',
 };
 
 export default Routes;
