@@ -29,8 +29,24 @@
               <option value="2">Mini Van (6 Seats)</option>
             </select>
           </div>
-          <div class="form-group main-app-section-md">
-            <button class="btn btn-custom btn-block" @click="book">Book</button>
+          <div class="form-group main-app-section-xs" v-if="showCalculation">
+            <div>
+              <label><strong>Distance:</strong> {{ distance }}</label>
+            </div>
+            <div>
+              <label><strong>Approx time:</strong> {{ approxTime }}</label>
+            </div>
+            <div>
+              <label><strong>Approx Cost:</strong></label>
+            </div>
+          </div>
+          <div class="row form-group main-app-section-md">
+            <div class="col">
+              <button class="btn btn-block btn-primary" @click="mapsAPICalculation">Estimate</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-custom btn-block" @click="book">Book</button>
+            </div>
           </div>
         </form>
       </Card>
@@ -39,7 +55,6 @@
 
 <script>
   /* eslint-disable */
-  import axios from 'axios';
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
 
@@ -50,13 +65,22 @@
       return {
         Routes,
         pickup: '',
+        pickupCoOrdinates: [],
+        dropCoOrdinates: [],
         drop: '',
         car_id: '0',
+        showCalculation: false,
+        distance: '',
+        approxTime: '',
+        approxCost: '',
       };
     },
     methods: {
       async book(event) {
         event.preventDefault();
+        if (!this.pickup || !this.drop || !this.car_id) {
+          return false;
+        }
         try {
           const data = {
             car_id: this.car_id,
@@ -72,14 +96,40 @@
       setPickup(place) {
         let lat = place.geometry.location.lat();
         let long = place.geometry.location.lng();
-        const plusCode = OpenLocationCode.encode(lat, long);
-        this.pickup = plusCode
+        this.pickupCoOrdinates[0] = lat;
+        this.pickupCoOrdinates[1] = long;
+        this.pickup = OpenLocationCode.encode(lat, long);
       },
       setDrop(place) {
         let lat = place.geometry.location.lat();
         let long = place.geometry.location.lng();
-        const plusCode = OpenLocationCode.encode(lat, long);
-        this.drop = plusCode
+        this.dropCoOrdinates[0] = lat;
+        this.dropCoOrdinates[1] = long;
+        this.drop = OpenLocationCode.encode(lat, long);
+      },
+      mapsAPICalculation(event) {
+        event.preventDefault();
+        if (!this.pickup || !this.drop || !this.car_id) {
+          alert('All fields are required');
+          return false;
+        }
+        this.showCalculation = true;
+
+        const url = "https://maps.googleapis.com/maps/api/distancematrix/json?";
+        const params = `units=imperial&origins=${this.pickupCoOrdinates.lat},${this.pickupCoOrdinates.long}&destinations=${this.dropCoOrdinates.lat},${this.dropCoOrdinates.long}&key=AIzaSyCPXsZhEgbSDGOY2QVsJCBf3gq7D5Eggwk`;
+
+        let service = new google.maps.DistanceMatrixService;
+        service.getDistanceMatrix({
+          origins: [`${this.pickupCoOrdinates[0]},${this.pickupCoOrdinates[1]}`],
+          destinations: [`${this.dropCoOrdinates[0]},${this.dropCoOrdinates[1]}`],
+          travelMode: 'DRIVING',
+          unitSystem: google.maps.UnitSystem.METRIC,
+          avoidHighways: false,
+          avoidTolls: false
+        }, (response, status) => {
+          this.distance = response.rows[0].elements[0].distance.text;
+          this.approxTime = response.rows[0].elements[0].duration.text;
+        });
       },
     },
   };

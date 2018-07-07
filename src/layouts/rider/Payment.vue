@@ -36,12 +36,16 @@
                 <div><strong>Total</strong></div>
                 <div><strong>$12.45</strong></div>
               </div>
-              <StripeCard class='stripe-card'
-                    :class='{ complete }'
-                    stripe='pk_test_8wgmvT01TU27qZFaMbAny3UF'
-                    :options='stripeOptions'
-                    @change='complete = $event.complete'
-              />
+              <hr />
+              <div class="form-group main-app-section-sm">
+                <label>Enter Card details:</label>
+                <StripeCard class='stripe-card'
+                            :class='{ complete }'
+                            stripe='pk_test_8wgmvT01TU27qZFaMbAny3UF'
+                            :options='stripeOptions'
+                            @change='complete = $event.complete'
+                />
+              </div>
               <div class="form-group main-app-section-md">
                 <!--<button class="btn btn-custom btn-block">Pay</button>-->
                 <button class='pay-with-stripe btn btn-custom btn-block' @click='pay' :disabled='!complete'>Pay with credit card</button>
@@ -92,5 +96,4 @@
   .car-details {
     font-size: 18px;
   }
-
 </style>
