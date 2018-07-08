@@ -2,8 +2,22 @@
   <div class="users container main-app-section-sm">
     <div class="row">
       <div class="col-md">
+        <template>
+          <div class="filter-bar ui basic segment grid main-app-section-sm search-box">
+            <div class="ui form">
+              <div class="inline field">
+                <label>Search for:</label>
+                <input type="text" v-model="filterText" class="three wide column" @keyup.enter="doFilter" placeholder="Text to filter">
+                <button class="btn btn-primary" @click="doFilter">Go</button>
+                <button class="btn btn-secondary" @click="resetFilter">Reset</button>
+              </div>
+            </div>
+          </div>
+        </template>
         <vuetable ref="vuetable"
-          api-url="https://vuetable.ratiw.net/api/users"
+          :api-mode="false"
+          :css="css.table"
+          :data="feedbackObj"
           :fields="fields"
           :sort-order="sortOrder"
           pagination-path=""
@@ -12,17 +26,17 @@
           @vuetable:loading="onLoading"
           @vuetable:loaded="onLoaded">
           <template slot="actions" scope="props">
-          <div class="table-button-container">
-              <button class="btn btn-warning btn-sm" @click="editRow(props.rowData)">
-                <span class="glyphicon glyphicon-pencil"></span> Edit</button>&nbsp;&nbsp;
-              <button class="btn btn-danger btn-sm" @click="deleteRow(props.rowData)">
-                <span class="glyphicon glyphicon-trash"></span> Delete</button>&nbsp;&nbsp;
-          </div>
+            <div class="table-button-container">
+                <button class="btn btn-warning btn-sm" @click="editRow(props.rowData)">
+                  <span class="glyphicon glyphicon-pencil"></span> Edit</button>&nbsp;&nbsp;
+                <button class="btn btn-danger btn-sm" @click="deleteRow(props.rowData)">
+                  <span class="glyphicon glyphicon-trash"></span> Delete</button>&nbsp;&nbsp;
+            </div>
           </template>
         </vuetable>
-        <vuetable-pagination ref="pagination"
+        <vuetable-pagination-bootstrap ref="pagination"
           @vuetable-pagination:change-page="onChangePage">
-        </vuetable-pagination>
+        </vuetable-pagination-bootstrap>
       </div>
     </div>
   </div>
@@ -31,13 +45,46 @@
 <script>
   // eslint-disable
   import vuetable from 'vuetable-2';
+  import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
   import Card from '@/components/Card';
+  import VuetablePaginationBootstrap from '@/components/VuetablePaginationBootstrap';
 
   export default {
     name: 'Feedbacks',
-    components: { Card, vuetable },
+    components: { Card, vuetable, VuetablePagination, VuetablePaginationBootstrap },
     data() {
       return {
+        feedbackObj: [
+          {
+            id: 1,
+            name: 'John Doe',
+            role: 'Rider',
+            feedback: 'Fine',
+            rating: 5,
+          },
+          {
+            id: 2,
+            name: 'John Snow',
+            role: 'Driver',
+            feedback: 'Best ride of my life',
+            rating: 5,
+          },
+          {
+            id: 3,
+            name: 'Anna Doe',
+            role: 'Rider',
+            feedback: 'Keep it up',
+            rating: 3,
+          },
+          {
+            id: 4,
+            name: 'Bob Dan',
+            role: 'Rider',
+            feedback: 'Nice facility and nature of the driver',
+            rating: 4,
+          },
+        ],
+        filterText: '',
         fields: [
           {
             name: 'id',
@@ -50,7 +97,7 @@
             sortField: 'name',
           },
           'role',
-          'Feedback',
+          'feedback',
           {
             name: 'rating',
             title: 'Rating',
@@ -90,6 +137,15 @@
       };
     },
     methods: {
+      doFilter() {
+        console.log('doFilter:', this.filterText);
+        this.$events.fire('filter-set', this.filterText);
+      },
+      resetFilter() {
+        this.filterText = '';
+        console.log('resetFilter');
+        this.$events.fire('filter-reset');
+      },
       onPaginationData(paginationData) {
         this.$refs.pagination.setPaginationData(paginationData);
       },
@@ -118,6 +174,9 @@
     background: #FFFFFF;
     box-shadow: 0 2px 4px 0 #ddd;
     padding: 20px;
+  }
+  .search-box {
+    margin-bottom: 25px;
   }
   .orange.glyphicon {
     color: blue;

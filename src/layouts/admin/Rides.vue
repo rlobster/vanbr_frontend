@@ -16,7 +16,9 @@
         </template>
 
         <vuetable ref="vuetable"
-          api-url="https://vuetable.ratiw.net/api/users"
+          :api-mode="false"
+          :css="css.table"
+          :data="rideObj"
           :fields="fields"
           :sort-order="sortOrder"
           pagination-path=""
@@ -33,9 +35,9 @@
           </div>
           </template>
         </vuetable>
-        <vuetable-pagination ref="pagination"
+        <vuetable-pagination-bootstrap ref="pagination"
           @vuetable-pagination:change-page="onChangePage">
-        </vuetable-pagination>
+        </vuetable-pagination-bootstrap>
       </div>
     </div>
   </div>
@@ -46,6 +48,7 @@
   import Card from '@/components/Card';
   import Vuetable from 'vuetable-2/src/components/Vuetable';
   import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
+  import VuetablePaginationBootstrap from '@/components/VuetablePaginationBootstrap';
 
   export default {
     name: 'Users',
@@ -53,10 +56,68 @@
       Card,
       Vuetable,
       VuetablePagination,
+      VuetablePaginationBootstrap,
     },
     data() {
       return {
         filterText: '',
+        rideObj: [
+          {
+            rider_name: 'John Doe',
+            rider_id: 1,
+            driver_name: 'Max Whalle',
+            driver_id: 11,
+            From: 'CA',
+            To: 'CT',
+            time: '10 min',
+            Price: '$4.34',
+            Status: 'Complete',
+          },
+          {
+            rider_name: 'Donald Trump',
+            rider_id: 2,
+            driver_name: 'Max Whalle',
+            driver_id: 11,
+            From: 'DC',
+            To: 'CT',
+            time: '19 min',
+            Price: '$24.34',
+            Status: 'Complete',
+          },
+          {
+            rider_name: 'Anna Watson',
+            rider_id: 3,
+            driver_name: 'Max Whalle',
+            driver_id: 11,
+            From: 'CA',
+            To: 'Canada',
+            time: '20 min',
+            Price: '$34',
+            Status: 'Complete',
+          },
+          {
+            rider_name: 'John Snow',
+            rider_id: 8,
+            driver_name: 'Bob Sherlock',
+            driver_id: 12,
+            From: 'CA',
+            To: 'CT',
+            time: '10 min',
+            Price: '$4.34',
+            Status: 'Incomplete',
+          },
+          {
+            rider_name: 'Raj Shekh',
+            rider_id: 7,
+            driver_name: 'Bob Sherlock',
+            driver_id: 12,
+            From: 'Office',
+            To: 'Park',
+            time: '10 min',
+            Price: '$4.34',
+            Status: 'Complete',
+          },
+        ],
         fields: [
           {
             name: 'rider_name',

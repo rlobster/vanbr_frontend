@@ -2,6 +2,18 @@
   <div class="users container main-app-section-sm">
     <div class="row">
       <div class="col-md">
+        <template>
+          <div class="filter-bar ui basic segment grid main-app-section-sm search-box">
+            <div class="ui form">
+              <div class="inline field">
+                <label>Search for:</label>
+                <input type="text" v-model="filterText" class="three wide column" @keyup.enter="doFilter" placeholder="Text to filter">
+                <button class="btn btn-primary" @click="doFilter">Go</button>
+                <button class="btn btn-secondary" @click="resetFilter">Reset</button>
+              </div>
+            </div>
+          </div>
+        </template>
         <vuetable ref="vuetable"
           api-url="https://vuetable.ratiw.net/api/users"
           :fields="fields"
@@ -40,6 +52,7 @@
     components: { Card, vuetable, VuetablePagination, VuetablePaginationBootstrap },
     data() {
       return {
+        filterText: '',
         fields: [
           {
             name: 'name',
@@ -92,6 +105,15 @@
       };
     },
     methods: {
+      doFilter() {
+        console.log('doFilter:', this.filterText);
+        this.$events.fire('filter-set', this.filterText);
+      },
+      resetFilter() {
+        this.filterText = '';
+        console.log('resetFilter');
+        this.$events.fire('filter-reset');
+      },
       onPaginationData(paginationData) {
         this.$refs.pagination.setPaginationData(paginationData);
       },
@@ -124,7 +146,9 @@
   .orange.glyphicon {
     color: blue;
   }
-
+  .search-box {
+    margin-bottom: 25px;
+  }
   th.sortable {
     color: blue;
   }
