@@ -8,8 +8,8 @@
               <div class="inline field">
                 <label>Search for:</label>
                 <input type="text" v-model="filterText" class="three wide column" @keyup.enter="doFilter" placeholder="Text to filter">
-                <button class="btn btn-primary" @click="doFilter">Go</button>
-                <button class="btn btn-secondary" @click="resetFilter">Reset</button>
+                <button class="btn btn-primary" @click="setFilter(filterText)">Go</button>
+                <button class="btn btn-secondary" @click="resetFilter(filterText)">Reset</button>
               </div>
             </div>
           </div>
@@ -17,6 +17,7 @@
 
         <vuetable ref="vuetable"
           :api-mode="false"
+          :append-params="moreParams"
           :css="css.table"
           :data="rideObj"
           :fields="fields"
@@ -45,6 +46,7 @@
 
 <script>
   // eslint-disable
+  import Vue from 'vue';
   import Card from '@/components/Card';
   import Vuetable from 'vuetable-2/src/components/Vuetable';
   import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
@@ -54,6 +56,7 @@
     name: 'Users',
     components: {
       Card,
+      Vue,
       Vuetable,
       VuetablePagination,
       VuetablePaginationBootstrap,
@@ -61,6 +64,7 @@
     data() {
       return {
         filterText: '',
+        moreParams: {},
         rideObj: [
           {
             rider_name: 'John Doe',
@@ -152,7 +156,7 @@
         ],
         sortOrder: [
           {
-            field: 'name',
+            field: 'rider_name',
             direction: 'asc',
           },
         ],
@@ -181,20 +185,41 @@
         },
       };
     },
-    // mounted: {
+    // mounted() {
     //   this.$events.$on('filter-set', eventData => this.onFilterSet(eventData));
-    //   this.$events.$on('filter-reset', e => this.onFilterReset());
+    //   this.$events.$on('filter-reset', () => this.onFilterReset());
     // },
     methods: {
-      doFilter() {
-        console.log('doFilter:', this.filterText);
-        this.$events.fire('filter-set', this.filterText);
+      setFilter(filterText) {
+        this.moreParams = {
+          filter: filterText,
+        };
+        Vue.nextTick(() => this.$refs.vuetable.refresh());
       },
       resetFilter() {
-        this.filterText = '';
-        console.log('resetFilter');
-        this.$events.fire('filter-reset');
+        this.moreParams = {};
+        Vue.nextTick(() => this.$refs.vuetable.refresh());
       },
+      // onFilterSet(filterText) {
+      //   this.moreParams = {
+      //     filter: filterText,
+      //   };
+      //   console.log('fired');
+      //   Vue.nextTick(() => this.$refs.vuetable.refresh());
+      // },
+      // onFilterReset() {
+      //   this.moreParams = {};
+      //   Vue.nextTick(() => this.$refs.vuetable.refresh());
+      // },
+      // doFilter() {
+      //   console.log('doFilter:', this.filterText);
+      //   this.$events.fire('filter-set', this.filterText);
+      // },
+      // resetFilter() {
+      //   this.filterText = '';
+      //   console.log('resetFilter');
+      //   this.$events.fire('filter-reset');
+      // },
       onPaginationData(paginationData) {
         this.$refs.pagination.setPaginationData(paginationData);
       },
