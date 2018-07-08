@@ -32,30 +32,29 @@
   // eslint-disable
   import vuetable from 'vuetable-2';
   import Card from '@/components/Card';
-  import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
 
   export default {
-    name: 'Users',
-    components: { Card, vuetable, VuetablePagination },
+    name: 'Feedbacks',
+    components: { Card, vuetable },
     data() {
       return {
         fields: [
+          {
+            name: 'id',
+            title: '#',
+            sortField: 'id',
+          },
           {
             name: 'name',
             title: '<span class="orange glyphicon glyphicon-user"></span> Name',
             sortField: 'name',
           },
-          {
-            name: 'email',
-            title: 'Email',
-            sortField: 'email',
-          },
-          'mobile',
           'role',
+          'Feedback',
           {
-            name: 'reg. date',
-            title: 'Reg. Date',
-            sortField: 'reg. date',
+            name: 'rating',
+            title: 'Rating',
+            sortField: 'rating',
           },
           '__slot:actions',
         ],

@@ -47,28 +47,34 @@
     </div>
     <div class="row">
       <div class="col-md main-app-section-sm">
-        <Card class="card">
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <img src="@/assets/car.svg" class="icons"/>
+        <router-link :to="Routes.Rides">                
+          <Card class="card">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <img src="@/assets/car.svg" class="icons"/>
+              </div>
+              <div>
+                <div class="subtitle text-secondary">Rides</div>
+                <div class="title text-dark">500</div>                
+              </div>
             </div>
-            <div>
-              <div class="subtitle text-secondary">Rides</div>
-            </div>
-          </div>
-        </Card>
+          </Card>
+        </router-link>
       </div>
       <div class="col-md main-app-section-sm">
-        <Card class="card">
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <img src="@/assets/feedback.svg" class="icons-sm"/>
+        <router-link :to="Routes.Feedbacks">        
+          <Card class="card">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <img src="@/assets/feedback.svg" class="icons-sm"/>
+              </div>
+              <div>
+                <div class="subtitle text-secondary">Feedback</div>
+                <div class="title text-dark">50</div>                
+              </div>
             </div>
-            <div>
-              <div class="subtitle text-secondary">Feedback</div>
-            </div>
-          </div>
-        </Card>
+          </Card>
+        </router-link>  
       </div>
       <div class="col-md main-app-section-sm">
         <router-link :to="Routes.Email">

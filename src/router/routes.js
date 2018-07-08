@@ -20,6 +20,8 @@ const Routes = {
   Users: '/admin/users',
   AddDriver: '/admin/add/driver',
   Email: '/admin/email',
+  Feedbacks: '/admin/feedbacks',
+  Rides: '/admin/rides',
 };
 
 export default Routes;

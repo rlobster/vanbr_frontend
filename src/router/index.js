@@ -24,6 +24,8 @@ import Admin from '@/layouts/admin/Admin';
 import Users from '@/layouts/admin/Users';
 import AddDriver from '@/layouts/admin/AddDriver';
 import Email from '@/layouts/admin/Email';
+import Feedbacks from '@/layouts/admin/Feedbacks';
+import Rides from '@/layouts/admin/Rides';
 
 import Routes from './routes';
 
@@ -174,6 +176,24 @@ const routes = [
     path: Routes.Email,
     name: 'Email',
     component: Email,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
+    },
+  },
+  {
+    path: Routes.Feedbacks,
+    name: 'Feedbacks',
+    component: Feedbacks,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
+    },
+  },
+  {
+    path: Routes.Rides,
+    name: 'Rides',
+    component: Rides,
     meta: {
       requiresAuth: true,
       type: 'Admin',

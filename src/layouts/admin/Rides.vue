@@ -2,6 +2,19 @@
   <div class="users container main-app-section-sm">
     <div class="row">
       <div class="col-md">
+         <template>
+          <div class="filter-bar ui basic segment grid main-app-section-sm search-box">
+            <div class="ui form">
+              <div class="inline field">
+                <label>Search for:</label>
+                <input type="text" v-model="filterText" class="three wide column" @keyup.enter="doFilter" placeholder="Text to filter">
+                <button class="btn btn-primary" @click="doFilter">Go</button>
+                <button class="btn btn-secondary" @click="resetFilter">Reset</button>
+              </div>
+            </div>
+          </div>
+        </template>
+
         <vuetable ref="vuetable"
           api-url="https://vuetable.ratiw.net/api/users"
           :fields="fields"
@@ -12,7 +25,7 @@
           @vuetable:loading="onLoading"
           @vuetable:loaded="onLoaded">
           <template slot="actions" scope="props">
-          <div class="table-button-container">
+          <div class="table-button-container main-app-section-sm">
               <button class="btn btn-warning btn-sm" @click="editRow(props.rowData)">
                 <span class="glyphicon glyphicon-pencil"></span> Edit</button>&nbsp;&nbsp;
               <button class="btn btn-danger btn-sm" @click="deleteRow(props.rowData)">
@@ -31,31 +44,44 @@
 <script>
   // eslint-disable
   import vuetable from 'vuetable-2';
+  import VueEvents from 'vue-events';
   import Card from '@/components/Card';
-  import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
 
   export default {
     name: 'Users',
-    components: { Card, vuetable, VuetablePagination },
+    components: { Card, vuetable, VueEvents },
     data() {
       return {
+        filterText: '',
         fields: [
           {
-            name: 'name',
-            title: '<span class="orange glyphicon glyphicon-user"></span> Name',
-            sortField: 'name',
+            name: 'rider_name',
+            title: '<span class="orange glyphicon glyphicon-user"></span>Rider Name',
+            sortField: 'rider_name',
           },
           {
-            name: 'email',
-            title: 'Email',
-            sortField: 'email',
+            name: 'rider_id',
+            title: 'Id',
+            sortField: 'rider_id',
           },
-          'mobile',
-          'role',
           {
-            name: 'reg. date',
-            title: 'Reg. Date',
-            sortField: 'reg. date',
+            name: 'driver_name',
+            title: '<span class="orange glyphicon glyphicon-user"></span>Driver Name',
+            sortField: 'driver_name',
+          },
+          {
+            name: 'driver_id',
+            title: 'Id',
+            sortField: 'driver_id',
+          },
+          'From',
+          'To',
+          'time',
+          'Price',
+          {
+            name: 'Status',
+            title: 'Status',
+            sortField: 'Status',
           },
           '__slot:actions',
         ],
@@ -90,7 +116,20 @@
         },
       };
     },
+    // mounted: {
+    //   this.$events.$on('filter-set', eventData => this.onFilterSet(eventData));
+    //   this.$events.$on('filter-reset', e => this.onFilterReset());
+    // },
     methods: {
+      doFilter() {
+        console.log('doFilter:', this.filterText);
+        this.$events.fire('filter-set', this.filterText);
+      },
+      resetFilter() {
+        this.filterText = '';
+        console.log('resetFilter');
+        this.$events.fire('filter-reset');
+      },
       onPaginationData(paginationData) {
         this.$refs.pagination.setPaginationData(paginationData);
       },
@@ -119,6 +158,9 @@
     background: #FFFFFF;
     box-shadow: 0 2px 4px 0 #ddd;
     padding: 20px;
+  }
+  .search-box {
+    margin-bottom: 25px;
   }
   .orange.glyphicon {
     color: blue;
