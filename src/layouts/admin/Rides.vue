@@ -43,13 +43,17 @@
 
 <script>
   // eslint-disable
-  import vuetable from 'vuetable-2';
-  import VueEvents from 'vue-events';
   import Card from '@/components/Card';
+  import Vuetable from 'vuetable-2/src/components/Vuetable';
+  import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
 
   export default {
     name: 'Users',
-    components: { Card, vuetable, VueEvents },
+    components: {
+      Card,
+      Vuetable,
+      VuetablePagination,
+    },
     data() {
       return {
         filterText: '',

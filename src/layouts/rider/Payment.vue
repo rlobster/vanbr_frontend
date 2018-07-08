@@ -40,10 +40,10 @@
               <div class="form-group main-app-section-sm">
                 <label>Enter Card details:</label>
                 <StripeCard class='stripe-card'
-                            :class='{ complete }'
-                            stripe='pk_test_8wgmvT01TU27qZFaMbAny3UF'
-                            :options='stripeOptions'
-                            @change='complete = $event.complete'
+                  :class='{ complete }'
+                  stripe='pk_test_8wgmvT01TU27qZFaMbAny3UF'
+                  :options='stripeOptions'
+                  @change='complete = $event.complete'
                 />
               </div>
               <div class="form-group main-app-section-md">

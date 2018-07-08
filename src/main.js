@@ -5,7 +5,7 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import VueSocketio from 'vue-socket.io';
-import vuetable from 'vuetable-2';
+// import Vuetable from 'vuetable-2/src/components/Vuetable';
 import VueEvents from 'vue-events';
 import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
 import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo';
@@ -23,7 +23,7 @@ Vue.use(VueGoogleMaps, {
   },
 });
 Vue.use(VueSocketio, 'http://localhost:3000');
-Vue.use(vuetable);
+// Vue.use(Vuetable);
 Vue.use(VueEvents);
 Vue.use(VuetablePagination);
 Vue.use(VuetablePaginationInfo);

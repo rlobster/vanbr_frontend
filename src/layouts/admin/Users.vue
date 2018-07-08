@@ -7,7 +7,7 @@
           :fields="fields"
           :sort-order="sortOrder"
           pagination-path=""
-          :per-page="3"
+          :per-page="10"
           @vuetable:pagination-data="onPaginationData"
           @vuetable:loading="onLoading"
           @vuetable:loaded="onLoaded">
@@ -20,9 +20,9 @@
           </div>
           </template>
         </vuetable>
-        <vuetable-pagination ref="pagination"
+        <vuetable-pagination-bootstrap ref="pagination"
           @vuetable-pagination:change-page="onChangePage">
-        </vuetable-pagination>
+        </vuetable-pagination-bootstrap>
       </div>
     </div>
   </div>
@@ -33,10 +33,11 @@
   import vuetable from 'vuetable-2';
   import Card from '@/components/Card';
   import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
+  import VuetablePaginationBootstrap from '@/components/VuetablePaginationBootstrap';
 
   export default {
     name: 'Users',
-    components: { Card, vuetable, VuetablePagination },
+    components: { Card, vuetable, VuetablePagination, VuetablePaginationBootstrap },
     data() {
       return {
         fields: [
