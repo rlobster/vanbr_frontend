@@ -22,14 +22,45 @@
               @place_changed="setDrop" />
           </div>
           <div class="form-group main-app-section-xs">
-            <label for="car">Select Car:</label>
-            <select id="car" class="form-control" v-model="car_id">
-              <option value="0" disabled="" selected>Select Type</option>
-              <option value="1">Sedan (4 Seats)</option>
-              <option value="2">Mini Van (6 Seats)</option>
+            <label for="select-member">Book for:</label>
+            <select class="form-control" id="select-member">
+              <option>Self</option>
+              <option>John Doe</option>
+              <option>Will Smith</option>
             </select>
+            <div class="d-flex justify-content-end mt-1">
+              <router-link to="javascript:void(0)">+ Add Member</router-link>
+            </div>
           </div>
-          <div class="form-group main-app-section-xs" v-if="showCalculation">
+          <div class="form-group">
+            <label>Select Car:</label>
+            <div class="section-container">
+              <div>
+                <label for="sedan" class="d-flex align-items-center car-type-label">
+                  <div class="car-logo" :class="{ 'colored-image-div' : (car_id == 1) }">
+                    <img src="../../assets/sedan.png"/>
+                  </div>
+                  <div class="ml-4" :class="{ 'text-secondary' : (car_id != 1) }">
+                    Sedan - 4 Seats
+                  </div>
+                </label>
+                <input type="radio" id="sedan" name="car-type" value="1" class="car-radio" v-model="car_id"/>
+              </div>
+              <hr class="hr-spacing"/>
+              <div>
+                <label for="mini-van" class="d-flex align-items-center car-type-label">
+                  <div class="car-logo" :class="{ 'colored-image-div' : (car_id == 2) }">
+                    <img src="../../assets/van.png"/>
+                  </div>
+                  <div class="ml-4" :class="{ 'text-secondary' : (car_id != 2) }">
+                    Mini Van - 6 Seats
+                  </div>
+                </label>
+                <input type="radio" id="mini-van" name="car-type" value="2" class="car-radio" v-model="car_id"/>
+              </div>
+            </div>
+          </div>
+          <div class="form-group main-app-section-sm section-container" v-if="showCalculation">
             <div>
               <label><strong>Distance:</strong> {{ distance }}</label>
             </div>
@@ -136,5 +167,41 @@
 </script>
 
 <style lang="scss" scoped>
+  label {
+    cursor: pointer;
+  }
+  .section-container {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 4px 10px;
+  }
+  .car-radio {
+    display: none;
+  }
+  .car-logo {
+    border-radius: 50%;
+    box-shadow: 0 0px 8px 0 #CCC;
+    padding: 8px;
+    margin: 4px;
+    background-color: #FFF;
+    transition: 0.4s all ease;
 
+    img {
+      width: 32px;
+      filter: grayscale(100%);
+      transition: 0.4s all ease;
+    }
+  }
+  .hr-spacing {
+    margin: 4px 0;
+  }
+  .colored-image-div {
+    background-color: #F8F8F8;
+    img {
+      filter: grayscale(0%);
+    }
+  }
+  .car-type-label {
+    margin-bottom: 0;
+  }
 </style>
