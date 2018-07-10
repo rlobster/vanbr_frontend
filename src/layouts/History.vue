@@ -4,7 +4,7 @@
       <div class="title">History</div>
       <div v-for="history in historyItem">
         <div class="history-card">
-          <router-link :to="Routes.HistoryDetail + history.id">
+          <router-link :to="{name: 'HistoryDetail', params: {id: history.id}}">
             <span>{{ history.ride_create_time }}</span>
             <span class="history-card-detail">{{ history.cost }}</span>
           </router-link>
