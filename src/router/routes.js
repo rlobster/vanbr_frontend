@@ -6,7 +6,7 @@ const Routes = {
   Profile: '/profile',
   Booking: '/booking',
   History: '/history',
-  HistoryDetail: '/history/id',
+  HistoryDetail: '/history/:id',
   Ride: '/ride/:id',
   Feedback: '/feedback',
   Payment: '/payment',
