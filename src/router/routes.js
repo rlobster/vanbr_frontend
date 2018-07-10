@@ -7,7 +7,7 @@ const Routes = {
   Booking: '/booking',
   History: '/history',
   HistoryDetail: '/history/:id',
-  Ride: '/ride',
+  Ride: '/ride/:id',
   Feedback: '/feedback',
   Payment: '/payment',
   // Driver Routes
@@ -22,6 +22,8 @@ const Routes = {
   Email: '/admin/email',
   Feedbacks: '/admin/feedbacks',
   Rides: '/admin/rides',
+  // Error Routes
+  Error404: '/404',
 };
 
 export default Routes;

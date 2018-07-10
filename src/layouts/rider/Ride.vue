@@ -4,32 +4,38 @@
         <div class="title text-center">Your Ride Info</div>
           <div class="d-flex main-app-section-sm">
               <div class="logo">
-                <img src="@/assets/sedan.png" />
+                <img src="@/assets/sedan.png" v-if="carType == 'Sedan'" />
+                <img src="@/assets/van.png" v-else-if="carType == 'Mini Van'" />
               </div>
               <div class="ride-info">
                 <div class="subtitle text-secondary">My Ride</div>
                 <div class="main-app-section-xs">
                   <div class="d-flex justify-content-between">
-                    <div><strong>Seats</strong>:</div>
-                    <div>10</div>
+                    <div><strong>Car type</strong>:</div>
+                    <div>{{ carType }}</div>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <div><strong>Pickup Location</strong>:</div>
+                    <div>{{ pickup }}</div>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <div><strong>Drop Location</strong>:</div>
+                    <div>{{ drop }}</div>
                   </div>
                   <div class="d-flex justify-content-between">
                     <div><strong>Driver</strong>:</div>
-                    <div>John Doe</div>
+                    <div>{{ driver }}</div>
                   </div>
                   <div class="d-flex justify-content-between">
                     <div><strong>Car No</strong>:</div>
-                    <div>ABC XY 1234</div>
+                    <div>{{ carNumber }}</div>
                   </div>
                 </div>
               </div>
           </div>
           <div class="form-group main-app-section-md">
             <button class="btn btn-secondary btn-ride btn-custom">Cancel</button>
-            <button class="btn btn-ride btn-custom">Book</button>
-          </div>
-          <div class="form-group main-app-section-xs">
-            <button class="btn btn-another btn-block">Book Another</button>
+            <router-link :to="Routes.Booking" class="btn btn-ride btn-another">Book Another</router-link>
           </div>
       </Card>
     </div>
@@ -46,6 +52,11 @@
     data() {
       return {
         Routes,
+        carType: '',
+        pickup: '',
+        drop: '',
+        driver: 'Searching...',
+        carNumber: 'Searching...',
       };
     },
     mounted() {
@@ -54,9 +65,12 @@
     methods: {
       async getRide() {
         try {
-          const response = axios.get('http://vanbr.ca/api/rider/get-single-ride?ride_id=1');
-          console.log(response);
+          const response = await axios.get(`http://vanbr.ca/api/rider/get-single-ride?ride_id=${this.$route.params.id}`);
+          this.carType = response.data.data.car.type;
+          this.pickup = response.data.data.pick_up_point;
+          this.drop = response.data.data.drop_point;
         } catch (e) {
+          this.$router.push(Routes.Error404);
           console.log(e);
         }
       },
