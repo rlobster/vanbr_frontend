@@ -66,14 +66,11 @@
       async getRide() {
         try {
           const response = await axios.get(`http://vanbr.ca/api/rider/get-single-ride?ride_id=${this.$route.params.id}`);
-          console.log(response);
-          if (response.status !== 200) {
-            this.$router.push(Routes.Error404);
-          }
           this.carType = response.data.data.car.type;
           this.pickup = response.data.data.pick_up_point;
           this.drop = response.data.data.drop_point;
         } catch (e) {
+          this.$router.push(Routes.Error404);
           console.log(e);
           this.$router.push(Routes.Error404);
         }
