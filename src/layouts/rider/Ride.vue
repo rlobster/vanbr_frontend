@@ -2,46 +2,48 @@
     <div class="booking container main-app-section-md">
       <Card class="mx-auto">
         <div class="title text-center">Your Ride Info</div>
-          <div class="d-flex main-app-section-sm">
+          <div class="d-flex main-app-section-sm align-items-center justify-content-center">
               <div class="logo">
                 <img src="@/assets/sedan.png" v-if="carType == 'Sedan'" />
                 <img src="@/assets/van.png" v-else-if="carType == 'Mini Van'" />
               </div>
-              <div class="ride-info">
-                <div class="subtitle text-secondary">My Ride</div>
-                <div class="main-app-section-xs">
-                  <div class="d-flex justify-content-between">
-                    <div><strong>Car type</strong>:</div>
-                    <div>{{ carType }}</div>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <div><strong>Pickup Location</strong>:</div>
-                    <div>{{ pickup }}</div>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <div><strong>Drop Location</strong>:</div>
-                    <div>{{ drop }}</div>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <div><strong>Driver</strong>:</div>
-                    <div>{{ driver }}</div>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <div><strong>Car No</strong>:</div>
-                    <div>{{ carNumber }}</div>
-                  </div>
-                </div>
-              </div>
           </div>
+        <div class="main-app-section-sm">
+          <table class="table table-borderless">
+            <tbody>
+            <tr>
+              <td><strong>Car type</strong>:</td>
+              <td class="text-right">{{ carType }}</td>
+            </tr>
+            <tr>
+              <td><strong>Pickup</strong>:</td>
+              <td class="text-right">{{ pickup }}</td>
+            </tr>
+            <tr>
+              <td><strong>Drop</strong>:</td>
+              <td class="text-right">{{ drop }}</td>
+            </tr>
+            <tr>
+              <td><strong>Driver</strong>:</td>
+              <td class="text-right">{{ driver }}</td>
+            </tr>
+            <tr>
+              <td><strong>Car Detail</strong>:</td>
+              <td class="text-right">{{ carDetail }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
           <div class="form-group main-app-section-md">
-            <button class="btn btn-secondary btn-ride btn-custom">Cancel</button>
-            <router-link :to="Routes.Booking" class="btn btn-ride btn-another">Book Another</router-link>
+            <button class="btn btn-outline-danger btn-ride">Cancel</button>
+            <router-link :to="Routes.Booking" class="btn btn-ride btn-custom">Book Another</router-link>
           </div>
       </Card>
     </div>
 </template>
 
 <script>
+  /* eslint-disable */
   import axios from 'axios';
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
@@ -56,7 +58,7 @@
         pickup: '',
         drop: '',
         driver: 'Searching...',
-        carNumber: 'Searching...',
+        carDetail: 'Searching...',
       };
     },
     mounted() {
@@ -67,14 +69,35 @@
         try {
           const response = await axios.get(`http://vanbr.ca/api/rider/get-single-ride?ride_id=${this.$route.params.id}`);
           this.carType = response.data.data.car.type;
-          this.pickup = response.data.data.pick_up_point;
-          this.drop = response.data.data.drop_point;
+
+          const pickupObj = OpenLocationCode.decode(response.data.data.pick_up_point);
+          this.pickup = await this.getLocation(pickupObj);
+
+          const dropObj = OpenLocationCode.decode(response.data.data.drop_point);
+          this.drop = await this.getLocation(dropObj);
+          console.log(this.pickup, this.drop)
         } catch (e) {
-          this.$router.push(Routes.Error404);
+          // this.$router.push(Routes.Error404);
           console.log(e);
-          this.$router.push(Routes.Error404);
         }
       },
+      getLocation(locationObj) {
+        return new Promise( ((resolve, reject) => {
+          const geocoder = new google.maps.Geocoder;
+          geocoder.geocode({'location': {lat: locationObj.latitudeCenter, lng: locationObj.longitudeCenter}}, function(results, status) {
+            if (status === 'OK') {
+              if (results[0]) {
+                const address = `${results[0].formatted_address.split(',')[0]} , ${results[0].formatted_address.split(',')[1]}`;
+                resolve(address)
+              } else {
+                window.alert('No results found');
+              }
+            } else {
+              window.alert('Geocoder failed due to: ' + status);
+            }
+          });
+        }));
+      }
     },
   };
 </script>
@@ -97,5 +120,13 @@
   }
   .btn-ride {
     width: 49%;
+  }
+  .table th, .table td {
+    padding: 0.25rem 1rem;
+  }
+  .btn-custom {
+    &:hover {
+      color: #FFFFFF;
+    }
   }
 </style>
