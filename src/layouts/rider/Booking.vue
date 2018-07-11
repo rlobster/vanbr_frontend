@@ -23,10 +23,8 @@
           </div>
           <div class="form-group main-app-section-xs">
             <label for="select-member">Book for:</label>
-            <select class="form-control" id="select-member">
-              <option>Self</option>
-              <option>John Doe</option>
-              <option>Will Smith</option>
+            <select class="form-control" id="select-member" v-model="referenceId">
+              <option value="0">Self</option>
             </select>
             <div class="d-flex justify-content-end mt-1">
               <router-link to="javascript:void(0)">+ Add Member</router-link>
@@ -37,26 +35,26 @@
             <div class="section-container">
               <div>
                 <label for="sedan" class="d-flex align-items-center car-type-label">
-                  <div class="car-logo" :class="{ 'colored-image-div' : (car_id == 1) }">
+                  <div class="car-logo" :class="{ 'colored-image-div' : (carId == 1) }">
                     <img src="../../assets/sedan.png"/>
                   </div>
-                  <div class="ml-4" :class="{ 'text-secondary' : (car_id != 1) }">
+                  <div class="ml-4" :class="{ 'text-secondary' : (carId != 1) }">
                     Sedan - 4 Seats
                   </div>
                 </label>
-                <input type="radio" id="sedan" name="car-type" value="1" class="car-radio" v-model="car_id"/>
+                <input type="radio" id="sedan" name="car-type" value="1" class="car-radio" v-model="carId"/>
               </div>
               <hr class="hr-spacing"/>
               <div>
                 <label for="mini-van" class="d-flex align-items-center car-type-label">
-                  <div class="car-logo" :class="{ 'colored-image-div' : (car_id == 2) }">
+                  <div class="car-logo" :class="{ 'colored-image-div' : (carId == 2) }">
                     <img src="../../assets/van.png"/>
                   </div>
-                  <div class="ml-4" :class="{ 'text-secondary' : (car_id != 2) }">
+                  <div class="ml-4" :class="{ 'text-secondary' : (carId != 2) }">
                     Mini Van - 6 Seats
                   </div>
                 </label>
-                <input type="radio" id="mini-van" name="car-type" value="2" class="car-radio" v-model="car_id"/>
+                <input type="radio" id="mini-van" name="car-type" value="2" class="car-radio" v-model="carId"/>
               </div>
             </div>
           </div>
@@ -76,7 +74,7 @@
               <button class="btn btn-block btn-primary" @click="mapsAPICalculation">Estimate</button>
             </div>
             <div class="col">
-              <button class="btn btn-custom btn-block" @click="book">Book</button>
+              <button class="btn btn-custom btn-block" @click="book" id="book">Book</button>
             </div>
           </div>
         </form>
@@ -99,7 +97,8 @@
         pickupCoOrdinates: [],
         dropCoOrdinates: [],
         drop: '',
-        car_id: '0',
+        carId: '0',
+        referenceId: '0',
         showCalculation: false,
         distance: '',
         approxTime: '',
@@ -109,19 +108,24 @@
     methods: {
       async book(event) {
         event.preventDefault();
-        if (!this.pickup || !this.drop || !this.car_id) {
+        document.querySelector("#book").disabled = true
+        if (!this.pickup || !this.drop || !this.carId) {
           return false;
         }
         try {
           const data = {
-            car_id: this.car_id,
+            car_id: this.carId,
             pick_up_point: this.pickup,
             drop_point: this.drop,
+            reference_id: this.referenceId
           };
-          const response = await axios.post('http://vanbr.ca/api/rider/book-ride', data);
+          const response = await this.axios.post('http://vanbr.ca/api/rider/book-ride', data);
           console.log(response);
+          this.$router.push({name: 'Ride', params: {id: response.data.data.id}});
         } catch (e) {
           console.log(e);
+        } finally {
+          document.querySelector("#book").disabled = false
         }
       },
       setPickup(place) {
@@ -140,7 +144,7 @@
       },
       mapsAPICalculation(event) {
         event.preventDefault();
-        if (!this.pickup || !this.drop || !this.car_id) {
+        if (!this.pickup || !this.drop || !this.carId) {
           alert('All fields are required');
           return false;
         }
