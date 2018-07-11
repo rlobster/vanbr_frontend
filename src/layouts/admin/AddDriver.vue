@@ -158,10 +158,8 @@
             driverImage: this.driverImage,
             driverCarImage: this.driverCarImage,
           };
-          const response = await this.axios.post('http://vanbr.ca/api/rider/signup', data);
-          localStorage.setItem('token', response.data.token);
-          this.axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          this.$router.push(Routes.Booking);
+          const response = await this.axios.post('http://vanbr.ca/api/driver/create', data);
+          console.log(response);
         } catch (e) {
           console.log(e);
         }

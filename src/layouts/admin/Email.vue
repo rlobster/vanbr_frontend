@@ -47,7 +47,7 @@
             subject: this.subject,
             body: this.body,
           };
-          const responseData = await this.axios.post('http://vanbr.ca/api/rider/profile', data);
+          const responseData = await this.axios.post('http://vanbr.ca/api/admin/send/email', data);
           console.log(responseData);
         } catch (e) {
           console.log(e);
