@@ -75,6 +75,7 @@
           this.drop = response.data.data.drop_point;
         } catch (e) {
           console.log(e);
+          this.$router.push(Routes.Error404);
         }
       },
     },
@@ -92,6 +93,7 @@
     padding: 8px;
     background-color: #F8F8F8;
     height: 70px;
+    width: 70px;
     img {
       width: 52px;
     }
