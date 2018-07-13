@@ -25,9 +25,10 @@
             <label for="select-member">Book for:</label>
             <select class="form-control" id="select-member" v-model="referenceId">
               <option value="0">Self</option>
+              <option v-for="reference in references" :value="reference.id">{{ reference.name }}</option>
             </select>
             <div class="d-flex justify-content-end mt-1">
-              <router-link :to="Routes.Reference">+ Add Member</router-link>
+              <router-link :to="Routes.Reference">+ Add Reference</router-link>
             </div>
           </div>
           <div class="form-group">
@@ -103,9 +104,22 @@
         distance: '',
         approxTime: '',
         approxCost: '',
+        references: '',
       };
     },
+    mounted() {
+      this.getReferences();
+    },
     methods: {
+      async getReferences() {
+        try {
+          const response = await this.axios.get('http://vanbr.ca/api/rider/get-reference');
+          console.log(response.data.data);
+          this.references = response.data.data;
+        } catch (e) {
+          console.log(e);
+        }
+      },
       async book(event) {
         event.preventDefault();
         document.querySelector("#book").disabled = true
