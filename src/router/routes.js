@@ -9,8 +9,8 @@ const Routes = {
   History: '/history',
   HistoryDetail: '/history/:id',
   Ride: '/ride/:id',
-  Feedback: '/feedback',
-  Payment: '/payment',
+  Feedback: '/feedback/:id',
+  Payment: '/payment/:id',
   // Driver Routes
   DriverLogin: '/driver/login',
   Status: '/driver/status',

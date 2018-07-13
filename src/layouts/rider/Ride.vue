@@ -71,7 +71,7 @@
 
           const pickupObj = OpenLocationCode.decode(response.data.data.pick_up_point);
           this.pickup = await this.getLocation(pickupObj);
-
+          
           const dropObj = OpenLocationCode.decode(response.data.data.drop_point);
           this.drop = await this.getLocation(dropObj);
         } catch (e) {
