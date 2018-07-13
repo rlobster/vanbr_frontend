@@ -71,7 +71,7 @@
 
           const pickupObj = OpenLocationCode.decode(response.data.data.pick_up_point);
           this.pickup = await this.getLocation(pickupObj);
-          
+
           const dropObj = OpenLocationCode.decode(response.data.data.drop_point);
           this.drop = await this.getLocation(dropObj);
         } catch (e) {
@@ -104,8 +104,8 @@
           const response = await this.axios.post('http://vanbr.ca/api/rider/cancel-ride', data);
           console.log(response);
           if (response.data.success) {
-            if (response.data.data.payment_status !== 3) {
-              this.$router.push(Routes.Payment + '/' +response.data.data.id);
+            if (response.data.data.payment_status === 3 && response.data.data.ride_status === 5) {
+              this.$router.push({name: 'Payment', params: {id: response.data.data.id}});
             } else {
               this.$router.push(Routes.Booking);
             }
