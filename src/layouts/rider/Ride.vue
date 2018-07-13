@@ -104,8 +104,10 @@
           const response = await this.axios.post('http://vanbr.ca/api/rider/cancel-ride', data);
           console.log(response);
           if (response.data.success) {
-            if (response.data.data.ride_status === 5) {
-              this.$router.push(Routes.Payment + '/' +response.data.data.id)
+            if (response.data.data.payment_status !== 3) {
+              this.$router.push(Routes.Payment + '/' +response.data.data.id);
+            } else {
+              this.$router.push(Routes.Booking);
             }
           }
         } catch (e) {
