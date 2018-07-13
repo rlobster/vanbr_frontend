@@ -7,34 +7,32 @@
 
             <div class="main-app-section-sm">
               <div>Ride from <strong>XYZ</strong> to <strong>ABC</strong></div>
-              <div>Kilometers: <strong>5</strong></div>
-              <div>Time: <strong>10 minute</strong></div>
-
+              <div>Kilometers: <strong>{{distance}}</strong></div>
+              <div>Time: <strong>{{time}} minute</strong></div>
               <hr />
-
               <div class="d-flex justify-content-between">
                 <div>Per Kilometers:</div>
-                <div>$4.00</div>
+                <div>${{cost_per_kilometer}} * {{distance}} = {{total_cost_per_kilometer}}</div>
               </div>
               <div class="d-flex justify-content-between">
                 <div>Per Minute:</div>
-                <div>$2.00</div>
+                <div>${{cost_per_minute}} * {{time}} = {{total_cost_per_minute}}</div>
               </div>
               <div class="d-flex justify-content-between">
                 <div>Vanbr charge:</div>
-                <div>$2.5</div>
+                <div>${{vanbr_charges}}</div>
               </div>
               <div class="d-flex justify-content-between">
                 <div>Service charge:</div>
-                <div>$2.5</div>
+                <div>${{service_charges}}</div>
               </div>
               <div class="d-flex justify-content-between">
-                <div>13% tax:</div>
-                <div>$1.45</div>
+                <div>{{tax}}% tax:</div>
+                <div>${{total_tax}}</div>
               </div>
               <div class="d-flex main-app-section-sm justify-content-between car-details">
                 <div><strong>Total</strong></div>
-                <div><strong>$12.45</strong></div>
+                <div><strong>${{Number(total_cost) + Number(total_tax)}}</strong></div>
               </div>
               <hr />
               <div class="form-group main-app-section-sm">
@@ -58,6 +56,9 @@
 </template>
 
 <script>
+  /* eslint-disable */
+  import axios from 'axios';
+  import moment from 'moment';
   import { Card as StripeCard, createToken } from 'vue-stripe-elements-plus';
   import Card from '@/components/Card';
 
@@ -67,25 +68,113 @@
     data() {
       return {
         complete: false,
+        pickup: '',
+        drop: '',
+        start_time: '',
+        end_time: '',
+        distance: 5,
+        time: '',
+        cost_per_kilometer: '',
+        cost_per_minute: '',
+        service_charges: '',
+        tax: '',
+        vanbr_charges: '',
+        total_cost_per_kilometer: '',
+        total_cost_per_minute: '',
+        total_tax: '',
+        total_cost: '',
         stripeOptions: {
           name: 'Vanbr',
           currency: 'cad',
         },
       };
     },
-
+    mounted() {
+      this.getRide();
+    },
     methods: {
+      async getRide() {
+        try {
+          const response = await axios.get(`http://vanbr.ca/api/rider/get-single-ride?ride_id=${this.$route.params.id}`);
+          
+          // const pickupObj = OpenLocationCode.decode(response.data.data.pick_up_point);
+          // this.pickup = await this.getLocation(pickupObj);
+
+          // const dropObj = OpenLocationCode.decode(response.data.data.drop_point);
+          // this.drop = await this.getLocation(dropObj);
+          
+          this.start_time = moment(response.data.data.cost_meta_data.ride_start_time);
+          this.end_time = moment(response.data.data.cost_meta_data.ride_end_time);
+          this.time = (this.start_time).diff(this.end_time, 'minutes');
+
+          this.cost_per_kilometer = response.data.data.cost_meta_data.cost_per_kilometer;
+          this.cost_per_minute = response.data.data.cost_meta_data.cost_per_minute;
+          this.vanbr_charges = response.data.data.cost_meta_data.vanbr_charges;
+          this.service_charges = response.data.data.cost_meta_data.service_charges;
+          this.tax = response.data.data.cost_meta_data.tax;
+          
+          this.total_cost_per_kilometer = (Number(this.cost_per_kilometer) * Number(this.distance)).toFixed(2);
+          this.total_cost_per_minute = (Number(this.cost_per_minute) * Number(this.time)).toFixed(2);
+          this.total_cost = Number(this.total_cost_per_kilometer) + Number(this.total_cost_per_minute) + Number(this.service_charges) + Number(this.vanbr_charges);
+          this.total_tax = (Number(this.total_cost) * Number(this.tax) / 100).toFixed(2);
+
+        } catch (e) {
+          // this.$router.push(Routes.Error404);
+          console.log(e);
+        }
+      },
+      // getLocation(locationObj) {
+      //   return new Promise( ((resolve, reject) => {
+      //     const geocoder = new google.maps.Geocoder;
+      //     geocoder.geocode({'location': {lat: locationObj.latitudeCenter, lng: locationObj.longitudeCenter}}, function(results, status) {
+      //       if (status === 'OK') {
+      //         if (results[0]) {
+      //           const address = `${results[0].formatted_address.split(',')[0]} , ${results[0].formatted_address.split(',')[1]}`;
+      //           resolve(address)
+      //         } else {
+      //           window.alert('No results found');
+      //         }
+      //       } else {
+      //         window.alert('Geocoder failed due to: ' + status);
+      //       }
+      //     });
+      //   }));
+      // },
+      // mapsAPICalculation(event) {
+      //   event.preventDefault();
+      //   if (!this.pickup || !this.drop || !this.carId) {
+      //     alert('All fields are required');
+      //     return false;
+      //   }
+      //   this.showCalculation = true;
+
+      //   const url = "https://maps.googleapis.com/maps/api/distancematrix/json?";
+      //   const params = `units=imperial&origins=${this.pickupCoOrdinates.lat},${this.pickupCoOrdinates.long}&destinations=${this.dropCoOrdinates.lat},${this.dropCoOrdinates.long}&key=AIzaSyCPXsZhEgbSDGOY2QVsJCBf3gq7D5Eggwk`;
+
+      //   let service = new google.maps.DistanceMatrixService;
+      //   service.getDistanceMatrix({
+      //     origins: [`${this.pickupCoOrdinates[0]},${this.pickupCoOrdinates[1]}`],
+      //     destinations: [`${this.dropCoOrdinates[0]},${this.dropCoOrdinates[1]}`],
+      //     travelMode: 'DRIVING',
+      //     unitSystem: google.maps.UnitSystem.METRIC,
+      //     avoidHighways: false,
+      //     avoidTolls: false
+      //   }, (response, status) => {
+      //     this.distance = response.rows[0].elements[0].distance.text;
+      //     this.approxTime = response.rows[0].elements[0].duration.text;
+      //   });
+      // },
       pay() {
         createToken().then(data => this.endRide(data.token));
       },
-      endRide(token) {
+      async endRide(token) {
         const data = {
           token,
           ride_id: 1,
           cost: 10.5,
         };
-        const response = this.axios.post('http://vanbr.ca/api/rider/end-ride', data);
-        console.log(response);
+        const response = await this.axios.post('http://vanbr.ca/api/rider/end-ride', data);
+        this.$router.push({name: 'Feedback', params: {id: response.data.data.id}});
       },
     },
   };
