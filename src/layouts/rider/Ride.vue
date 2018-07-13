@@ -35,7 +35,7 @@
           </table>
         </div>
           <div class="form-group main-app-section-md">
-            <button class="btn btn-outline-danger btn-ride">Cancel</button>
+            <button class="btn btn-outline-danger btn-ride" @click="cancelRide">Cancel</button>
             <router-link :to="Routes.Booking" class="btn btn-ride btn-custom">Book Another</router-link>
           </div>
       </Card>
@@ -80,13 +80,13 @@
         }
       },
       getLocation(locationObj) {
-        return new Promise( ((resolve, reject) => {
+        return new Promise( ( resolve => {
           const geocoder = new google.maps.Geocoder;
-          geocoder.geocode({'location': {lat: locationObj.latitudeCenter, lng: locationObj.longitudeCenter}}, function(results, status) {
+          geocoder.geocode({ location: { lat: locationObj.latitudeCenter, lng: locationObj.longitudeCenter } }, function(results, status) {
             if (status === 'OK') {
               if (results[0]) {
                 const address = `${results[0].formatted_address.split(',')[0]} , ${results[0].formatted_address.split(',')[1]}`;
-                resolve(address)
+                resolve(address);
               } else {
                 window.alert('No results found');
               }
@@ -95,7 +95,23 @@
             }
           });
         }));
-      }
+      },
+      async cancelRide() {
+        try {
+          const data = {
+            ride_id: this.$route.params.id,
+          }
+          const response = await this.axios.post('http://vanbr.ca/api/rider/cancel-ride', data);
+          console.log(response);
+          if (response.data.success) {
+            if (response.data.data.ride_status === 5) {
+              this.$router.push(Routes.Payment + '/' +response.data.data.id)
+            }
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      },
     },
   };
 </script>
