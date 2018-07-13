@@ -1,0 +1,71 @@
+<template>
+    <div class="reference container main-app-section-sm">
+      <Card class="mx-auto">
+        <div class="title text-center">Add Reference</div>
+        <form class="main-app-section-sm">
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" placeholder="Name of reference" id="name" v-model="name"/>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" class="form-control" placeholder="Email of reference" id="email" v-model="email"/>
+          </div>
+          <div class="form-group">
+            <label for="contact">Contact Number:</label>
+            <input type="text" class="form-control" placeholder="Contact of reference" id="contact" v-model="mobile_no"/>
+          </div>
+          <div class="form-group">
+            <label for="relationship">Relationship:</label>
+            <input type="text" class="form-control" placeholder="Relationship with reference" id="relationship" v-model="relationship"/>
+          </div>
+          <div class="form-group main-app-section-md">
+            <button type="submit" class="btn btn-custom btn-block" @click="addReference">Add Reference</button>
+          </div>
+        </form>
+      </Card>
+    </div>
+</template>
+
+<script>
+  import Card from '@/components/Card';
+
+  export default {
+    name: 'Reference',
+    components: { Card },
+    data() {
+      return {
+        name: '',
+        email: '',
+        mobile_no: '',
+        relationship: '',
+      };
+    },
+    methods: {
+      async addReference(event) {
+        event.preventDefault();
+        try {
+          const data = {
+            name: this.name,
+            email: this.email,
+            mobile_no: this.mobile_no,
+            relationship: this.relationship,
+          };
+          const response = await this.axios.post('http://vanbr.ca/api/rider/add-reference', data);
+          console.log(response.data);
+          if (response.data.success) {
+            alert('Reference added Successfully');
+          } else {
+            alert('Error Occurred');
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      },
+    },
+  };
+</script>
+
+<style scoped>
+
+</style>

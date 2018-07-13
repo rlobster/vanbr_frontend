@@ -1,5 +1,5 @@
 <template>
-    <div class="booking container main-app-section-md">
+    <div class="booking container main-app-section-sm">
       <Card class="mx-auto">
         <div class="title text-center">Your Ride Info</div>
           <div class="d-flex main-app-section-sm align-items-center justify-content-center">
@@ -44,7 +44,6 @@
 
 <script>
   /* eslint-disable */
-  import axios from 'axios';
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
 
@@ -67,7 +66,7 @@
     methods: {
       async getRide() {
         try {
-          const response = await axios.get(`http://vanbr.ca/api/rider/get-single-ride?ride_id=${this.$route.params.id}`);
+          const response = await this.axios.get(`http://vanbr.ca/api/rider/get-single-ride?ride_id=${this.$route.params.id}`);
           this.carType = response.data.data.car.type;
 
           const pickupObj = OpenLocationCode.decode(response.data.data.pick_up_point);
@@ -75,7 +74,6 @@
           
           const dropObj = OpenLocationCode.decode(response.data.data.drop_point);
           this.drop = await this.getLocation(dropObj);
-          console.log(this.pickup, this.drop)
         } catch (e) {
           // this.$router.push(Routes.Error404);
           console.log(e);
@@ -127,6 +125,7 @@
   .btn-custom {
     &:hover {
       color: #FFFFFF;
+      background-color: #4D5EB8;
     }
   }
 </style>

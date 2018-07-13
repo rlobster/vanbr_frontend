@@ -14,6 +14,7 @@ import Register from '@/layouts/rider/Register';
 import Booking from '@/layouts/rider/Booking';
 import Ride from '@/layouts/rider/Ride';
 import Payment from '@/layouts/rider/Payment';
+import Reference from '@/layouts/rider/Reference';
 
 // Import all Driver Layouts
 import Status from '@/layouts/driver/Status';
@@ -74,6 +75,15 @@ const routes = [
     path: Routes.Booking,
     name: 'Booking',
     component: Booking,
+    meta: {
+      requiresAuth: true,
+      type: 'Rider',
+    },
+  },
+  {
+    path: Routes.Reference,
+    name: 'Reference',
+    component: Reference,
     meta: {
       requiresAuth: true,
       type: 'Rider',
