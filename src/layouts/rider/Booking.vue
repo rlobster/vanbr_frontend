@@ -27,7 +27,7 @@
               <option value="0">Self</option>
             </select>
             <div class="d-flex justify-content-end mt-1">
-              <router-link to="javascript:void(0)">+ Add Member</router-link>
+              <router-link :to="Routes.Reference">+ Add Member</router-link>
             </div>
           </div>
           <div class="form-group">
