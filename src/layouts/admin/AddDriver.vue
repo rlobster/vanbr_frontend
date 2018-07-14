@@ -4,12 +4,8 @@
         <div class="title text-center">Add Driver</div>
         <form>
           <div class="form-group main-app-section-xs">
-            <label for="name">First Name:</label>
-            <input type="text" class="form-control" placeholder="First Name" v-model="firstName" id="fname"/>
-          </div>
-           <div class="form-group main-app-section-xs">
-            <label for="name">Last Name:</label>
-            <input type="text" class="form-control" placeholder="Last Name" v-model="lastName" id="lname"/>
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" placeholder="First Name" v-model="name" id="name"/>
           </div>
           <div class="form-group main-app-section-xs">
             <label for="dob">Date of Birth:</label>
@@ -36,14 +32,6 @@
             <input type="text" class="form-control" v-model="address" placeholder="Address" id="address"/>
           </div>
           <div class="form-group main-app-section-xs">
-            <label>City:</label>
-            <input type="text" class="form-control" v-model="city" placeholder="City" id="city"/>
-          </div>
-          <div class="form-group main-app-section-xs">
-            <label>PinCode:</label>
-            <input type="number" class="form-control" v-model="pincode" placeholder="Pincode" id="pincode"/>
-          </div>
-          <div class="form-group main-app-section-xs">
             <label>Car Model:</label>
             <input type="text" class="form-control" v-model="carModel" placeholder="Car Model" id="model"/>
           </div>
@@ -67,14 +55,14 @@
             <label>Insurance Expiry Date:</label>
             <input type="date" class="form-control" v-model="insuranceExpiry" placeholder="Insurance Expiry Date" id="insuranceExpiry"/>
           </div>
-          <div class="form-group main-app-section-xs">
+          <!-- <div class="form-group main-app-section-xs">
             <label>Driver Image:</label>
             <input type="file" class="form-control" @change="onFileChange" id="driverImage" name="driverimage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
-          </div>
-          <div class="form-group main-app-section-xs">
+          </div> -->
+          <!-- <div class="form-group main-app-section-xs">
             <label>Driver's Car Image:</label>
             <input type="file" class="form-control" @change="onFileChange" id="driverCarImage" name="driverCarImage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
-          </div>
+          </div> -->
           <div class="form-group main-app-section-sm">
             <button type="submit" class="btn btn-custom btn-block" @click="addDriver">Submit</button>
           </div>
@@ -94,37 +82,35 @@
     data() {
       return {
         Routes,
-        firstName: '',
-        lastName: '',
+        name: '',
         dob: '',
         gender: '',
         mobile_no: '',
         email: '',
-        address: '',
-        pincode: '',
+        currentLocation: '',
+        plusCode: '',
         carModel: '',
-        city: '',
         carNumber: '',
         licenseNumber: '',
         licenseExpiry: '',
         insuranceNo: '',
         insuranceExpiry: '',
-        driverImage: '',
-        driverCarImage: '',
+        // driverImage: '',
+        // driverCarImage: '',
       };
     },
     methods: {
-      onFileChange(e) {
-        const files = e.target.files || e.dataTransfer.files;
-        console.log(files);
-        if (files && files.length) {
-          const reader = new FileReader();
-          // this.createImage(files[0]);
-          const output = reader.readAsDataURL(files[0]);
-          console.log(output);
-        }
-        // this.createImage(files[0]);
-      },
+      // onFileChange(e) {
+      //   const files = e.target.files || e.dataTransfer.files;
+      //   console.log(files);
+      //   if (files && files.length) {
+      //     const reader = new FileReader();
+      //     // this.createImage(files[0]);
+      //     const output = reader.readAsDataURL(files[0]);
+      //     console.log(output);
+      //   }
+      //   // this.createImage(files[0]);
+      // },
       // createImage(file) {
       //   // const image = new Image();
       //   const reader = new FileReader();
@@ -140,8 +126,7 @@
         event.preventDefault();
         try {
           const data = {
-            first_name: this.firstName,
-            last_name: this.lastName,
+            name: this.name,
             dob: this.dob,
             gender: this.gender,
             mobile_no: this.mobile_no,

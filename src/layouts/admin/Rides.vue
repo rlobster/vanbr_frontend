@@ -3,21 +3,22 @@
     <div class="row">
       <div class="col-md">
          <template>
-          <!-- <div class="filter-bar ui basic segment grid main-app-section-sm search-box">
+          <div class="filter-bar ui basic segment grid main-app-section-sm search-box">
             <div class="ui form">
               <div class="inline field">
                 <label>Search for:</label>
-                <input type="text" v-model="filterText" class="three wide column" @keyup.enter="doFilter" placeholder="Text to filter">
-                <button class="btn btn-primary" @click="setFilter(filterText)">Go</button>
-                <button class="btn btn-secondary" @click="resetFilter(filterText)">Reset</button>
+                <input type="text" v-model="search" class="three wide column" placeholder="Text to filter">
+                <!-- <button class="btn btn-primary" @click="setFilter(filterText)">Go</button> -->
+                <!-- <button class="btn btn-secondary" @click="resetFilter(filterText)">Reset</button> -->
               </div>
             </div>
-          </div> -->
+          </div>
         </template>
 
         <vuetable ref="vuetable"
-          api-url="https://vanbr.ca/api/admin/rides/list"
+          :api-mode="false"
           :css="css.table"
+          :data="rideObj"
           :fields="fields"
           :sort-order="sortOrder"
           pagination-path=""
@@ -43,7 +44,7 @@
 </template>
 
 <script>
-  // eslint-disable
+  /* eslint-disable */
   import Vue from 'vue';
   import Card from '@/components/Card';
   import Vuetable from 'vuetable-2/src/components/Vuetable';
@@ -62,7 +63,7 @@
     computed: {
       filteredList() {
         return this.postList.filter(function () {
-          return this.rideObj.title.toLowerCase().includes(this.search.toLowerCase());
+          return this.rideObj.driver.name.toLowerCase().includes(this.search.toLowerCase());
         });
       },
     },
@@ -70,90 +71,36 @@
       return {
         filterText: '',
         moreParams: {},
-        rideObj: [
-          {
-            rider_name: 'John Doe',
-            rider_id: 1,
-            driver_name: 'Max Whalle',
-            driver_id: 11,
-            From: 'CA',
-            To: 'CT',
-            time: '10 min',
-            Price: '$4.34',
-            Status: 'Complete',
-          },
-          {
-            rider_name: 'Donald Trump',
-            rider_id: 2,
-            driver_name: 'Max Whalle',
-            driver_id: 11,
-            From: 'DC',
-            To: 'CT',
-            time: '19 min',
-            Price: '$24.34',
-            Status: 'Complete',
-          },
-          {
-            rider_name: 'Anna Watson',
-            rider_id: 3,
-            driver_name: 'Max Whalle',
-            driver_id: 11,
-            From: 'CA',
-            To: 'Canada',
-            time: '20 min',
-            Price: '$34',
-            Status: 'Complete',
-          },
-          {
-            rider_name: 'John Snow',
-            rider_id: 8,
-            driver_name: 'Bob Sherlock',
-            driver_id: 12,
-            From: 'CA',
-            To: 'CT',
-            time: '10 min',
-            Price: '$4.34',
-            Status: 'Incomplete',
-          },
-          {
-            rider_name: 'Raj Shekh',
-            rider_id: 7,
-            driver_name: 'Bob Sherlock',
-            driver_id: 12,
-            From: 'Office',
-            To: 'Park',
-            time: '10 min',
-            Price: '$4.34',
-            Status: 'Complete',
-          },
-        ],
+        pickup: '',
+        drop: '',
+        rideObj: [],
         fields: [
           {
-            name: 'rider_name',
+            name: 'rider.name',
             title: '<span class="orange glyphicon glyphicon-user"></span>Rider Name',
             sortField: 'rider_name',
           },
           {
-            name: 'rider_id',
+            name: 'rider_user_id',
             title: 'Id',
-            sortField: 'rider_id',
+            sortField: 'rider_user_id',
           },
           {
-            name: 'driver_name',
+            name: 'driver.name',
             title: '<span class="orange glyphicon glyphicon-user"></span>Driver Name',
             sortField: 'driver_name',
           },
           {
-            name: 'driver_id',
+            name: 'driver_user_id',
             title: 'Id',
-            sortField: 'driver_id',
+            sortField: 'driver_user_id',
           },
-          'From',
-          'To',
-          'time',
-          'Price',
+          'pick_up_point',
+          'drop_point',
+          'ride_create_time',
+          'cost',
           {
-            name: 'Status',
+            name: 'ride_status',
             title: 'Status',
             sortField: 'Status',
           },
@@ -161,7 +108,7 @@
         ],
         sortOrder: [
           {
-            field: 'rider_name',
+            field: 'rider.name',
             direction: 'asc',
           },
         ],
@@ -190,11 +137,45 @@
         },
       };
     },
-    // mounted() {
-    //   this.$events.$on('filter-set', eventData => this.onFilterSet(eventData));
-    //   this.$events.$on('filter-reset', () => this.onFilterReset());
-    // },
+    mounted() {
+      this.getRides();
+    },
     methods: {
+      async getRides() {
+        try {
+          const ride = await this.axios.get('http://vanbr.ca/api/admin/rides/list');
+          console.log(ride);
+          this.rideObj = ride.data.data;
+
+          const pickupObj = OpenLocationCode.decode(this.rideObj.pick_up_point);
+          this.pickup = await this.getLocation(pickupObj);
+          this.rideObj.pick_up_point = this.pickup;
+          console.log(this.rideObj.pick_up_point);
+
+          const dropObj = OpenLocationCode.decode(this.rideObj.drop_point);
+          this.drop = await this.getLocation(dropObj);
+          console.log(this.drop);
+        } catch (e) {
+          console.log(e);
+        }
+      },
+      getLocation(locationObj) {
+        return new Promise( ( resolve => {
+          const geocoder = new google.maps.Geocoder;
+          geocoder.geocode({ location: { lat: locationObj.latitudeCenter, lng: locationObj.longitudeCenter } }, function(results, status) {
+            if (status === 'OK') {
+              if (results[0]) {
+                const address = `${results[0].formatted_address.split(',')[0]} , ${results[0].formatted_address.split(',')[1]}`;
+                resolve(address);
+              } else {
+                window.alert('No results found');
+              }
+            } else {
+              window.alert('Geocoder failed due to: ' + status);
+            }
+          });
+        }));
+      },
       setFilter(filterText) {
         this.moreParams = {
           filter: filterText,
