@@ -149,6 +149,24 @@ const routes = [
     name: 'DriverLogin',
     component: Login,
   },
+  {
+    path: Routes.DriverHistory,
+    name: 'DriverHistory',
+    component: History,
+    meta: {
+      requiresAuth: true,
+      type: 'Driver',
+    },
+  },
+  {
+    path: Routes.DriverHistoryDetail,
+    name: 'DriverHistoryDetail',
+    component: HistoryDetail,
+    meta: {
+      requiresAuth: true,
+      type: 'Driver',
+    },
+  },
   // Admin Routes
   {
     path: Routes.AdminLogin,

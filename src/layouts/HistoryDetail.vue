@@ -4,37 +4,71 @@
       <div class="col-md">
         <Card class="mx-auto">
           <div class="title text-center">Ride History</div>
-  
+
           <div class="main-app-section-sm">
-            <div>Ride Pickup: <strong>{{ pickup || '-' }}</strong></div>
-            <div>Ride Drop: <strong>{{ drop || '-' }}</strong></div>
-            <div>Date: <strong>{{ historyItem.ride_create_time || '-' }}</strong></div>
+            <div class="d-flex justify-content-between">
+              <div>Ride Pickup:</div><div><strong>{{ pickup || '-' }}</strong></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>Ride Drop:</div><div><strong>{{ drop || '-' }}</strong></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>Date:</div><div><strong>{{ historyItem.ride_create_time || '-' }}</strong></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>Date:</div><div><strong>{{ historyItem.ride_create_time || '-' }}</strong></div>
+            </div>
+
             <!-- <div>Kilometers: <strong v-bind="historyItem."></strong></div> -->
-            <div>Ride Start Time: <strong>{{ historyItem.ride_start_time || '-' }}</strong></div>
-            <div>Ride End Time: <strong>{{ historyItem.ride_end_time || '-' }}</strong></div>
-  
+            <div class="d-flex justify-content-between">
+              <div>Ride Start Time:</div><div><strong>{{ historyItem.ride_start_time || '-' }}</strong></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>Ride End Time:</div><div><strong>{{ historyItem.ride_end_time || '-' }}</strong></div>
+            </div>
+
             <hr />
-  
-            <div>Rider: <strong>{{ historyItem.rider.name || '-' }}</strong></div>
+
+            <div class="d-flex justify-content-between">
+              <div>Rider:</div><div><strong>{{ historyItem.rider.name || '-' }}</strong></div>
+            </div>
             <!-- <div>Ride Booked for: <strong v-bind="historyItem.rider."></strong></div> -->
-            <div>Gender: <strong>{{ historyItem.rider.gender || '-' }}</strong></div>
-            <div>Rider Contact: <strong>{{ historyItem.rider.mobile_no || '-' }}</strong></div>
-            <div>Rider Rating: <strong>{{ historyItem.feedback.rider_ratings || '-' }}</strong></div>  
-            <div>Rider Feedback: <strong>{{ historyItem.feedback.rider_comments || '-' }}</strong></div>                        
+            <div class="d-flex justify-content-between">
+              <div>Gender:</div><div><strong>{{ historyItem.rider.gender || '-' }}</strong></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>Rider Contact:</div><div><strong>{{ historyItem.rider.mobile_no || '-' }}</strong></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>Rider Rating:</div><div><strong>{{ historyItem.feedback.rider_ratings || '-' }}</strong></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>Rider Feedback:</div><div><strong>{{ historyItem.feedback.rider_comments || '-' }}</strong></div>
+            </div>
             <!-- <div>Rider Email: <strong v-bind="historyItem.rider."></strong></div> -->
-  
+
             <hr />
-  
-            <div>Driver: <strong>{{ historyItem.driver.name || '-' }}</strong></div>
-            <div>Car Type: <strong>{{ historyItem.car.type || '-' }}</strong></div>
-            <div>Driver Contact: <strong>{{ historyItem.driver.mobile_no || '-' }}</strong></div>
-            <div>Driver Rating: <strong>{{ historyItem.feedback.driver_ratings || '-' }}</strong></div>
-            <div>Driver Feedback: <strong>{{ historyItem.feedback.driver_comments || '-' }}</strong></div>                        
-            
+
+            <div class="d-flex justify-content-between">
+              <div>Driver:</div><div><strong>{{ historyItem.driver.name || '-' }}</strong></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>Car Type:</div><div><strong>{{ historyItem.car.type || '-' }}</strong></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>Driver Contact:</div><div><strong>{{ historyItem.driver.mobile_no || '-' }}</strong></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>Driver Rating:</div><div><strong>{{ historyItem.feedback.driver_ratings || '-' }}</strong></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>Driver Feedback:</div><div><strong>{{ historyItem.feedback.driver_comments || '-' }}</strong></div>
+            </div>
+
             <!-- <div>Driver Email: <strong>abc@abc.abc</strong></div> -->
-  
+
             <hr />
-  
+
             <div class="d-flex justify-content-between">
               <div>Per Kilometers($):</div>
               <div>{{ historyItem.car.cost_per_kilometer || '-' }}</div>
@@ -78,7 +112,7 @@
   /* eslint-disable */
   import Card from '@/components/Card';
   import Routes from '@/router/routes';
-  
+
   export default {
     name: 'HistoryDetail',
     components: {
@@ -90,19 +124,24 @@
         historyItem: {},
         pickup: '',
         drop: '',
+        api: '',
       };
     },
-    mounted() {
-      console.log(this.$route.params.id);
-      this.getHistoryDetail();
+    async mounted() {
+      if (this.$route.name === 'DriverHistoryDetail') {
+        this.api = 'driver';
+      } else if (this.$route.name === 'HistoryDetail') {
+        this.api = 'rider';
+      }
+      await this.getHistoryDetail();
     },
     methods: {
       async getHistoryDetail() {
         try {
-          const history = await this.axios.get(`http://vanbr.ca/api/rider/get-single-ride?ride_id=${this.$route.params.id}`);
+          const history = await this.axios.get(`http://vanbr.ca/api/${this.api}/get-single-ride?ride_id=${this.$route.params.id}`);
           console.log(history);
           this.historyItem = history.data.data;
-          
+
           const pickupObj = OpenLocationCode.decode(this.historyItem.pick_up_point);
           this.pickup = await this.getLocation(pickupObj);
           console.log(this.pickup);
@@ -110,7 +149,7 @@
           const dropObj = OpenLocationCode.decode(this.historyItem.drop_point);
           this.drop = await this.getLocation(dropObj);
           console.log(this.drop);
-          
+
           console.log(this.historyItem);
         } catch (e) {
           console.log(e);

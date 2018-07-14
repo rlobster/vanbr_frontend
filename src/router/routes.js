@@ -15,6 +15,8 @@ const Routes = {
   DriverLogin: '/driver/login',
   Status: '/driver/status',
   ProfileView: '/driver/profile',
+  DriverHistory: '/driver/history',
+  DriverHistoryDetail: '/driver/history/:id',
   // Admin Routes
   AdminLogin: '/admin/login',
   Admin: '/admin',

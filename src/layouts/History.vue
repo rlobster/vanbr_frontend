@@ -4,7 +4,13 @@
       <div class="title">History</div>
       <div v-for="history in historyItem" :key="history.id">
         <div class="history-card">
-          <router-link :to="{name: 'HistoryDetail', params: {id: history.id}}">
+          <router-link :to="{name: 'HistoryDetail', params: {id: history.id}}" v-if="$route.name === 'History'">
+            <div class="d-flex justify-content-between">
+              <span>{{ history.ride_create_time }}</span>
+              <span class="history-card-detail">${{ history.cost }}</span>
+            </div>
+          </router-link>
+          <router-link :to="{name: 'DriverHistoryDetail', params: {id: history.id}}" v-else>
             <div class="d-flex justify-content-between">
               <span>{{ history.ride_create_time }}</span>
               <span class="history-card-detail">${{ history.cost }}</span>
@@ -19,7 +25,7 @@
 <script>
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
-  
+
   export default {
     name: 'History',
     components: {
@@ -29,15 +35,21 @@
       return {
         Routes,
         historyItem: [],
+        api: '',
       };
     },
     mounted() {
+      if (this.$route.name === 'DriverHistory') {
+        this.api = 'driver';
+      } else if (this.$route.name === 'History') {
+        this.api = 'rider';
+      }
       this.getHistory();
     },
     methods: {
       async getHistory() {
         try {
-          const history = await this.axios.get('http://vanbr.ca/api/rider/get-all-rides');
+          const history = await this.axios.get(`http://vanbr.ca/api/${this.api}/get-all-rides`);
           console.log(history);
           this.historyItem = history.data.data;
         } catch (e) {
@@ -56,7 +68,7 @@
     padding: 20px;
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
   }
-  
+
   .history-card-detail {
     text-align: right;
   }
