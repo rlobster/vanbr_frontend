@@ -13,22 +13,22 @@
               <hr />
               <div class="d-flex justify-content-between">
                 <div>Per Kilometers:</div>
-                <div>${{cost_per_kilometer}} * {{distance}} = {{total_cost_per_kilometer}}</div>
+                <div>${{cost_meta_data.cost_per_kilometer}} * {{distance}} = {{total_cost_per_kilometer}}</div>
               </div>
               <div class="d-flex justify-content-between">
                 <div>Per Minute:</div>
-                <div>${{cost_per_minute}} * {{time}} = {{total_cost_per_minute}}</div>
+                <div>${{cost_meta_data.cost_per_minute}} * {{time}} = {{total_cost_per_minute}}</div>
               </div>
               <div class="d-flex justify-content-between">
                 <div>Vanbr charge:</div>
-                <div>${{vanbr_charges}}</div>
+                <div>${{cost_meta_data.vanbr_charges}}</div>
               </div>
               <div class="d-flex justify-content-between">
                 <div>Service charge:</div>
-                <div>${{service_charges}}</div>
+                <div>${{cost_meta_data.service_charges}}</div>
               </div>
               <div class="d-flex justify-content-between">
-                <div>{{tax}}% tax:</div>
+                <div>{{cost_meta_data.tax}}% tax:</div>
                 <div>${{total_tax}}</div>
               </div>
               <div class="d-flex main-app-section-sm justify-content-between car-details">
@@ -73,13 +73,9 @@
         drop: '',
         start_time: '',
         end_time: '',
-        distance: 5,
+        distance: 0,
         time: '',
-        cost_per_kilometer: '',
-        cost_per_minute: '',
-        service_charges: '',
-        tax: '',
-        vanbr_charges: '',
+        cost_meta_data: {},
         total_cost_per_kilometer: '',
         total_cost_per_minute: '',
         total_tax: '',
@@ -114,16 +110,12 @@
           this.end_time = moment(ride_data.cost_meta_data.ride_end_time);
           this.time = (this.start_time).diff(this.end_time, 'minutes');
 
-          this.cost_per_kilometer = ride_data.cost_meta_data.cost_per_kilometer;
-          this.cost_per_minute = ride_data.cost_meta_data.cost_per_minute;
-          this.vanbr_charges = ride_data.cost_meta_data.vanbr_charges;
-          this.service_charges = ride_data.cost_meta_data.service_charges;
-          this.tax = ride_data.cost_meta_data.tax;
+          this.cost_meta_data = ride_data.cost_meta_data;
           
-          this.total_cost_per_kilometer = (Number(this.cost_per_kilometer) * Number(this.distance)).toFixed(2);
-          this.total_cost_per_minute = (Number(this.cost_per_minute) * Number(this.time)).toFixed(2);
-          this.total_cost = Number(this.total_cost_per_kilometer) + Number(this.total_cost_per_minute) + Number(this.service_charges) + Number(this.vanbr_charges);
-          this.total_tax = (Number(this.total_cost) * Number(this.tax) / 100).toFixed(2);
+          this.total_cost_per_kilometer = (Number(this.cost_meta_data.cost_per_kilometer) * Number(this.distance)).toFixed(2);
+          this.total_cost_per_minute = (Number(this.cost_meta_data.cost_per_minute) * Number(this.time)).toFixed(2);
+          this.total_cost = Number(this.total_cost_per_kilometer) + Number(this.total_cost_per_minute) + Number(this.cost_meta_data.service_charges) + Number(this.cost_meta_data.vanbr_charges);
+          this.total_tax = (Number(this.total_cost) * Number(this.cost_meta_data.tax) / 100).toFixed(2);
 
         } catch (e) {
           // this.$router.push(Routes.Error404);
@@ -177,8 +169,7 @@
       async endRide(token) {
         const data = {
           token,
-          ride_id: 1,
-          cost: 10.5,
+          ride_id: this.$route.params.id
         };
         const response = await this.axios.post('http://vanbr.ca/api/rider/end-ride', data);
         this.$router.push({name: 'Feedback', params: {id: response.data.data.id}});
