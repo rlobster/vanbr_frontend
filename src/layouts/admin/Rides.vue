@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md">
          <template>
-          <div class="filter-bar ui basic segment grid main-app-section-sm search-box">
+          <!-- <div class="filter-bar ui basic segment grid main-app-section-sm search-box">
             <div class="ui form">
               <div class="inline field">
                 <label>Search for:</label>
@@ -12,14 +12,12 @@
                 <button class="btn btn-secondary" @click="resetFilter(filterText)">Reset</button>
               </div>
             </div>
-          </div>
+          </div> -->
         </template>
 
         <vuetable ref="vuetable"
-          :api-mode="false"
-          :append-params="moreParams"
+          api-url="https://vanbr.ca/api/admin/rides/list"
           :css="css.table"
-          :data="rideObj"
           :fields="fields"
           :sort-order="sortOrder"
           pagination-path=""
@@ -60,6 +58,13 @@
       Vuetable,
       VuetablePagination,
       VuetablePaginationBootstrap,
+    },
+    computed: {
+      filteredList() {
+        return this.postList.filter(function () {
+          return this.rideObj.title.toLowerCase().includes(this.search.toLowerCase());
+        });
+      },
     },
     data() {
       return {
