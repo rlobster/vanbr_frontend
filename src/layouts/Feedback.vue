@@ -43,6 +43,7 @@
 </template>
 
 <script>
+  /* eslint-disable */
   import axios from 'axios';
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
@@ -66,6 +67,7 @@
             rider_comments: 'lorem ipsum qqwerty ffjfjf',
           };
           const response = await axios.post('http://vanbr.ca/api/rider/feedback', data);
+          this.$router.push({name: 'Booking'});
           console.log(response);
         } catch (e) {
           console.log(e);
