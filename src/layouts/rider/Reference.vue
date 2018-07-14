@@ -19,8 +19,13 @@
             <label for="relationship">Relationship:</label>
             <input type="text" class="form-control" placeholder="Relationship with reference" id="relationship" v-model="relationship"/>
           </div>
-          <div class="form-group main-app-section-md">
-            <button type="submit" class="btn btn-custom btn-block" @click="addReference">Add Reference</button>
+          <div class="row form-group main-app-section-md">
+            <div class="col">
+              <button class="btn btn-block btn-outline-danger btn-ride" @click="cancel">Cancel</button>
+            </div>
+            <div class="col">
+              <button type="submit" class="btn btn-custom btn-block" @click="addReference">Add Reference</button>
+            </div>
           </div>
         </form>
       </Card>
@@ -28,6 +33,7 @@
 </template>
 
 <script>
+  /* eslint-disable */
   import Card from '@/components/Card';
 
   export default {
@@ -52,16 +58,21 @@
             relationship: this.relationship,
           };
           const response = await this.axios.post('http://vanbr.ca/api/rider/add-reference', data);
+          this.$router.push({name: 'Booking'});
           console.log(response.data);
-          if (response.data.success) {
-            alert('Reference added Successfully');
-          } else {
-            alert('Error Occurred');
-          }
+          // if (response.data.success) {
+          //   alert('Reference added Successfully');
+          // } else {
+          //   alert('Error Occurred');
+          // }
         } catch (e) {
           console.log(e);
         }
       },
+      cancel(event) {
+        event.preventDefault();
+        this.$router.push({name: 'Booking'});
+      }
     },
   };
 </script>
