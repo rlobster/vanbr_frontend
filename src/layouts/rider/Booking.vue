@@ -67,7 +67,7 @@
               <label><strong>Approx time:</strong> {{ approxTime }}</label>
             </div>
             <div>
-              <label><strong>Approx Cost:</strong></label>
+              <label><strong>Approx Cost:</strong> {{ approxCost }} </label>
             </div>
           </div>
           <div class="row form-group main-app-section-md">
@@ -99,6 +99,7 @@
         dropCoOrdinates: [],
         drop: '',
         carId: '0',
+        car_data: {},
         referenceId: '0',
         showCalculation: false,
         distance: '',
@@ -109,6 +110,7 @@
     },
     mounted() {
       this.getReferences();
+      this.getCars();
     },
     methods: {
       async getReferences() {
@@ -116,6 +118,14 @@
           const response = await this.axios.get('http://vanbr.ca/api/rider/get-reference');
           console.log(response.data.data);
           this.references = response.data.data;
+        } catch (e) {
+          console.log(e);
+        }
+      },
+      async getCars() {
+        try {
+          const response = await this.axios.get(`http://vanbr.ca/api/get-cars`);
+          this.car_data = response.data.data;
         } catch (e) {
           console.log(e);
         }
@@ -175,9 +185,17 @@
           unitSystem: google.maps.UnitSystem.METRIC,
           avoidHighways: false,
           avoidTolls: false
-        }, (response, status) => {
+        }, async (response, status) => {
           this.distance = response.rows[0].elements[0].distance.text;
           this.approxTime = response.rows[0].elements[0].duration.text;
+          
+          const car = this.car_data.find(key => key.id == this.carId);
+          
+          const total_cost_per_kilometer = (Number(car.cost_per_kilometer) * parseFloat(this.distance)).toFixed(2);
+          const total_cost_per_minute = (Number(car.cost_per_minute) * parseFloat(this.approxTime)).toFixed(2);
+          const total_cost = Number(total_cost_per_kilometer) + Number(total_cost_per_minute) + Number(car.service_charges) + Number(car.vanbr_charges);
+          const total_tax = (Number(total_cost) * Number(car.tax) / 100).toFixed(2);
+          this.approxCost = Number(total_cost) + Number(total_tax);
         });
       },
     },

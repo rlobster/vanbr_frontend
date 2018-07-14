@@ -37,27 +37,27 @@
   
             <div class="d-flex justify-content-between">
               <div>Per Kilometers($):</div>
-              <div>{{ historyItem.car.cost_per_kilometer || '-' }}</div>
+              <div>{{ historyItem.cost_meta_data.cost_per_kilometer || '-' }}</div>
             </div>
             <div class="d-flex justify-content-between">
               <div>Per Minute($):</div>
-              <div>{{ historyItem.car.cost_per_minute || '-' }}</div>
+              <div>{{ historyItem.cost_meta_data.cost_per_minute || '-' }}</div>
             </div>
             <div class="d-flex justify-content-between">
               <div>Service charge($):</div>
-              <div>{{ historyItem.car.service_charges || '-' }}</div>
+              <div>{{ historyItem.cost_meta_data.service_charges || '-' }}</div>
             </div>
             <div class="d-flex justify-content-between">
               <div>Tax:</div>
-              <div>{{ historyItem.car.tax || '-' }}</div>
+              <div>{{ historyItem.cost_meta_data.tax || '-' }}</div>
             </div>
             <div class="d-flex justify-content-between">
               <div>Vanbr Charges($):</div>
-              <div>{{ historyItem.car.vanbr_charges || '-' }}</div>
+              <div>{{ historyItem.cost_meta_data.vanbr_charges || '-' }}</div>
             </div>
             <div class="d-flex justify-content-between">
               <div>Vanbr Commission($):</div>
-              <div>{{ historyItem.car.vanbr_commission || '-' }}</div>
+              <div>{{ historyItem.cost_meta_data.vanbr_commission || '-' }}</div>
             </div>
             <div class="d-flex main-app-section-sm justify-content-between car-details">
               <div><strong>Total charge</strong></div>
