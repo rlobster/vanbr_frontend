@@ -15,7 +15,7 @@
           </div>
         </template>
         <vuetable ref="vuetable"
-          api-url="https://vuetable.ratiw.net/api/users"
+          api-url="https://vanbr.ca/api/admin/users/Rider/"
           :fields="fields"
           :sort-order="sortOrder"
           pagination-path=""
@@ -54,24 +54,25 @@
       return {
         filterText: '',
         fields: [
-          {
-            name: 'name',
-            title: '<span class="orange glyphicon glyphicon-user"></span> Name',
-            sortField: 'name',
-          },
-          {
-            name: 'email',
-            title: 'Email',
-            sortField: 'email',
-          },
-          'mobile',
-          'role',
-          {
-            name: 'reg. date',
-            title: 'Reg. Date',
-            sortField: 'reg. date',
-          },
-          '__slot:actions',
+          'name', 'email', 'mobile_no', 'dob', 'gender', '__slot:actions',
+          // {
+          //   name: 'name',
+          //   title: '<span class="orange glyphicon glyphicon-user"></span> Name',
+          //   sortField: 'name',
+          // },
+          // {
+          //   name: 'email',
+          //   title: 'Email',
+          //   sortField: 'email',
+          // },
+          // 'mobile',
+          // 'role',
+          // {
+          //   name: 'reg. date',
+          //   title: 'Reg. Date',
+          //   sortField: 'reg. date',
+          // },
+          // '__slot:actions',
         ],
         sortOrder: [
           {

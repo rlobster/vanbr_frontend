@@ -55,34 +55,34 @@
     data() {
       return {
         feedbackObj: [
-          {
-            id: 1,
-            name: 'John Doe',
-            role: 'Rider',
-            feedback: 'Fine',
-            rating: 5,
-          },
-          {
-            id: 2,
-            name: 'John Snow',
-            role: 'Driver',
-            feedback: 'Best ride of my life',
-            rating: 5,
-          },
-          {
-            id: 3,
-            name: 'Anna Doe',
-            role: 'Rider',
-            feedback: 'Keep it up',
-            rating: 3,
-          },
-          {
-            id: 4,
-            name: 'Bob Dan',
-            role: 'Rider',
-            feedback: 'Nice facility and nature of the driver',
-            rating: 4,
-          },
+          // {
+          //   id: 1,
+          //   name: 'John Doe',
+          //   role: 'Rider',
+          //   feedback: 'Fine',
+          //   rating: 5,
+          // },
+          // {
+          //   id: 2,
+          //   name: 'John Snow',
+          //   role: 'Driver',
+          //   feedback: 'Best ride of my life',
+          //   rating: 5,
+          // },
+          // {
+          //   id: 3,
+          //   name: 'Anna Doe',
+          //   role: 'Rider',
+          //   feedback: 'Keep it up',
+          //   rating: 3,
+          // },
+          // {
+          //   id: 4,
+          //   name: 'Bob Dan',
+          //   role: 'Rider',
+          //   feedback: 'Nice facility and nature of the driver',
+          //   rating: 4,
+          // },
         ],
         filterText: '',
         fields: [
@@ -136,7 +136,18 @@
         },
       };
     },
+    mounted() {
+      this.getFeedbacks();
+    },
     methods: {
+      async getFeedbacks() {
+        try {
+          const feedback = await this.axios.get('http://vanbr.ca/api/admin/feedbacks/list');
+          console.log(feedback);
+        } catch (e) {
+          console.log(e);
+        }
+      },
       doFilter() {
         console.log('doFilter:', this.filterText);
         this.$events.fire('filter-set', this.filterText);

@@ -11,7 +11,7 @@
                 </div>
                 <div>
                   <div class="subtitle text-secondary">Users</div>
-                  <div class="title text-dark">100</div>
+                  <!-- <div class="title text-dark">100</div> -->
                 </div>
               </div>
             </Card>
@@ -54,8 +54,7 @@
                 <img src="@/assets/car.svg" class="icons"/>
               </div>
               <div>
-                <div class="subtitle text-secondary">Rides</div>
-                <div class="title text-dark">500</div>                
+                <div class="subtitle text-secondary">Rides</div>    
               </div>
             </div>
           </Card>
@@ -70,7 +69,6 @@
               </div>
               <div>
                 <div class="subtitle text-secondary">Feedback</div>
-                <div class="title text-dark">50</div>                
               </div>
             </div>
           </Card>
