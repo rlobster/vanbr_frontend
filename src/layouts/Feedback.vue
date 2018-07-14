@@ -6,32 +6,32 @@
           <div class="form-group main-app-section-sm p-2">
             <div class="d-flex justify-content-between">
               <div><strong>Source</strong>:</div>
-              <div>ABC</div>
+              <div>{{pickup}}</div>
             </div>
             <div class="d-flex justify-content-between">
               <div><strong>Destination</strong>:</div>
-              <div>XYZ</div>
+              <div>{{drop}}</div>
             </div>
             <div class="d-flex justify-content-between">
               <div><strong>Rider</strong>:</div>
-              <div>John Doe</div>
+              <div>{{rider}}</div>
             </div>
             <div class="d-flex justify-content-between">
               <div><strong>Driver</strong>:</div>
-              <div>Will Smith</div>
+              <div>{{driver}}</div>
             </div>
             <div class="d-flex justify-content-between">
               <div><strong>Date</strong>:</div>
-              <div>1 Jan 2020, 12:30:00 PM</div>
+              <div>{{date}}</div>
             </div>
           </div>
           <div class="form-group main-app-section-sm">
             <label for="rating">Rating</label>
-            <star-rating id="rating" :show-rating="false"></star-rating>
+            <star-rating id="rating" :show-rating="false" v-model="rating"></star-rating>
           </div>
           <div class="form-group main-app-section-sm">
             <label for="feedback">Feedback</label>
-            <textarea row="4" class="form-control" name="feedback" id="feedback">
+            <textarea row="4" class="form-control" name="feedback" id="feedback" v-model="comment">
             </textarea>
           </div>
           <div class="form-group main-app-section-md">
@@ -45,6 +45,7 @@
 <script>
   /* eslint-disable */
   import axios from 'axios';
+  import moment from 'moment';
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
   import StarRating from 'vue-star-rating';
@@ -55,16 +56,65 @@
     data() {
       return {
         Routes,
+        pickup: '',
+        drop: '',
+        rider: '',
+        driver: '',
+        date: '',
+        rating: null,
+        comment: ''
       };
     },
+    mounted() {
+      this.getRide();
+    },
     methods: {
+      async getRide() {
+        try {
+          const response = await axios.get(`http://vanbr.ca/api/rider/get-single-ride?ride_id=${this.$route.params.id}`);
+          
+          const ride_data = response.data.data;
+          
+          const pickupObj = OpenLocationCode.decode(ride_data.pick_up_point);
+          this.pickup = await this.getLocation(pickupObj);
+
+          const dropObj = OpenLocationCode.decode(ride_data.drop_point);
+          this.drop = await this.getLocation(dropObj);
+
+          this.rider = ride_data.rider.name;
+          this.driver = ride_data.driver.name;
+          
+          this.date = moment(ride_data.cost_meta_data.ride_end_time).format('YYYY-MM-DD, HH:mm');
+
+        } catch (e) {
+          // this.$router.push(Routes.Error404);
+          console.log(e);
+        }
+      },
+      getLocation(locationObj) {
+        return new Promise( ((resolve, reject) => {
+          const geocoder = new google.maps.Geocoder;
+          geocoder.geocode({'location': {lat: locationObj.latitudeCenter, lng: locationObj.longitudeCenter}}, function(results, status) {
+            if (status === 'OK') {
+              if (results[0]) {
+                const address = `${results[0].formatted_address.split(',')[0]} , ${results[0].formatted_address.split(',')[1]}`;
+                resolve(address)
+              } else {
+                window.alert('No results found');
+              }
+            } else {
+              window.alert('Geocoder failed due to: ' + status);
+            }
+          });
+        }));
+      },
       async feedback(event) {
         event.preventDefault();
         try {
           const data = {
-            ride_id: '1',
-            rider_ratings: '5',
-            rider_comments: 'lorem ipsum qqwerty ffjfjf',
+            ride_id: this.$route.params.id,
+            rider_ratings: this.rating,
+            rider_comments: this.comment,
           };
           const response = await axios.post('http://vanbr.ca/api/rider/feedback', data);
           this.$router.push({name: 'Booking'});

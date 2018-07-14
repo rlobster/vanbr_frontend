@@ -13,23 +13,23 @@
             <div class="main-app-section-sm">
               <div class="d-flex justify-content-between car-details">
                 <div>Available seats:</div>
-                <div>1-4</div>
+                <div>1-{{sedan.max_seats}}</div>
               </div>
               <div class="d-flex justify-content-between car-details">
                 <div>Booking fees:</div>
-                <div>$2.5</div>
+                <div>${{sedan.vanbr_charges}}</div>
               </div>
               <div class="d-flex justify-content-between car-details">
                 <div>Service charge:</div>
-                <div>$2.5</div>
+                <div>${{sedan.service_charges}}</div>
               </div>
               <div class="d-flex justify-content-between car-details">
                 <div>Per kilometer:</div>
-                <div>$0.80</div>
+                <div>${{sedan.cost_per_kilometer}}</div>
               </div>
               <div class="d-flex justify-content-between car-details">
                 <div>Per minute:</div>
-                <div>$0.20</div>
+                <div>${{sedan.cost_per_minute}}</div>
               </div>
             </div>
             <div class="main-app-section-sm car-details">
@@ -53,23 +53,23 @@
             <div class="main-app-section-sm">
               <div class="d-flex justify-content-between car-details">
                 <div>Available seats:</div>
-                <div>1-6</div>
+                <div>1-{{mini_van.max_seats}}</div>
               </div>
               <div class="d-flex justify-content-between car-details">
                 <div>Booking fees:</div>
-                <div>$2.5</div>
+                <div>${{mini_van.vanbr_charges}}</div>
               </div>
               <div class="d-flex justify-content-between car-details">
                 <div>Service charge:</div>
-                <div>$2.5</div>
+                <div>${{mini_van.service_charges}}</div>
               </div>
               <div class="d-flex justify-content-between car-details">
                 <div>Per kilometer:</div>
-                <div>$0.80</div>
+                <div>${{mini_van.cost_per_kilometer}}</div>
               </div>
               <div class="d-flex justify-content-between car-details">
                 <div>Per minute:</div>
-                <div>$0.20</div>
+                <div>${{mini_van.cost_per_minute}}</div>
               </div>
               <div class="main-app-section-sm car-details">
                 <router-link :to="Routes.Booking">
@@ -86,6 +86,8 @@
 </template>
 
 <script>
+  /* eslint-disable */
+  import axios from 'axios';
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
 
@@ -95,8 +97,29 @@
     data() {
       return {
         Routes,
+        sedan: {},
+        mini_van: {},
       };
     },
+    mounted() {
+      this.getCars();
+    },
+    methods: {
+      async getCars() {
+        try {
+          const response = await axios.get(`http://vanbr.ca/api/get-cars`);
+          
+          const car_data = response.data.data;
+          this.sedan = car_data[0];
+          this.mini_van = car_data[1];
+          console.log(this.sedan);
+
+        } catch (e) {
+          // this.$router.push(Routes.Error404);
+          console.log(e);
+        }
+      },
+    }
   };
 </script>
 

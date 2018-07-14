@@ -6,7 +6,8 @@
             <div class="title text-center">Invoice</div>
 
             <div class="main-app-section-sm">
-              <div>Ride from <strong>XYZ</strong> to <strong>ABC</strong></div>
+              <div>Source: <strong>{{pickup}}</strong></div>
+              <div>Destination: <strong>{{drop}}</strong></div>
               <div>Kilometers: <strong>{{distance}}</strong></div>
               <div>Time: <strong>{{time}} minute</strong></div>
               <hr />
@@ -84,7 +85,7 @@
         total_tax: '',
         total_cost: '',
         stripeOptions: {
-          name: 'Vanbr',
+          name: '',
           currency: 'cad',
         },
       };
@@ -97,21 +98,27 @@
         try {
           const response = await axios.get(`http://vanbr.ca/api/rider/get-single-ride?ride_id=${this.$route.params.id}`);
           
-          // const pickupObj = OpenLocationCode.decode(response.data.data.pick_up_point);
-          // this.pickup = await this.getLocation(pickupObj);
+          const ride_data = response.data.data;
 
-          // const dropObj = OpenLocationCode.decode(response.data.data.drop_point);
-          // this.drop = await this.getLocation(dropObj);
+          this.stripeOptions.name = ride_data.rider.name;
+
+          console.log(this.stripeOptions)
+
+          const pickupObj = OpenLocationCode.decode(ride_data.pick_up_point);
+          this.pickup = await this.getLocation(pickupObj);
+
+          const dropObj = OpenLocationCode.decode(ride_data.drop_point);
+          this.drop = await this.getLocation(dropObj);
           
-          this.start_time = moment(response.data.data.cost_meta_data.ride_start_time);
-          this.end_time = moment(response.data.data.cost_meta_data.ride_end_time);
+          this.start_time = moment(ride_data.cost_meta_data.ride_start_time);
+          this.end_time = moment(ride_data.cost_meta_data.ride_end_time);
           this.time = (this.start_time).diff(this.end_time, 'minutes');
 
-          this.cost_per_kilometer = response.data.data.cost_meta_data.cost_per_kilometer;
-          this.cost_per_minute = response.data.data.cost_meta_data.cost_per_minute;
-          this.vanbr_charges = response.data.data.cost_meta_data.vanbr_charges;
-          this.service_charges = response.data.data.cost_meta_data.service_charges;
-          this.tax = response.data.data.cost_meta_data.tax;
+          this.cost_per_kilometer = ride_data.cost_meta_data.cost_per_kilometer;
+          this.cost_per_minute = ride_data.cost_meta_data.cost_per_minute;
+          this.vanbr_charges = ride_data.cost_meta_data.vanbr_charges;
+          this.service_charges = ride_data.cost_meta_data.service_charges;
+          this.tax = ride_data.cost_meta_data.tax;
           
           this.total_cost_per_kilometer = (Number(this.cost_per_kilometer) * Number(this.distance)).toFixed(2);
           this.total_cost_per_minute = (Number(this.cost_per_minute) * Number(this.time)).toFixed(2);
@@ -123,23 +130,23 @@
           console.log(e);
         }
       },
-      // getLocation(locationObj) {
-      //   return new Promise( ((resolve, reject) => {
-      //     const geocoder = new google.maps.Geocoder;
-      //     geocoder.geocode({'location': {lat: locationObj.latitudeCenter, lng: locationObj.longitudeCenter}}, function(results, status) {
-      //       if (status === 'OK') {
-      //         if (results[0]) {
-      //           const address = `${results[0].formatted_address.split(',')[0]} , ${results[0].formatted_address.split(',')[1]}`;
-      //           resolve(address)
-      //         } else {
-      //           window.alert('No results found');
-      //         }
-      //       } else {
-      //         window.alert('Geocoder failed due to: ' + status);
-      //       }
-      //     });
-      //   }));
-      // },
+      getLocation(locationObj) {
+        return new Promise( ((resolve, reject) => {
+          const geocoder = new google.maps.Geocoder;
+          geocoder.geocode({'location': {lat: locationObj.latitudeCenter, lng: locationObj.longitudeCenter}}, function(results, status) {
+            if (status === 'OK') {
+              if (results[0]) {
+                const address = `${results[0].formatted_address.split(',')[0]} , ${results[0].formatted_address.split(',')[1]}`;
+                resolve(address)
+              } else {
+                window.alert('No results found');
+              }
+            } else {
+              window.alert('Geocoder failed due to: ' + status);
+            }
+          });
+        }));
+      },
       // mapsAPICalculation(event) {
       //   event.preventDefault();
       //   if (!this.pickup || !this.drop || !this.carId) {
