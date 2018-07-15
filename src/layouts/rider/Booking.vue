@@ -117,10 +117,10 @@
     methods: {
       async getReferences() {
         try {
-          const response = await this.axios.get(`${this.AppURL}/rider/get-reference`);          
+          const response = await this.axios.get(`${this.AppURL}/rider/get-reference`);
           this.references = response.data.data;
         } catch (e) {
-          this.checkError(e.response.status);          
+          this.checkError(e.response.status);
         }
       },
       async getCars() {
@@ -128,7 +128,7 @@
           const response = await this.axios.get(`${this.AppURL}/get-cars`);
           this.car_data = response.data.data;
         } catch (e) {
-          this.checkError(e.response.status);          
+          this.checkError(e.response.status);
         }
       },
       async book(event) {
@@ -145,10 +145,11 @@
             drop_point: this.drop,
             reference_id: this.referenceId
           };
-          const response = await this.axios.post(`${this.AppURL}/rider/book-ride`, data);          
+          const response = await this.axios.post(`${this.AppURL}/rider/book-ride`, data);
+          this.$socket.emit('getRideRequest', response.data.data.id);
           this.$router.push({name: 'Ride', params: {id: response.data.data.id}});
         } catch (e) {
-          this.checkError(e.response.status);          
+          this.checkError(e.response.status);
         } finally {
           document.querySelector("#book").disabled = false
         }
@@ -189,9 +190,9 @@
         }, async (response, status) => {
           this.distance = response.rows[0].elements[0].distance.text;
           this.approxTime = response.rows[0].elements[0].duration.text;
-          
+
           const car = this.car_data.find(key => key.id == this.carId);
-          
+
           const total_cost_per_kilometer = (Number(car.cost_per_kilometer) * parseFloat(this.distance)).toFixed(2);
           const total_cost_per_minute = (Number(car.cost_per_minute) * parseFloat(this.approxTime)).toFixed(2);
           const total_cost = Number(total_cost_per_kilometer) + Number(total_cost_per_minute) + Number(car.service_charges) + Number(car.vanbr_charges);
@@ -199,6 +200,11 @@
           this.approxCost = Number(total_cost) + Number(total_tax);
         });
       },
+    },
+    sockets: {
+      sendDriverResponse(value) {
+        console.log(value);
+      }
     },
   };
 </script>

@@ -52,6 +52,7 @@
           };
           const response = await this.axios.post(`${this.AppURL}/${this.role}/login`, data);
           localStorage.setItem('token', response.data.token);
+          this.$socket.emit('join', response.data.token);
           this.axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           if (this.role === 'rider') {
             this.$router.push(Routes.Booking);
