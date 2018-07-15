@@ -28,6 +28,7 @@ const Routes = {
   Rides: '/rides',
   Riders: '/users/riders',
   Drivers: '/users/drivers',
+  PaymentList: '/users/payment/list',
 
   // Error Routes
   Error404: '/404',

@@ -12,8 +12,7 @@ import AddDriver from '@/layouts/admin/AddDriver';
 import Email from '@/layouts/admin/Email';
 import Feedbacks from '@/layouts/admin/Feedbacks';
 import Rides from '@/layouts/admin/Rides';
-import RiderFeedbacks from '@/layouts/admin/RiderFeedbacks';
-import DriverFeedbacks from '@/layouts/admin/DriverFeedbacks';
+import PaymentList from '@/layouts/admin/PaymentList';
 
 import Routes from './routes';
 
@@ -85,27 +84,17 @@ const routes = [
     },
   },
   {
-    path: Routes.RiderFeedbacks,
-    name: 'RiderFeedbacks',
-    component: RiderFeedbacks,
-    meta: {
-      requiresAuth: true,
-      type: 'Admin',
-    },
-  },
-  {
-    path: Routes.DriverFeedbacks,
-    name: 'DriverFeedbacks',
-    component: DriverFeedbacks,
-    meta: {
-      requiresAuth: true,
-      type: 'Admin',
-    },
-  },
-  {
     path: Routes.Rides,
     name: 'Rides',
     component: Rides,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: Routes.PaymentList,
+    name: 'PaymentList',
+    component: PaymentList,
     meta: {
       requiresAuth: true,
     },

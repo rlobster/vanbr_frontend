@@ -29,6 +29,7 @@ import AddDriver from '@/layouts/admin/AddDriver';
 import Email from '@/layouts/admin/Email';
 import Feedbacks from '@/layouts/admin/Feedbacks';
 import Rides from '@/layouts/admin/Rides';
+import PaymentList from '@/layouts/admin/PaymentList';
 
 import Routes from './routes';
 
@@ -242,6 +243,15 @@ const routes = [
     path: Routes.Rides,
     name: 'Rides',
     component: Rides,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
+    },
+  },
+  {
+    path: Routes.PaymentList,
+    name: 'PaymentList',
+    component: PaymentList,
     meta: {
       requiresAuth: true,
       type: 'Admin',

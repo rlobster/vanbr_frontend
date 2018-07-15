@@ -33,16 +33,18 @@
         </router-link>
       </div>
       <div class="col-md main-app-section-sm">
-        <Card class="card">
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <img src="@/assets/payment.svg" class="icons"/>
+        <router-link :to="Routes.PaymentList">        
+          <Card class="card">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <img src="@/assets/payment.svg" class="icons"/>
+              </div>
+              <div>
+                <div class="subtitle text-secondary">Payment</div>
+              </div>
             </div>
-            <div>
-              <div class="subtitle text-secondary">Payment</div>
-            </div>
-          </div>
-        </Card>
+          </Card>
+        </router-link>
       </div>
     </div>
     <div class="row">
