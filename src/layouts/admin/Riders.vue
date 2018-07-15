@@ -15,7 +15,9 @@
           </div>
         </template>
         <vuetable ref="vuetable"
-          api-url="https://vanbr.ca/api/admin/users/Rider/"
+          :api-mode="false"
+          :css="css.table"
+          :data="riderObj"
           :fields="fields"
           :sort-order="sortOrder"
           pagination-path=""
@@ -23,14 +25,6 @@
           @vuetable:pagination-data="onPaginationData"
           @vuetable:loading="onLoading"
           @vuetable:loaded="onLoaded">
-          <template slot="actions" scope="props">
-          <div class="table-button-container">
-              <button class="btn btn-warning btn-sm" @click="editRow(props.rowData)">
-                <span class="glyphicon glyphicon-pencil"></span> Edit</button>&nbsp;&nbsp;
-              <button class="btn btn-danger btn-sm" @click="deleteRow(props.rowData)">
-                <span class="glyphicon glyphicon-trash"></span> Delete</button>&nbsp;&nbsp;
-          </div>
-          </template>
         </vuetable>
         <vuetable-pagination-bootstrap ref="pagination"
           @vuetable-pagination:change-page="onChangePage">
@@ -53,26 +47,35 @@
     data() {
       return {
         filterText: '',
+        riderObj: [],
         fields: [
-          'name', 'email', 'mobile_no', 'dob', 'gender', '__slot:actions',
-          // {
-          //   name: 'name',
-          //   title: '<span class="orange glyphicon glyphicon-user"></span> Name',
-          //   sortField: 'name',
-          // },
-          // {
-          //   name: 'email',
-          //   title: 'Email',
-          //   sortField: 'email',
-          // },
-          // 'mobile',
-          // 'role',
-          // {
-          //   name: 'reg. date',
-          //   title: 'Reg. Date',
-          //   sortField: 'reg. date',
-          // },
-          // '__slot:actions',
+          {
+            name: 'id',
+            title: '<span class="orange glyphicon glyphicon-user"></span> Id',
+            sortField: 'id',
+          },
+          {
+            name: 'rider.name',
+            title: '<span class="orange glyphicon glyphicon-user"></span> Name',
+            sortField: 'rider.name',
+          },
+          {
+            name: 'rider.mobile_no',
+            title: 'Contact',
+          },
+          {
+            name: 'rider.email',
+            title: 'Email',
+          },
+          {
+            name: 'rider.gender',
+            title: 'Gender',
+          },
+          {
+            name: 'rider.dob',
+            title: 'DoB',
+          },
+          '__slot:actions',
         ],
         sortOrder: [
           {
@@ -105,7 +108,19 @@
         },
       };
     },
+    mounted() {
+      this.getRiders();
+    },
     methods: {
+      async getRiders() {
+        try {
+          const rider = await this.axios.get('http://vanbr.ca/api/admin/users/Rider');
+          console.log(rider.data.data);
+          this.riderObj = rider.data.data;
+        } catch (e) {
+          console.log(e);
+        }
+      },
       doFilter() {
         console.log('doFilter:', this.filterText);
         this.$events.fire('filter-set', this.filterText);
@@ -121,12 +136,6 @@
       onChangePage(page) {
         console.log(page);
         this.$refs.vuetable.changePage(page);
-      },
-      editRow(rowData) {
-        alert(JSON.stringify(rowData));
-      },
-      deleteRow(rowData) {
-        alert(JSON.stringify(rowData));
       },
       onLoading() {
         console.log('loading... show your spinner here');

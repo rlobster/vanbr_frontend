@@ -15,7 +15,9 @@
           </div>
         </template> -->
         <vuetable ref="vuetable"
-          api-url="https://vanbr.ca/api/admin/users/Rider/"
+          :api-mode="false"
+          :css="css.table"
+          :data="driverObj"
           :fields="fields"
           :sort-order="sortOrder"
           pagination-path=""
@@ -53,26 +55,35 @@
     data() {
       return {
         filterText: '',
+        driverObj: [],
         fields: [
-          'name', 'email', 'mobile_no', 'dob', 'gender', '__slot:actions',
-          // {
-          //   name: 'name',
-          //   title: '<span class="orange glyphicon glyphicon-user"></span> Name',
-          //   sortField: 'name',
-          // },
-          // {
-          //   name: 'email',
-          //   title: 'Email',
-          //   sortField: 'email',
-          // },
-          // 'mobile',
-          // 'role',
-          // {
-          //   name: 'reg. date',
-          //   title: 'Reg. Date',
-          //   sortField: 'reg. date',
-          // },
-          // '__slot:actions',
+          {
+            name: 'id',
+            title: '<span class="orange glyphicon glyphicon-user"></span> Id',
+            sortField: 'id',
+          },
+          {
+            name: 'driver.name',
+            title: '<span class="orange glyphicon glyphicon-user"></span> Name',
+            sortField: 'driver.name',
+          },
+          {
+            name: 'driver.mobile_no',
+            title: 'Contact',
+          },
+          {
+            name: 'driver.email',
+            title: 'Email',
+          },
+          {
+            name: 'driver.gender',
+            title: 'Gender',
+          },
+          {
+            name: 'driver.dob',
+            title: 'DoB',
+          },
+          '__slot:actions',
         ],
         sortOrder: [
           {
@@ -105,7 +116,19 @@
         },
       };
     },
+    mounted() {
+      this.getDrivers();
+    },
     methods: {
+      async getDrivers() {
+        try {
+          const driver = await this.axios.get('http://vanbr.ca/api/admin/users/Driver');
+          console.log(driver);
+          this.driverObj = driver.data.data;
+        } catch (e) {
+          console.log(e);
+        }
+      },
       doFilter() {
         console.log('doFilter:', this.filterText);
         this.$events.fire('filter-set', this.filterText);
