@@ -117,12 +117,10 @@
     methods: {
       async getReferences() {
         try {
-          const response = await this.axios.get(`${this.AppURL}/rider/get-reference`);
-          console.log(response.data.data);
+          const response = await this.axios.get(`${this.AppURL}/rider/get-reference`);          
           this.references = response.data.data;
         } catch (e) {
-          this.checkError(e.response.status);
-          console.log(e);
+          this.checkError(e.response.status);          
         }
       },
       async getCars() {
@@ -130,29 +128,27 @@
           const response = await this.axios.get(`${this.AppURL}/get-cars`);
           this.car_data = response.data.data;
         } catch (e) {
-          this.checkError(e.response.status);
-          console.log(e);
+          this.checkError(e.response.status);          
         }
       },
       async book(event) {
         event.preventDefault();
-        document.querySelector("#book").disabled = true
         if (!this.pickup || !this.drop || !this.carId) {
+          alert('Please enter valid details');
           return false;
         }
         try {
+          document.querySelector("#book").disabled = true
           const data = {
             car_id: this.carId,
             pick_up_point: this.pickup,
             drop_point: this.drop,
             reference_id: this.referenceId
           };
-          const response = await this.axios.post(`${this.AppURL}/rider/book-ride`, data);
-          console.log(response);
+          const response = await this.axios.post(`${this.AppURL}/rider/book-ride`, data);          
           this.$router.push({name: 'Ride', params: {id: response.data.data.id}});
         } catch (e) {
-          this.checkError(e.response.status);
-          console.log(e);
+          this.checkError(e.response.status);          
         } finally {
           document.querySelector("#book").disabled = false
         }

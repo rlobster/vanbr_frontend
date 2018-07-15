@@ -12,57 +12,57 @@
             <div class="d-flex justify-content-between">
               <div>Ride Drop:</div><div><strong>{{ drop || '-' }}</strong></div>
             </div>
-            <div class="d-flex justify-content-between">
-              <div>Date:</div><div><strong>{{ historyItem.ride_create_time || '-' }}</strong></div>
+            <!-- <div class="d-flex justify-content-between">
+              <div>Date:</div><div><strong>{{ this.idx(historyItem, _ => _.ride_create_time) || '-' }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
               <div>Date:</div><div><strong>{{ historyItem.ride_create_time || '-' }}</strong></div>
-            </div>
+            </div> -->
 
             <!-- <div>Kilometers: <strong v-bind="historyItem."></strong></div> -->
             <div class="d-flex justify-content-between">
-              <div>Ride Start Time:</div><div><strong>{{ historyItem.ride_start_time || '-' }}</strong></div>
+              <div>Ride Start Time:</div><div><strong>{{ this.idx(historyItem, _ => _.ride_start_time) || '-' }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
-              <div>Ride End Time:</div><div><strong>{{ historyItem.ride_end_time || '-' }}</strong></div>
+              <div>Ride End Time:</div><div><strong>{{ this.idx(historyItem, _ => _.ride_end_time) || '-' }}</strong></div>
             </div>
 
             <hr />
 
             <div class="d-flex justify-content-between">
-              <div>Rider:</div><div><strong>{{ historyItem.rider.name || '-' }}</strong></div>
+              <div>Rider:</div><div><strong>{{ this.idx(historyItem, _ => _.rider.name) || '-' }}</strong></div>
             </div>
             <!-- <div>Ride Booked for: <strong v-bind="historyItem.rider."></strong></div> -->
             <div class="d-flex justify-content-between">
-              <div>Gender:</div><div><strong>{{ historyItem.rider.gender || '-' }}</strong></div>
+              <div>Gender:</div><div><strong>{{ this.idx(historyItem, _ => _.rider.gender) || '-' }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
-              <div>Rider Contact:</div><div><strong>{{ historyItem.rider.mobile_no || '-' }}</strong></div>
+              <div>Rider Contact:</div><div><strong>{{ this.idx(historyItem, _ => _.rider.mobile_no) || '-' }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
-              <div>Rider Rating:</div><div><strong>{{ historyItem.feedback.rider_ratings || '-' }}</strong></div>
+              <div>Rider Rating:</div><div><strong>{{ this.idx(historyItem, _ => _.feedback.rider_ratings) || '-' }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
-              <div>Rider Feedback:</div><div><strong>{{ historyItem.feedback.rider_comments || '-' }}</strong></div>
+              <div>Rider Feedback:</div><div><strong>{{ this.idx(historyItem, _ => _.feedback.rider_comments) || '-' }}</strong></div>
             </div>
             <!-- <div>Rider Email: <strong v-bind="historyItem.rider."></strong></div> -->
 
             <hr />
 
             <div class="d-flex justify-content-between">
-              <div>Driver:</div><div><strong>{{ historyItem.driver.name || '-' }}</strong></div>
+              <div>Driver:</div><div><strong>{{ this.idx(historyItem, _ => _.driver.name) || '-' }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
-              <div>Car Type:</div><div><strong>{{ historyItem.car.type || '-' }}</strong></div>
+              <div>Car Type:</div><div><strong>{{ this.idx(historyItem, _ => _.car.type) || '-' }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
-              <div>Driver Contact:</div><div><strong>{{ historyItem.driver.mobile_no || '-' }}</strong></div>
+              <div>Driver Contact:</div><div><strong>{{ this.idx(historyItem, _ => _.driver.mobile_no) || '-' }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
-              <div>Driver Rating:</div><div><strong>{{ historyItem.feedback.driver_ratings || '-' }}</strong></div>
+              <div>Driver Rating:</div><div><strong>{{ this.idx(historyItem, _ => _.feedback.driver_ratings) || '-' }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
-              <div>Driver Feedback:</div><div><strong>{{ historyItem.feedback.driver_comments || '-' }}</strong></div>
+              <div>Driver Feedback:</div><div><strong>{{ this.idx(historyItem, _ => _.feedback.driver_comments) || '-' }}</strong></div>
             </div>
 
             <!-- <div>Driver Email: <strong>abc@abc.abc</strong></div> -->
@@ -71,35 +71,35 @@
 
             <div class="d-flex justify-content-between">
               <div>Per Kilometers($):</div>
-              <div>{{ historyItem.cost_meta_data.cost_per_kilometer || '-' }}</div>
+              <div>{{ this.idx(historyItem, _ => _.cost_meta_data.cost_per_kilometer) || '-' }}</div>
             </div>
             <div class="d-flex justify-content-between">
               <div>Per Minute($):</div>
-              <div>{{ historyItem.cost_meta_data.cost_per_minute || '-' }}</div>
+              <div>{{ this.idx(historyItem, _ => _.cost_meta_data.cost_per_minute) || '-' }}</div>
             </div>
             <div class="d-flex justify-content-between">
               <div>Service charge($):</div>
-              <div>{{ historyItem.cost_meta_data.service_charges || '-' }}</div>
+              <div>{{ this.idx(historyItem, _ => _.cost_meta_data.service_charges) || '-' }}</div>
             </div>
             <div class="d-flex justify-content-between">
               <div>Tax:</div>
-              <div>{{ historyItem.cost_meta_data.tax || '-' }}</div>
+              <div>{{ this.idx(historyItem, _ => _.cost_meta_data.tax) || '-' }}</div>
             </div>
             <div class="d-flex justify-content-between">
               <div>Vanbr Charges($):</div>
-              <div>{{ historyItem.cost_meta_data.vanbr_charges || '-' }}</div>
+              <div>{{ this.idx(historyItem, _ => _.cost_meta_data.vanbr_charges) || '-' }}</div>
             </div>
             <div class="d-flex justify-content-between">
               <div>Vanbr Commission($):</div>
-              <div>{{ historyItem.cost_meta_data.vanbr_commission || '-' }}</div>
+              <div>{{ this.idx(historyItem, _ => _.cost_meta_data.vanbr_commission) || '-' }}</div>
             </div>
             <div class="d-flex main-app-section-sm justify-content-between car-details">
               <div><strong>Total charge</strong></div>
-              <div><strong>{{ historyItem.cost || '-' }}</strong></div>
+              <div><strong>{{ this.idx(historyItem, _ => _.cost) || '-' }}</strong></div>
             </div>
             <div class="d-flex main-app-section-sm justify-content-between car-details">
               <div><strong>Payment status</strong></div>
-              <div><strong>{{ historyItem.payment_status || '-' }}</strong></div>
+              <div><strong>{{ this.idx(historyItem, _ => _.payment_status) || '-' }}</strong></div>
             </div>
           </div>
         </Card>
@@ -137,21 +137,16 @@
       async getHistoryDetail() {
         try {
           const history = await this.axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
-          console.log(history);
           this.historyItem = history.data.data;
 
           const pickupObj = OpenLocationCode.decode(this.historyItem.pick_up_point);
           this.pickup = await this.getLocation(pickupObj);
-          console.log(this.pickup);
 
           const dropObj = OpenLocationCode.decode(this.historyItem.drop_point);
           this.drop = await this.getLocation(dropObj);
-          console.log(this.drop);
-
-          console.log(this.historyItem);
+          
         } catch (e) {
           this.checkError(e.response.status);
-          console.log(e);
         }
       },
       getLocation(locationObj) {

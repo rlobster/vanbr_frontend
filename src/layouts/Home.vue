@@ -1,13 +1,13 @@
 <template>
   <div class="home container main-app-section-sm">
     <div class="title text-center">Home welcome</div>
-    <div class="d-flex justify-content-between main-app-section-sm">
+    <!-- <div class="d-flex justify-content-between main-app-section-sm">
       <router-link :to='Routes.Login'>Go to Login</router-link>
       <router-link :to='Routes.Register'>Go to Register</router-link>
       <router-link :to='Routes.Feedback'>Give Feedback</router-link>
       <router-link :to='Routes.Ride'>View Ride Info</router-link>
       <router-link :to='Routes.Payment'>Pay a Ride</router-link>
-    </div>
+    </div> -->
   </div>
 </template>
 

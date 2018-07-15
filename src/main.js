@@ -2,6 +2,8 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import axios from 'axios';
+import idx from 'idx';
+import moment from 'moment';
 import VueAxios from 'vue-axios';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import VueSocketio from 'vue-socket.io';
@@ -48,6 +50,9 @@ Vue.mixin({
   data() {
     return {
       HelloURL: 'app',
+      Routes,
+      moment,
+      idx,
     };
   },
   methods: {
