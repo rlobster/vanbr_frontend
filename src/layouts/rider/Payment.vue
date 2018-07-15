@@ -14,38 +14,44 @@
                 <div>Destination:</div>
                 <div><strong>{{drop}}</strong></div>
               </div>
-              <div class="d-flex justify-content-between">
-                <div>Kilometers:</div>
-                <div><strong>{{distance}}</strong></div>
-              </div>
-              <div class="d-flex justify-content-between">
-                <div>Time:</div>
-                <div><strong>{{time}} minute</strong></div>
+              <div v-if="is_ride_end">
+                <div class="d-flex justify-content-between">
+                  <div>Kilometers:</div>
+                  <div><strong>{{distance}}</strong></div>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <div>Time:</div>
+                  <div><strong>{{time}} minute</strong></div>
+                </div>
               </div>
               <hr />
-              <div class="d-flex justify-content-between">
-                <div>Per Kilometers:</div>
-                <div>{{cost_meta_data.cost_per_kilometer}} * {{distance}} = <strong>${{total_cost_per_kilometer}}</strong></div>
-              </div>
-              <div class="d-flex justify-content-between">
-                <div>Per Minute:</div>
-                <div>{{cost_meta_data.cost_per_minute}} * {{time}} = <strong>${{total_cost_per_minute}}</strong></div>
+              <div v-if="is_ride_end">
+                <div class="d-flex justify-content-between">
+                  <div>Per Kilometers:</div>
+                  <div>{{cost_meta_data.cost_per_kilometer}} * {{distance}} = <strong>${{total_cost_per_kilometer}}</strong></div>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <div>Per Minute:</div>
+                  <div>{{cost_meta_data.cost_per_minute}} * {{time}} = <strong>${{total_cost_per_minute}}</strong></div>
+                </div>
               </div>
               <div class="d-flex justify-content-between">
                 <div>Vanbr charge:</div>
                 <div><strong>${{cost_meta_data.vanbr_charges}}</strong></div>
               </div>
-              <div class="d-flex justify-content-between">
-                <div>Service charge:</div>
-                <div><strong>${{cost_meta_data.service_charges}}</strong></div>
-              </div>
-              <div class="d-flex justify-content-between">
-                <div>{{cost_meta_data.tax}}% tax:</div>
-                <div><strong>${{total_tax}}</strong></div>
+              <div v-if="is_ride_end">
+                <div class="d-flex justify-content-between">
+                  <div>Service charge:</div>
+                  <div><strong>${{cost_meta_data.service_charges}}</strong></div>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <div>{{cost_meta_data.tax}}% tax:</div>
+                  <div><strong>${{total_tax}}</strong></div>
+                </div>
               </div>
               <div class="d-flex main-app-section-sm justify-content-between car-details">
                 <div><strong>Total</strong></div>
-                <div><strong>${{Number(total_cost) + Number(total_tax)}}</strong></div>
+                <div><strong>${{(Number(total_cost) + Number(total_tax)).toFixed(2)}}</strong></div>
               </div>
               <hr />
               <div class="form-group main-app-section-sm">
@@ -82,6 +88,7 @@
         AppURL,
         role: '',
         complete: false,
+        is_ride_end: '',
         pickup: '',
         drop: '',
         start_time: '',
@@ -122,17 +129,23 @@
           const dropObj = OpenLocationCode.decode(ride_data.drop_point);
           this.drop = await this.getLocation(dropObj);
           
-          this.start_time = this.moment(ride_data.ride_start_time);
-          this.end_time = this.moment(ride_data.ride_end_time);
-          this.time = (this.start_time).diff(this.end_time, 'minutes');
-
           this.cost_meta_data = ride_data.cost_meta_data;
-          
-          this.total_cost_per_kilometer = (Number(this.cost_meta_data.cost_per_kilometer) * Number(this.distance)).toFixed(2);
-          this.total_cost_per_minute = (Number(this.cost_meta_data.cost_per_minute) * Number(this.time)).toFixed(2);
-          this.total_cost = Number(this.total_cost_per_kilometer) + Number(this.total_cost_per_minute) + Number(this.cost_meta_data.service_charges) + Number(this.cost_meta_data.vanbr_charges);
-          this.total_tax = (Number(this.total_cost) * Number(this.cost_meta_data.tax) / 100).toFixed(2);
 
+          if (ride_data.ride_status === 3) {
+            this.is_ride_end = true;
+            this.start_time = this.moment(ride_data.ride_start_time);
+            this.end_time = this.moment(ride_data.ride_end_time);
+            this.time = (this.start_time).diff(this.end_time, 'minutes');
+            
+            this.total_cost_per_kilometer = (Number(this.cost_meta_data.cost_per_kilometer) * Number(this.distance)).toFixed(2);
+            this.total_cost_per_minute = (Number(this.cost_meta_data.cost_per_minute) * Number(this.time)).toFixed(2);
+            this.total_cost = Number(this.total_cost_per_kilometer) + Number(this.total_cost_per_minute) + Number(this.cost_meta_data.service_charges) + Number(this.cost_meta_data.vanbr_charges);
+            this.total_tax = (Number(this.total_cost) * Number(this.cost_meta_data.tax) / 100).toFixed(2);
+          } else {
+            this.is_ride_end = false;
+            this.total_cost = Number(this.cost_meta_data.vanbr_charges);
+            this.total_tax = 0;
+          }
         } catch (e) {
           this.checkError(e.response.status);
         }
@@ -154,30 +167,6 @@
           });
         }));
       },
-      // mapsAPICalculation(event) {
-      //   event.preventDefault();
-      //   if (!this.pickup || !this.drop || !this.carId) {
-      //     alert('All fields are required');
-      //     return false;
-      //   }
-      //   this.showCalculation = true;
-
-      //   const url = "https://maps.googleapis.com/maps/api/distancematrix/json?";
-      //   const params = `units=imperial&origins=${this.pickupCoOrdinates.lat},${this.pickupCoOrdinates.long}&destinations=${this.dropCoOrdinates.lat},${this.dropCoOrdinates.long}&key=AIzaSyCPXsZhEgbSDGOY2QVsJCBf3gq7D5Eggwk`;
-
-      //   let service = new google.maps.DistanceMatrixService;
-      //   service.getDistanceMatrix({
-      //     origins: [`${this.pickupCoOrdinates[0]},${this.pickupCoOrdinates[1]}`],
-      //     destinations: [`${this.dropCoOrdinates[0]},${this.dropCoOrdinates[1]}`],
-      //     travelMode: 'DRIVING',
-      //     unitSystem: google.maps.UnitSystem.METRIC,
-      //     avoidHighways: false,
-      //     avoidTolls: false
-      //   }, (response, status) => {
-      //     this.distance = response.rows[0].elements[0].distance.text;
-      //     this.approxTime = response.rows[0].elements[0].duration.text;
-      //   });
-      // },
       pay() {
         createToken().then(data => this.endRide(data.token));
       },
