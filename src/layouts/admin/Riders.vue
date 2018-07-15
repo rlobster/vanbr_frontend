@@ -118,6 +118,7 @@
           console.log(rider.data.data);
           this.riderObj = rider.data.data;
         } catch (e) {
+          this.checkError(e.response.status);
           console.log(e);
         }
       },

@@ -58,7 +58,6 @@
 
 <script>
   /* eslint-disable */
-  import axios from 'axios';
   import moment from 'moment';
   import { Card as StripeCard, createToken } from 'vue-stripe-elements-plus';
   import Card from '@/components/Card';
@@ -96,7 +95,7 @@
     methods: {
       async getRide() {
         try {
-          const response = await axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
+          const response = await this.axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
           
           const ride_data = response.data.data;
 
@@ -120,6 +119,7 @@
           this.total_tax = (Number(this.total_cost) * Number(this.cost_meta_data.tax) / 100).toFixed(2);
 
         } catch (e) {
+          this.checkError(e.response.status);
           // this.$router.push(Routes.Error404);
           console.log(e);
         }

@@ -77,6 +77,7 @@
           this.mobile_no = profile.data.data.mobile_no;
           this.role = profile.data.data.user.role;
         } catch (e) {
+          this.checkError(e.response.status);
           console.log(e);
         }
       },
@@ -94,6 +95,7 @@
           alert('Your profile updated successfully!');
           console.log(responseData);
         } catch (e) {
+          this.checkError(e.response.status);
           console.log(e.responseData);
         }
       },

@@ -73,11 +73,12 @@
       },
       async logout() {
         try {
-          localStorage.removeItem('token');
           await this.axios.post(`${this.AppURL}/logout`);
+          delete this.axios.defaults.headers.common.Authorization;
+          await localStorage.clear();
           this.$router.push(Routes.Login);
         } catch (e) {
-          console.log(e);
+          this.checkError(e.response.status);
         }
       },
       logoutHandler() {

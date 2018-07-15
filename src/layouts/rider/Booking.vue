@@ -121,6 +121,7 @@
           console.log(response.data.data);
           this.references = response.data.data;
         } catch (e) {
+          this.checkError(e.response.status);
           console.log(e);
         }
       },
@@ -129,6 +130,7 @@
           const response = await this.axios.get(`${this.AppURL}/get-cars`);
           this.car_data = response.data.data;
         } catch (e) {
+          this.checkError(e.response.status);
           console.log(e);
         }
       },
@@ -149,6 +151,7 @@
           console.log(response);
           this.$router.push({name: 'Ride', params: {id: response.data.data.id}});
         } catch (e) {
+          this.checkError(e.response.status);
           console.log(e);
         } finally {
           document.querySelector("#book").disabled = false

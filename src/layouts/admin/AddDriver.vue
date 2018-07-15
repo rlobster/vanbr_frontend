@@ -147,6 +147,7 @@
           const response = await this.axios.post(`${this.AppURL}/driver/create`, data);
           console.log(response);
         } catch (e) {
+          this.checkError(e.response.status);
           console.log(e);
         }
       },

@@ -128,6 +128,7 @@
           console.log(driver);
           this.driverObj = driver.data.data;
         } catch (e) {
+          this.checkError(e.response.status);
           console.log(e);
         }
       },

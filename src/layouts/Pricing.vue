@@ -87,7 +87,6 @@
 
 <script>
   /* eslint-disable */
-  import axios from 'axios';
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
   import AppURL from '@/constants';
@@ -109,7 +108,7 @@
     methods: {
       async getCars() {
         try {
-          const response = await axios.get(`${this.AppURL}/get-cars`);
+          const response = await this.axios.get(`${this.AppURL}/get-cars`);
           
           const car_data = response.data.data;
           this.sedan = car_data[0];
@@ -117,6 +116,7 @@
           console.log(this.sedan);
 
         } catch (e) {
+          this.checkError(e.response.status);
           // this.$router.push(Routes.Error404);
           console.log(e);
         }

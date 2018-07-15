@@ -52,6 +52,7 @@
           console.log(history);
           this.historyItem = history.data.data;
         } catch (e) {
+          this.checkError(e.response.status);
           console.log(e);
         }
       },

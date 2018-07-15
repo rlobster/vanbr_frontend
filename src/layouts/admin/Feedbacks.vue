@@ -130,6 +130,7 @@
           console.log(feedback);
           this.feedbackObj = feedback.data.data;
         } catch (e) {
+          this.checkError(e.response.status);
           console.log(e);
         }
       },

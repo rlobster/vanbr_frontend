@@ -44,7 +44,6 @@
 
 <script>
   /* eslint-disable */
-  import axios from 'axios';
   import moment from 'moment';
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
@@ -75,7 +74,7 @@
     methods: {
       async getRide() {
         try {
-          const response = await axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
+          const response = await this.axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
           
           const ride_data = response.data.data;
           
@@ -91,6 +90,7 @@
           this.date = moment(ride_data.cost_meta_data.ride_end_time).format('YYYY-MM-DD, HH:mm');
 
         } catch (e) {
+          this.checkError(e.response.status);
           // this.$router.push(Routes.Error404);
           console.log(e);
         }
@@ -120,10 +120,11 @@
             rider_ratings: this.rating,
             rider_comments: this.comment,
           };
-          const response = await axios.post(`${this.AppURL}/${this.role}/feedback`, data);
+          const response = await this.axios.post(`${this.AppURL}/${this.role}/feedback`, data);
           this.$router.push({name: 'Booking'});
           console.log(response);
         } catch (e) {
+          this.checkError(e.response.status);
           console.log(e);
         }
       },

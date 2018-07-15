@@ -82,6 +82,7 @@
           this.axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           this.$router.push(Routes.Booking);
         } catch (e) {
+          this.checkError(e.response.status);
           console.log(e);
         }
       },

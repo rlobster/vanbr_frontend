@@ -68,6 +68,7 @@
           //   alert('Error Occurred');
           // }
         } catch (e) {
+          this.checkError(e.response.status);
           console.log(e);
         }
       },

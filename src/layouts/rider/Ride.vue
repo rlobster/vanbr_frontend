@@ -77,6 +77,7 @@
           const dropObj = OpenLocationCode.decode(response.data.data.drop_point);
           this.drop = await this.getLocation(dropObj);
         } catch (e) {
+          this.checkError(e.response.status);
           // this.$router.push(Routes.Error404);
           console.log(e);
         }
@@ -113,6 +114,7 @@
             }
           }
         } catch (e) {
+          this.checkError(e.response.status);
           console.log(e);
         }
       },

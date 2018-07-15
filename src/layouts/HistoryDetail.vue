@@ -150,6 +150,7 @@
 
           console.log(this.historyItem);
         } catch (e) {
+          this.checkError(e.response.status);
           console.log(e);
         }
       },
