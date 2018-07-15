@@ -45,7 +45,6 @@
 <script>
   /* eslint-disable */
   import moment from 'moment';
-  import Routes from '@/router/routes';
   import Card from '@/components/Card';
   import StarRating from 'vue-star-rating';
   import AppURL from '@/constants';
@@ -57,7 +56,6 @@
       return {
         AppURL,
         role: '',
-        Routes,
         pickup: '',
         drop: '',
         rider: '',
@@ -67,7 +65,7 @@
         comment: ''
       };
     },
-    mounted() {
+    beforeMount() {
       this.role = this.getRole();
       this.getRide();
     },
@@ -77,21 +75,24 @@
           const response = await this.axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
           
           const ride_data = response.data.data;
-          
-          const pickupObj = OpenLocationCode.decode(ride_data.pick_up_point);
-          this.pickup = await this.getLocation(pickupObj);
 
-          const dropObj = OpenLocationCode.decode(ride_data.drop_point);
-          this.drop = await this.getLocation(dropObj);
+          if (ride_data.ride_status === 3 && ride_data.payment_status === 3) {
+            const pickupObj = OpenLocationCode.decode(ride_data.pick_up_point);
+            this.pickup = await this.getLocation(pickupObj);
 
-          this.rider = ride_data.rider.name;
-          this.driver = ride_data.driver.name;
-          
-          this.date = moment(ride_data.cost_meta_data.ride_end_time).format('YYYY-MM-DD, HH:mm');
+            const dropObj = OpenLocationCode.decode(ride_data.drop_point);
+            this.drop = await this.getLocation(dropObj);
+
+            this.rider = ride_data.rider.name;
+            this.driver = ride_data.driver.name;
+            
+            this.date = moment(ride_data.cost_meta_data.ride_end_time).format('YYYY-MM-DD, HH:mm');
+          } else {
+            this.$router.push(this.Routes.Booking);
+          }
 
         } catch (e) {
           this.checkError(e.response.status);
-          // this.$router.push(Routes.Error404);
           console.log(e);
         }
       },

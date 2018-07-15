@@ -48,6 +48,7 @@ Vue.mixin({
   data() {
     return {
       HelloURL: 'app',
+      Routes,
     };
   },
   methods: {

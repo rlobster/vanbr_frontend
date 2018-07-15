@@ -88,7 +88,7 @@
         },
       };
     },
-    mounted() {
+    beforeMount() {
       this.role = this.getRole();
       this.getRide();
     },
@@ -98,8 +98,12 @@
           const response = await this.axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
           
           const ride_data = response.data.data;
-
+          
           this.stripeOptions.name = ride_data.rider.name;
+          
+          if (ride_data.payment_status === 3) {
+            this.$router.push(this.Routes.Booking);
+          }
 
           const pickupObj = OpenLocationCode.decode(ride_data.pick_up_point);
           this.pickup = await this.getLocation(pickupObj);
@@ -120,7 +124,7 @@
 
         } catch (e) {
           this.checkError(e.response.status);
-          // this.$router.push(Routes.Error404);
+          // this.$router.push(this.Routes.Error404);
           console.log(e);
         }
       },

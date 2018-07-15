@@ -44,7 +44,6 @@
 
 <script>
   /* eslint-disable */
-  import Routes from '@/router/routes';
   import Card from '@/components/Card';
   import AppURL from '@/constants';
 
@@ -54,7 +53,6 @@
     data() {
       return {
         AppURL,
-        Routes,
         carType: '',
         pickup: '',
         drop: '',
@@ -62,23 +60,30 @@
         carDetail: 'Searching...',
       };
     },
-    mounted() {
+    beforeMount() {
       this.getRide();
     },
     methods: {
       async getRide() {
         try {
           const response = await this.axios.get(`${this.AppURL}/rider/get-single-ride?ride_id=${this.$route.params.id}`);
-          this.carType = response.data.data.car.type;
+          
+          const ride_data = response.data.data;
+          
+          if (ride_data.ride_status === 0 || ride_data.ride_status === 1 || ride_data.ride_status === 2) {
+            this.carType = ride_data.car.type;
 
-          const pickupObj = OpenLocationCode.decode(response.data.data.pick_up_point);
-          this.pickup = await this.getLocation(pickupObj);
+            const pickupObj = OpenLocationCode.decode(ride_data.pick_up_point);
+            this.pickup = await this.getLocation(pickupObj);
 
-          const dropObj = OpenLocationCode.decode(response.data.data.drop_point);
-          this.drop = await this.getLocation(dropObj);
+            const dropObj = OpenLocationCode.decode(ride_data.drop_point);
+            this.drop = await this.getLocation(dropObj);
+          } else {
+            this.$router.push(this.Routes.Booking);
+          }
         } catch (e) {
           this.checkError(e.response.status);
-          // this.$router.push(Routes.Error404);
+          // this.$router.push(this.Routes.Error404);
           console.log(e);
         }
       },
@@ -107,10 +112,10 @@
           const response = await this.axios.post(`${this.AppURL}/rider/cancel-ride`, data);
           console.log(response);
           if (response.data.success) {
-            if (response.data.data.payment_status === 3 && response.data.data.ride_status === 5) {
+            if (response.data.data.payment_status === 5 && response.data.data.ride_status === 5) {
               this.$router.push({name: 'Payment', params: {id: response.data.data.id}});
             } else {
-              this.$router.push(Routes.Booking);
+              this.$router.push(this.Routes.Booking);
             }
           }
         } catch (e) {
