@@ -28,8 +28,7 @@ const Routes = {
   Rides: '/rides',
   Riders: '/users/riders',
   Drivers: '/users/drivers',
-  DriverFeedbacks: '/feedbacks/drivers',
-  RiderFeedbacks: '/feedbacks/riders',
+  PaymentList: '/users/payment/list',
 
   // Error Routes
   Error404: '/404',

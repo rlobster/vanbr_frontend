@@ -21,18 +21,10 @@
           :fields="fields"
           :sort-order="sortOrder"
           pagination-path=""
-          :per-page="3"
+          :per-page="10"
           @vuetable:pagination-data="onPaginationData"
           @vuetable:loading="onLoading"
           @vuetable:loaded="onLoaded">
-          <template slot="actions" scope="props">
-            <div class="table-button-container">
-                <button class="btn btn-warning btn-sm" @click="editRow(props.rowData)">
-                  <span class="glyphicon glyphicon-pencil"></span> Edit</button>&nbsp;&nbsp;
-                <button class="btn btn-danger btn-sm" @click="deleteRow(props.rowData)">
-                  <span class="glyphicon glyphicon-trash"></span> Delete</button>&nbsp;&nbsp;
-            </div>
-          </template>
         </vuetable>
         <vuetable-pagination-bootstrap ref="pagination"
           @vuetable-pagination:change-page="onChangePage">
@@ -56,60 +48,50 @@
     data() {
       return {
         AppURL,
-        feedbackObj: [
-          // {
-          //   id: 1,
-          //   name: 'John Doe',
-          //   role: 'Rider',
-          //   feedback: 'Fine',
-          //   rating: 5,
-          // },
-          // {
-          //   id: 2,
-          //   name: 'John Snow',
-          //   role: 'Driver',
-          //   feedback: 'Best ride of my life',
-          //   rating: 5,
-          // },
-          // {
-          //   id: 3,
-          //   name: 'Anna Doe',
-          //   role: 'Rider',
-          //   feedback: 'Keep it up',
-          //   rating: 3,
-          // },
-          // {
-          //   id: 4,
-          //   name: 'Bob Dan',
-          //   role: 'Rider',
-          //   feedback: 'Nice facility and nature of the driver',
-          //   rating: 4,
-          // },
-        ],
+        feedbackObj: [],
         filterText: '',
         fields: [
           {
+            name: 'rides.rider.name',
+            title: 'Rider Name',
+            sortField: 'rides.rider.name',
+          },
+          {
+            name: 'rides.driver.name',
+            title: '<span class="orange glyphicon glyphicon-user"></span>Driver Name',
+            sortField: 'rides.driver.name',
+          },
+          {
             name: 'id',
-            title: '#',
-            sortField: 'id',
+            title: 'Ride Id',
           },
           {
-            name: 'name',
-            title: '<span class="orange glyphicon glyphicon-user"></span> Name',
-            sortField: 'name',
+            name: 'rides.ride_end_time',
+            title: 'Ride Time',
           },
-          'role',
-          'feedback',
           {
-            name: 'rating',
-            title: 'Rating',
-            sortField: 'rating',
+            name: 'driver_ratings',
+            title: 'Driver Rating',
+            sortField: 'driver_ratings',
+          },
+          {
+            name: 'rider_ratings',
+            title: 'Rider Rating',
+            sortField: 'rider_ratings',
+          },
+          {
+            name: 'driver_comments',
+            title: 'Driver Comments',
+          },
+          {
+            name: 'rider_comments',
+            title: 'Rider Comments',
           },
           '__slot:actions',
         ],
         sortOrder: [
           {
-            field: 'name',
+            field: 'rides.rider.name',
             direction: 'asc',
           },
         ],
@@ -146,6 +128,7 @@
         try {
           const feedback = await this.axios.get(`${this.AppURL}/admin/feedbacks/list`);
           console.log(feedback);
+          this.feedbackObj = feedback.data.data;
         } catch (e) {
           console.log(e);
         }
@@ -165,12 +148,6 @@
       onChangePage(page) {
         console.log(page);
         this.$refs.vuetable.changePage(page);
-      },
-      editRow(rowData) {
-        alert(JSON.stringify(rowData));
-      },
-      deleteRow(rowData) {
-        alert(JSON.stringify(rowData));
       },
       onLoading() {
         console.log('loading... show your spinner here');

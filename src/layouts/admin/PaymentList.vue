@@ -45,7 +45,7 @@
   import AppURL from '@/constants';
 
   export default {
-    name: 'Users',
+    name: 'PaymentList',
     components: {
       Card,
       Vue,
@@ -70,33 +70,24 @@
         rideObj: [],
         fields: [
           {
-            name: 'rider.name',
-            title: '<span class="orange glyphicon glyphicon-user"></span>Rider Name',
-            sortField: 'rider_name',
+            name: 'payment.ride_id',
+            title: '<span class="orange glyphicon glyphicon-user"></span>Ride Id',
+            sortField: 'payment.ride_id',
           },
           {
-            name: 'rider_user_id',
-            title: 'Id',
-            sortField: 'rider_user_id',
+            name: 'payment.cost',
+            title: '<span class="orange glyphicon glyphicon-user"></span>Ride Cost (in $)',
+            sortField: 'payment.cost',
           },
           {
-            name: 'driver.name',
-            title: '<span class="orange glyphicon glyphicon-user"></span>Driver Name',
-            sortField: 'driver_name',
+            name: 'payment.stripe_id',
+            title: 'Stripe Id',
+            sortField: 'payment.stripe_id',
           },
           {
-            name: 'driver_user_id',
-            title: 'Id',
-            sortField: 'driver_user_id',
-          },
-          'pick_up_point',
-          'drop_point',
-          'ride_create_time',
-          'cost',
-          {
-            name: 'ride_status',
+            name: 'payment.status',
             title: 'Status',
-            sortField: 'Status',
+            sortField: 'payment.status',
           },
           '__slot:actions',
         ],
@@ -150,7 +141,7 @@
           this.drop = await this.getLocation(dropObj);
           console.log(this.drop);
         } catch (e) {
-          this.checkError(e.response.status);
+          console.log(e);
         }
       },
       getLocation(locationObj) {
