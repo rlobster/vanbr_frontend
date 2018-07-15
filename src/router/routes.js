@@ -18,6 +18,7 @@ const Routes = {
   // DriverHistory: '/driver/history',
   // DriverHistoryDetail: '/driver/history/:id',
   // Admin Routes
+
   // Login: '/admin/login',
   Dashboard: '/dashboard',
   Users: '/users',
@@ -25,6 +26,11 @@ const Routes = {
   Email: '/email',
   Feedbacks: '/feedbacks',
   Rides: '/rides',
+  Riders: '/users/riders',
+  Drivers: '/users/drivers',
+  DriverFeedbacks: '/feedbacks/drivers',
+  RiderFeedbacks: '/feedbacks/riders',
+
   // Error Routes
   Error404: '/404',
 };

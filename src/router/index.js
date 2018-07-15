@@ -23,9 +23,13 @@ import ProfileView from '@/layouts/driver/ProfileView';
 // Import all Admin Layouts
 import Admin from '@/layouts/admin/Admin';
 import Users from '@/layouts/admin/Users';
+import Riders from '@/layouts/admin/Riders';
+import Drivers from '@/layouts/admin/Drivers';
 import AddDriver from '@/layouts/admin/AddDriver';
 import Email from '@/layouts/admin/Email';
 import Feedbacks from '@/layouts/admin/Feedbacks';
+import RiderFeedbacks from '@/layouts/admin/RiderFeedbacks';
+import DriverFeedbacks from '@/layouts/admin/DriverFeedbacks';
 import Rides from '@/layouts/admin/Rides';
 
 import Routes from './routes';
@@ -192,6 +196,24 @@ const routes = [
     },
   },
   {
+    path: Routes.Riders,
+    name: 'Riders',
+    component: Riders,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
+    },
+  },
+  {
+    path: Routes.Drivers,
+    name: 'Drivers',
+    component: Drivers,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
+    },
+  },
+  {
     path: Routes.AddDriver,
     name: 'AddDriver',
     component: AddDriver,
@@ -213,6 +235,24 @@ const routes = [
     path: Routes.Feedbacks,
     name: 'Feedbacks',
     component: Feedbacks,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
+    },
+  },
+  {
+    path: Routes.RiderFeedbacks,
+    name: 'RiderFeedbacks',
+    component: RiderFeedbacks,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
+    },
+  },
+  {
+    path: Routes.DriverFeedbacks,
+    name: 'DriverFeedbacks',
+    component: DriverFeedbacks,
     meta: {
       requiresAuth: true,
       type: 'Admin',

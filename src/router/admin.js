@@ -6,10 +6,14 @@ import Login from '@/layouts/Login';
 // Import all Admin Layouts
 import Dashboard from '@/layouts/admin/Dashboard';
 import Users from '@/layouts/admin/Users';
+import Riders from '@/layouts/admin/Riders';
+import Drivers from '@/layouts/admin/Drivers';
 import AddDriver from '@/layouts/admin/AddDriver';
 import Email from '@/layouts/admin/Email';
 import Feedbacks from '@/layouts/admin/Feedbacks';
 import Rides from '@/layouts/admin/Rides';
+import RiderFeedbacks from '@/layouts/admin/RiderFeedbacks';
+import DriverFeedbacks from '@/layouts/admin/DriverFeedbacks';
 
 import Routes from './routes';
 
@@ -39,6 +43,24 @@ const routes = [
     },
   },
   {
+    path: Routes.Riders,
+    name: 'Riders',
+    component: Riders,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
+    },
+  },
+  {
+    path: Routes.Drivers,
+    name: 'Drivers',
+    component: Drivers,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
+    },
+  },
+  {
     path: Routes.AddDriver,
     name: 'AddDriver',
     component: AddDriver,
@@ -60,6 +82,24 @@ const routes = [
     component: Feedbacks,
     meta: {
       requiresAuth: true,
+    },
+  },
+  {
+    path: Routes.RiderFeedbacks,
+    name: 'RiderFeedbacks',
+    component: RiderFeedbacks,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
+    },
+  },
+  {
+    path: Routes.DriverFeedbacks,
+    name: 'DriverFeedbacks',
+    component: DriverFeedbacks,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
     },
   },
   {
