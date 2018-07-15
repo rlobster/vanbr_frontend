@@ -22,18 +22,10 @@
           :fields="fields"
           :sort-order="sortOrder"
           pagination-path=""
-          :per-page="3"
+          :per-page="10"
           @vuetable:pagination-data="onPaginationData"
           @vuetable:loading="onLoading"
           @vuetable:loaded="onLoaded">
-          <template slot="actions" scope="props">
-          <div class="table-button-container main-app-section-sm">
-              <button class="btn btn-warning btn-sm" @click="editRow(props.rowData)">
-                <span class="glyphicon glyphicon-pencil"></span> Edit</button>&nbsp;&nbsp;
-              <button class="btn btn-danger btn-sm" @click="deleteRow(props.rowData)">
-                <span class="glyphicon glyphicon-trash"></span> Delete</button>&nbsp;&nbsp;
-          </div>
-          </template>
         </vuetable>
         <vuetable-pagination-bootstrap ref="pagination"
           @vuetable-pagination:change-page="onChangePage">
@@ -212,12 +204,6 @@
       onChangePage(page) {
         console.log(page);
         this.$refs.vuetable.changePage(page);
-      },
-      editRow(rowData) {
-        alert(JSON.stringify(rowData));
-      },
-      deleteRow(rowData) {
-        alert(JSON.stringify(rowData));
       },
       onLoading() {
         console.log('loading... show your spinner here');

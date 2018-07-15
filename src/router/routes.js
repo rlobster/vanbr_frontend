@@ -26,8 +26,6 @@ const Routes = {
   AddDriver: '/admin/add/driver',
   Email: '/admin/email',
   Feedbacks: '/admin/feedbacks',
-  DriverFeedbacks: '/admin/feedbacks/drivers',
-  RiderFeedbacks: '/admin/feedbacks/riders',
   Rides: '/admin/rides',
   // Error Routes
   Error404: '/404',
