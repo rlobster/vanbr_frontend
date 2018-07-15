@@ -23,12 +23,14 @@ const Routes = {
   Dashboard: '/dashboard',
   Users: '/users',
   AddDriver: '/add-driver',
+  EditDriver: '/edit-driver/:id',
   Email: '/email',
   Feedbacks: '/feedbacks',
   Rides: '/rides',
   Riders: '/users/riders',
   Drivers: '/users/drivers',
-  PaymentList: '/users/payment/list',
+  PaymentList: '/payment/list',
+  ChangeCost: '/cost/change',
 
   // Error Routes
   Error404: '/404',

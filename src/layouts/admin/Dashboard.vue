@@ -90,6 +90,20 @@
         </Card>
         </router-link>
       </div>
+      <div class="col-md main-app-section-sm">
+        <router-link :to="Routes.ChangeCost">
+        <Card class="card">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <img src="@/assets/payment.svg" class="icons-sm"/>
+            </div>
+            <div>
+              <div class="subtitle text-secondary">Change Costs</div>
+            </div>
+          </div>
+        </Card>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>

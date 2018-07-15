@@ -26,6 +26,14 @@
           @vuetable:pagination-data="onPaginationData"
           @vuetable:loading="onLoading"
           @vuetable:loaded="onLoaded">
+          <template slot="actions" scope="props">
+          <div class="table-button-container">
+              <button class="btn btn-secondary btn-sm" @click="getPickupPoint(props.rowData.pick_up_point)">
+                <span class="glyphicon glyphicon-pencil"></span>Pickup Point</button>&nbsp;&nbsp;
+              <button class="btn btn-secondary btn-sm" @click="getDropPoint(props.rowData.drop_point)">
+                <span class="glyphicon glyphicon-trash"></span>Drop Point</button>&nbsp;&nbsp;
+          </div>
+          </template>
         </vuetable>
         <vuetable-pagination-bootstrap ref="pagination"
           @vuetable-pagination:change-page="onChangePage">
@@ -89,8 +97,11 @@
             title: 'Id',
             sortField: 'driver_user_id',
           },
-          'pick_up_point',
-          'drop_point',
+          {
+            name: 'driver_user_id',
+            title: 'Id',
+            sortField: 'driver_user_id',
+          },
           'ride_create_time',
           'cost',
           {
@@ -135,6 +146,12 @@
       this.getRides();
     },
     methods: {
+      getPickupPoint(location) {
+        window.open(`https://plus.codes/${location}`);
+      },
+      getDropPoint(location) {
+        window.open(`https://plus.codes/${location}`);
+      },
       async getRides() {
         try {
           const ride = await this.axios.get(`${this.AppURL}/admin/rides/list`);
@@ -152,23 +169,6 @@
         } catch (e) {
           this.checkError(e.response.status);
         }
-      },
-      getLocation(locationObj) {
-        return new Promise( ( resolve => {
-          const geocoder = new google.maps.Geocoder;
-          geocoder.geocode({ location: { lat: locationObj.latitudeCenter, lng: locationObj.longitudeCenter } }, function(results, status) {
-            if (status === 'OK') {
-              if (results[0]) {
-                const address = `${results[0].formatted_address.split(',')[0]} , ${results[0].formatted_address.split(',')[1]}`;
-                resolve(address);
-              } else {
-                window.alert('No results found');
-              }
-            } else {
-              window.alert('Geocoder failed due to: ' + status);
-            }
-          });
-        }));
       },
       setFilter(filterText) {
         this.moreParams = {

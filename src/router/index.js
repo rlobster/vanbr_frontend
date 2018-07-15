@@ -30,6 +30,8 @@ import Email from '@/layouts/admin/Email';
 import Feedbacks from '@/layouts/admin/Feedbacks';
 import Rides from '@/layouts/admin/Rides';
 import PaymentList from '@/layouts/admin/PaymentList';
+import ChangeCost from '@/layouts/admin/ChangeCost';
+import EditDriver from '@/layouts/admin/EditDriver';
 
 import Routes from './routes';
 
@@ -222,6 +224,15 @@ const routes = [
     },
   },
   {
+    path: Routes.EditDriver,
+    name: 'EditDriver',
+    component: EditDriver,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
+    },
+  },
+  {
     path: Routes.Email,
     name: 'Email',
     component: Email,
@@ -252,6 +263,15 @@ const routes = [
     path: Routes.PaymentList,
     name: 'PaymentList',
     component: PaymentList,
+    meta: {
+      requiresAuth: true,
+      type: 'Admin',
+    },
+  },
+  {
+    path: Routes.ChangeCost,
+    name: 'ChangeCost',
+    component: ChangeCost,
     meta: {
       requiresAuth: true,
       type: 'Admin',

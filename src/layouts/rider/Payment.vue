@@ -6,7 +6,7 @@
             <div class="title text-center">Invoice</div>
 
             <div class="main-app-section-sm">
-              <div>Source: <strong>{{pickup}}</strong></div>
+              <div class="d-flex justify-content-between">Source: <strong>{{pickup}}</strong></div>
               <div>Destination: <strong>{{drop}}</strong></div>
               <div>Kilometers: <strong>{{distance}}</strong></div>
               <div>Time: <strong>{{time}} minute</strong></div>
