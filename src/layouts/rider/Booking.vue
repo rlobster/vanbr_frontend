@@ -87,12 +87,14 @@
   /* eslint-disable */
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
+  import AppURL from '@/constants';
 
   export default {
     name: 'Booking',
     components: { Card },
     data() {
       return {
+        AppURL,
         Routes,
         pickup: '',
         pickupCoOrdinates: [],
@@ -115,7 +117,7 @@
     methods: {
       async getReferences() {
         try {
-          const response = await this.axios.get('http://vanbr.ca/api/rider/get-reference');
+          const response = await this.axios.get(`${this.AppURL}/rider/get-reference`);
           console.log(response.data.data);
           this.references = response.data.data;
         } catch (e) {
@@ -124,7 +126,7 @@
       },
       async getCars() {
         try {
-          const response = await this.axios.get(`http://vanbr.ca/api/get-cars`);
+          const response = await this.axios.get(`${this.AppURL}/get-cars`);
           this.car_data = response.data.data;
         } catch (e) {
           console.log(e);
@@ -143,7 +145,7 @@
             drop_point: this.drop,
             reference_id: this.referenceId
           };
-          const response = await this.axios.post('http://vanbr.ca/api/rider/book-ride', data);
+          const response = await this.axios.post(`${this.AppURL}/rider/book-ride`, data);
           console.log(response);
           this.$router.push({name: 'Ride', params: {id: response.data.data.id}});
         } catch (e) {

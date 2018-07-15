@@ -62,12 +62,15 @@
   import moment from 'moment';
   import { Card as StripeCard, createToken } from 'vue-stripe-elements-plus';
   import Card from '@/components/Card';
+  import AppURL from '@/constants';
 
   export default {
     name: 'Payment',
     components: { Card, StripeCard },
     data() {
       return {
+        AppURL,
+        role: '',
         complete: false,
         pickup: '',
         drop: '',
@@ -88,11 +91,12 @@
     },
     mounted() {
       this.getRide();
+      this.role = this.getRole();
     },
     methods: {
       async getRide() {
         try {
-          const response = await axios.get(`http://vanbr.ca/api/rider/get-single-ride?ride_id=${this.$route.params.id}`);
+          const response = await axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
           
           const ride_data = response.data.data;
 
@@ -171,7 +175,7 @@
           token,
           ride_id: this.$route.params.id
         };
-        const response = await this.axios.post('http://vanbr.ca/api/rider/end-ride', data);
+        const response = await this.axios.post(`${this.AppURL}/rider/end-ride`, data);
         this.$router.push({name: 'Feedback', params: {id: response.data.data.id}});
       },
     },

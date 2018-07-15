@@ -97,7 +97,7 @@
   import Routes from '@/router/routes';
 
   export default {
-    name: 'Admin',
+    name: 'Dashboard',
     components: { Card },
     data() {
       return {

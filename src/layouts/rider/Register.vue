@@ -48,12 +48,14 @@
 
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
+  import AppURL from '@/constants';
 
   export default {
     name: 'Register',
     components: { Card },
     data() {
       return {
+        AppURL,
         Routes,
         name: '',
         dob: '',
@@ -75,7 +77,7 @@
             dob: this.dob,
             gender: this.gender,
           };
-          const response = await this.axios.post('http://vanbr.ca/api/rider/signup', data);
+          const response = await this.axios.post(`${this.AppURL}/rider/signup`, data);
           localStorage.setItem('token', response.data.token);
           this.axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           this.$router.push(Routes.Booking);

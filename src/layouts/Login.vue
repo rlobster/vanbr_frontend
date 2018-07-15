@@ -1,7 +1,7 @@
 <template>
   <div class="login container main-app-section-sm">
     <Card class="mx-auto">
-      <div class="title text-center">{{ routeName }} Login</div>
+      <div class="title text-center">Login</div>
       <form>
         <div class="form-group main-app-section-xs">
           <label for="email">Email:</label>
@@ -25,6 +25,7 @@
 <script>
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
+  import AppURL from '@/constants';
 
   export default {
     name: 'Login',
@@ -32,37 +33,14 @@
     data() {
       return {
         Routes,
+        AppURL,
+        role: '',
         email: '',
         password: '',
-        routeName: '',
-        api: '',
       };
     },
     mounted() {
-      const token = localStorage.getItem('token');
-
-      if (token) {
-        const decodedToken = JSON.parse(window.atob(token.split('.')[1].replace('-', '+').replace('_', '/')));
-        if (decodedToken.type === 'Driver') {
-          this.$router.push({ name: 'DriverStatus' });
-        } else if (decodedToken.type === 'Admin') {
-          this.$router.push({ name: 'Admin' });
-        } else if (decodedToken.type === 'Rider') {
-          this.$router.push({ name: 'Booking' });
-        } else {
-          this.$router.push({ name: 'Home' });
-        }
-      }
-
-      if (this.$route.name === 'DriverLogin') {
-        this.routeName = 'Driver';
-        this.api = 'driver';
-      } else if (this.$route.name === 'AdminLogin') {
-        this.routeName = 'Admin';
-        this.api = 'admin';
-      } else if (this.$route.name === 'RiderLogin') {
-        this.api = 'rider';
-      }
+      this.role = this.getRole();
     },
     methods: {
       async login(event) {
@@ -72,15 +50,15 @@
             email: this.email,
             password: this.password,
           };
-          const response = await this.axios.post(`http://vanbr.ca/api/${this.api}/login`, data);
+          const response = await this.axios.post(`${this.AppURL}/${this.role}/login`, data);
           localStorage.setItem('token', response.data.token);
           this.axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          if (this.api === 'rider') {
+          if (this.role === 'rider') {
             this.$router.push(Routes.Booking);
-          } else if (this.api === 'driver') {
-            this.$router.push(Routes.Status);
-          } else if (this.api === 'admin') {
-            this.$router.push(Routes.Admin);
+          } else if (this.role === 'driver') {
+            this.$router.push(Routes.DriverStatus);
+          } else if (this.role === 'admin') {
+            this.$router.push(Routes.Dashboard);
           }
         } catch (e) {
           console.warn(e);

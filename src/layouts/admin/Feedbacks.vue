@@ -40,12 +40,14 @@
   import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
   import Card from '@/components/Card';
   import VuetablePaginationBootstrap from '@/components/VuetablePaginationBootstrap';
+  import AppURL from '@/constants';
 
   export default {
     name: 'Feedbacks',
     components: { Card, vuetable, VuetablePagination, VuetablePaginationBootstrap },
     data() {
       return {
+        AppURL,
         feedbackObj: [],
         filterText: '',
         fields: [
@@ -124,7 +126,7 @@
     methods: {
       async getFeedbacks() {
         try {
-          const feedback = await this.axios.get('http://vanbr.ca/api/admin/feedbacks/list');
+          const feedback = await this.axios.get(`${this.AppURL}/admin/feedbacks/list`);
           console.log(feedback);
           this.feedbackObj = feedback.data.data;
         } catch (e) {

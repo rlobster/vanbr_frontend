@@ -48,12 +48,14 @@
   import Card from '@/components/Card';
   import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
   import VuetablePaginationBootstrap from '@/components/VuetablePaginationBootstrap';
+  import AppURL from '@/constants';
 
   export default {
     name: 'Drivers',
     components: { Card, vuetable, VuetablePagination, VuetablePaginationBootstrap },
     data() {
       return {
+        AppURL,
         filterText: '',
         driverObj: [],
         fields: [

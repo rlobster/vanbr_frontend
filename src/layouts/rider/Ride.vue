@@ -46,12 +46,14 @@
   /* eslint-disable */
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
+  import AppURL from '@/constants';
 
   export default {
     name: 'Ride',
     components: { Card },
     data() {
       return {
+        AppURL,
         Routes,
         carType: '',
         pickup: '',
@@ -66,7 +68,7 @@
     methods: {
       async getRide() {
         try {
-          const response = await this.axios.get(`http://vanbr.ca/api/rider/get-single-ride?ride_id=${this.$route.params.id}`);
+          const response = await this.axios.get(`${this.AppURL}/rider/get-single-ride?ride_id=${this.$route.params.id}`);
           this.carType = response.data.data.car.type;
 
           const pickupObj = OpenLocationCode.decode(response.data.data.pick_up_point);
@@ -101,7 +103,7 @@
           const data = {
             ride_id: this.$route.params.id,
           }
-          const response = await this.axios.post('http://vanbr.ca/api/rider/cancel-ride', data);
+          const response = await this.axios.post(`${this.AppURL}/rider/cancel-ride`, data);
           console.log(response);
           if (response.data.success) {
             if (response.data.data.payment_status === 3 && response.data.data.ride_status === 5) {

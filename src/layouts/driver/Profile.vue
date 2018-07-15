@@ -35,12 +35,14 @@
 <script>
   import Card from '@/components/Card';
   import Routes from '@/router/routes';
+  import AppURL from '@/constants';
 
   export default {
-    name: 'ProfileView',
+    name: 'Profile',
     components: { Card },
     data() {
       return {
+        AppURL,
         Routes,
         name: '',
         dob: '',
@@ -57,7 +59,7 @@
     methods: {
       async getProfile() {
         try {
-          const profile = await this.axios.get('http://vanbr.ca/api/driver/profile');
+          const profile = await this.axios.get(`${this.AppURL}/driver/profile`);
           console.log(profile);
           this.id = profile.data.data.user.id;
           this.name = profile.data.data.name;

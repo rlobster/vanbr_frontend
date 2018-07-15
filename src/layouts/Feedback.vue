@@ -49,12 +49,15 @@
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
   import StarRating from 'vue-star-rating';
+  import AppURL from '@/constants';
 
   export default {
     name: 'Payment',
     components: { Card, StarRating },
     data() {
       return {
+        AppURL,
+        role: '',
         Routes,
         pickup: '',
         drop: '',
@@ -66,12 +69,13 @@
       };
     },
     mounted() {
+      this.role = this.getRole();
       this.getRide();
     },
     methods: {
       async getRide() {
         try {
-          const response = await axios.get(`http://vanbr.ca/api/rider/get-single-ride?ride_id=${this.$route.params.id}`);
+          const response = await axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
           
           const ride_data = response.data.data;
           
@@ -116,7 +120,7 @@
             rider_ratings: this.rating,
             rider_comments: this.comment,
           };
-          const response = await axios.post('http://vanbr.ca/api/rider/feedback', data);
+          const response = await axios.post(`${this.AppURL}/${this.role}/feedback`, data);
           this.$router.push({name: 'Booking'});
           console.log(response);
         } catch (e) {

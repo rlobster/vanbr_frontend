@@ -12,21 +12,23 @@ const Routes = {
   Feedback: '/feedback/:id',
   Payment: '/payment/:id',
   // Driver Routes
-  DriverLogin: '/driver/login',
-  Status: '/driver/status',
-  ProfileView: '/driver/profile',
-  DriverHistory: '/driver/history',
-  DriverHistoryDetail: '/driver/history/:id',
+  // Login: '/driver/login',
+  DriverStatus: '/status',
+  // ProfileView: '/driver/profile',
+  // DriverHistory: '/driver/history',
+  // DriverHistoryDetail: '/driver/history/:id',
   // Admin Routes
-  AdminLogin: '/admin/login',
-  Admin: '/admin',
-  Users: '/admin/users',
-  Riders: '/admin/users/riders',
-  Drivers: '/admin/users/drivers',
-  AddDriver: '/admin/add/driver',
-  Email: '/admin/email',
-  Feedbacks: '/admin/feedbacks',
-  Rides: '/admin/rides',
+
+  // Login: '/admin/login',
+  Dashboard: '/dashboard',
+  Users: '/users',
+  AddDriver: '/add-driver',
+  Email: '/email',
+  Feedbacks: '/feedbacks',
+  Rides: '/rides',
+  Riders: '/users/riders',
+  Drivers: '/users/drivers',
+
   // Error Routes
   Error404: '/404',
 };

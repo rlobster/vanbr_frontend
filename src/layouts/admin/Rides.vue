@@ -42,6 +42,7 @@
   import Vuetable from 'vuetable-2/src/components/Vuetable';
   import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
   import VuetablePaginationBootstrap from '@/components/VuetablePaginationBootstrap';
+  import AppURL from '@/constants';
 
   export default {
     name: 'Users',
@@ -61,6 +62,7 @@
     },
     data() {
       return {
+        AppURL,
         filterText: '',
         moreParams: {},
         pickup: '',
@@ -135,7 +137,7 @@
     methods: {
       async getRides() {
         try {
-          const ride = await this.axios.get('http://vanbr.ca/api/admin/rides/list');
+          const ride = await this.axios.get(`${this.AppURL}/admin/rides/list`);
           console.log(ride);
           this.rideObj = ride.data.data;
 

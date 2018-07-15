@@ -34,7 +34,7 @@
   import Card from '@/components/Card';
 
   export default {
-    name: 'Status',
+    name: 'DriverStatus',
     data() {
       return {
         status: false,

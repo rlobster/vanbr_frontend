@@ -90,12 +90,14 @@
   import axios from 'axios';
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
+  import AppURL from '@/constants';
 
   export default {
     name: 'Pricing',
     components: { Card },
     data() {
       return {
+        AppURL,
         Routes,
         sedan: {},
         mini_van: {},
@@ -107,7 +109,7 @@
     methods: {
       async getCars() {
         try {
-          const response = await axios.get(`http://vanbr.ca/api/get-cars`);
+          const response = await axios.get(`${this.AppURL}/get-cars`);
           
           const car_data = response.data.data;
           this.sedan = car_data[0];

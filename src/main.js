@@ -11,7 +11,10 @@ import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
 import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo';
 
 import App from './App';
-import router from './router';
+import rider from './router/rider';
+import driver from './router/driver';
+import admin from './router/admin';
+// import router from './router';
 
 Vue.config.productionTip = false;
 
@@ -27,6 +30,44 @@ Vue.use(VueSocketio, 'http://localhost:3000');
 Vue.use(VueEvents);
 Vue.use(VuetablePagination);
 Vue.use(VuetablePaginationInfo);
+
+const host = window.location.host;
+const parts = host.split('.');
+let router;
+if (parts.length === 2 || parts[0] === 'www') {
+  router = rider;
+} else if (parts[0] === 'driver') {
+  router = driver;
+} else if (parts[0] === 'admin') {
+  router = admin;
+} else {
+  router = rider;
+}
+
+Vue.mixin({
+  data() {
+    return {
+      HelloURL: 'app',
+    };
+  },
+  methods: {
+    getRole() {
+      const host1 = window.location.host;
+      const parts1 = host1.split('.');
+      let role;
+      if (parts1.length === 2 || parts1[0] === 'www') {
+        role = 'rider';
+      } else if (parts[0] === 'driver') {
+        role = 'driver';
+      } else if (parts[0] === 'admin') {
+        role = 'admin';
+      } else {
+        role = 'rider';
+      }
+      return role;
+    },
+  },
+});
 
 /* eslint-disable no-new */
 new Vue({

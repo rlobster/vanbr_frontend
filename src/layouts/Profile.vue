@@ -38,12 +38,14 @@
 <script>
   import Card from '@/components/Card';
   import Routes from '@/router/routes';
+  import AppURL from '@/constants';
 
   export default {
     name: 'Profile',
     components: { Card },
     data() {
       return {
+        AppURL,
         Routes,
         name: '',
         dob: '',
@@ -65,7 +67,7 @@
     methods: {
       async getProfile() {
         try {
-          const profile = await this.axios.get(`http://vanbr.ca/api/${this.api}/profile`);
+          const profile = await this.axios.get(`${this.AppURL}/${this.api}/profile`);
           console.log(profile);
           this.id = profile.data.data.user.id;
           this.name = profile.data.data.name;
@@ -88,7 +90,7 @@
             dob: this.dob,
             gender: this.gender,
           };
-          const responseData = await this.axios.post('http://vanbr.ca/api/rider/profile', data);
+          const responseData = await this.axios.post(`${this.AppURL}/rider/profile`, data);
           console.log(responseData);
         } catch (e) {
           console.log(e);
