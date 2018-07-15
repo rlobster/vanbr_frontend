@@ -35,12 +35,14 @@
 <script>
   /* eslint-disable */
   import Card from '@/components/Card';
+  import AppURL from '@/constants';
 
   export default {
     name: 'Reference',
     components: { Card },
     data() {
       return {
+        AppURL,
         name: '',
         email: '',
         mobile_no: '',
@@ -57,7 +59,7 @@
             mobile_no: this.mobile_no,
             relationship: this.relationship,
           };
-          const response = await this.axios.post('http://vanbr.ca/api/rider/add-reference', data);
+          const response = await this.axios.post(`${this.AppURL}/rider/add-reference`, data);
           this.$router.push({name: 'Booking'});
           console.log(response.data);
           // if (response.data.success) {

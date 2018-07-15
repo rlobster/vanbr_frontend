@@ -112,6 +112,7 @@
   /* eslint-disable */
   import Card from '@/components/Card';
   import Routes from '@/router/routes';
+  import AppURL from '@/constants';
 
   export default {
     name: 'HistoryDetail',
@@ -120,6 +121,7 @@
     },
     data() {
       return {
+        AppURL,
         Routes,
         historyItem: {},
         pickup: '',
@@ -138,7 +140,7 @@
     methods: {
       async getHistoryDetail() {
         try {
-          const history = await this.axios.get(`http://vanbr.ca/api/${this.api}/get-single-ride?ride_id=${this.$route.params.id}`);
+          const history = await this.axios.get(`${this.AppURL}/${this.api}/get-single-ride?ride_id=${this.$route.params.id}`);
           console.log(history);
           this.historyItem = history.data.data;
 

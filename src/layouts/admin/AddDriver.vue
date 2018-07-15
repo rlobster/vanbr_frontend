@@ -75,12 +75,14 @@
 
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
+  import AppURL from '@/constants';
 
   export default {
     name: 'AddDriver',
     components: { Card },
     data() {
       return {
+        AppURL,
         Routes,
         name: '',
         dob: '',
@@ -143,7 +145,7 @@
             driverImage: this.driverImage,
             driverCarImage: this.driverCarImage,
           };
-          const response = await this.axios.post('http://vanbr.ca/api/driver/create', data);
+          const response = await this.axios.post(`${this.AppURL}/driver/create`, data);
           console.log(response);
         } catch (e) {
           console.log(e);

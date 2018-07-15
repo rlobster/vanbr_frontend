@@ -55,6 +55,7 @@
   import Routes from '@/router/routes';
   import MobileTablet from '@/components/MediaQuery/MobileTablet';
   import Desktop from '@/components/MediaQuery/Desktop';
+  import AppURL from '@/constants';
 
   export default {
     name: 'Navbar',
@@ -62,6 +63,7 @@
     data() {
       return {
         Routes,
+        AppURL,
         isActive: false,
       };
     },
@@ -72,7 +74,7 @@
       async logout() {
         try {
           localStorage.removeItem('token');
-          await this.axios.post('http://vanbr.ca/api/rider/logout');
+          await this.axios.post(`${this.AppURL}/logout`);
           this.$router.push(Routes.Login);
         } catch (e) {
           console.log(e);

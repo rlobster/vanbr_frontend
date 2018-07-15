@@ -27,12 +27,14 @@
 <script>
   import Card from '@/components/Card';
   // import Routes from '@/router/routes';
+  import AppURL from '@/constants';
 
   export default {
     name: 'Email',
     components: { Card },
     data() {
       return {
+        AppURL,
         email: '',
         subject: '',
         body: '',
@@ -47,7 +49,7 @@
             subject: this.subject,
             body: this.body,
           };
-          const responseData = await this.axios.post('http://vanbr.ca/api/admin/send/email', data);
+          const responseData = await this.axios.post(`${this.AppURL}/admin/send/email`, data);
           console.log(responseData);
         } catch (e) {
           console.log(e);
