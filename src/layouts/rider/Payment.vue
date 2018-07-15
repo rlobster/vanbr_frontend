@@ -6,30 +6,42 @@
             <div class="title text-center">Invoice</div>
 
             <div class="main-app-section-sm">
-              <div>Source: <strong>{{pickup}}</strong></div>
-              <div>Destination: <strong>{{drop}}</strong></div>
-              <div>Kilometers: <strong>{{distance}}</strong></div>
-              <div>Time: <strong>{{time}} minute</strong></div>
+              <div class="d-flex justify-content-between">
+                <div>Source:</div>
+                <div><strong>{{pickup}}</strong></div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <div>Destination:</div>
+                <div><strong>{{drop}}</strong></div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <div>Kilometers:</div>
+                <div><strong>{{distance}}</strong></div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <div>Time:</div>
+                <div><strong>{{time}} minute</strong></div>
+              </div>
               <hr />
               <div class="d-flex justify-content-between">
                 <div>Per Kilometers:</div>
-                <div>${{cost_meta_data.cost_per_kilometer}} * {{distance}} = {{total_cost_per_kilometer}}</div>
+                <div>{{cost_meta_data.cost_per_kilometer}} * {{distance}} = <strong>${{total_cost_per_kilometer}}</strong></div>
               </div>
               <div class="d-flex justify-content-between">
                 <div>Per Minute:</div>
-                <div>${{cost_meta_data.cost_per_minute}} * {{time}} = {{total_cost_per_minute}}</div>
+                <div>{{cost_meta_data.cost_per_minute}} * {{time}} = <strong>${{total_cost_per_minute}}</strong></div>
               </div>
               <div class="d-flex justify-content-between">
                 <div>Vanbr charge:</div>
-                <div>${{cost_meta_data.vanbr_charges}}</div>
+                <div><strong>${{cost_meta_data.vanbr_charges}}</strong></div>
               </div>
               <div class="d-flex justify-content-between">
                 <div>Service charge:</div>
-                <div>${{cost_meta_data.service_charges}}</div>
+                <div><strong>${{cost_meta_data.service_charges}}</strong></div>
               </div>
               <div class="d-flex justify-content-between">
                 <div>{{cost_meta_data.tax}}% tax:</div>
-                <div>${{total_tax}}</div>
+                <div><strong>${{total_tax}}</strong></div>
               </div>
               <div class="d-flex main-app-section-sm justify-content-between car-details">
                 <div><strong>Total</strong></div>
@@ -110,8 +122,8 @@
           const dropObj = OpenLocationCode.decode(ride_data.drop_point);
           this.drop = await this.getLocation(dropObj);
           
-          this.start_time = this.moment(ride_data.cost_meta_data.ride_start_time);
-          this.end_time = this.moment(ride_data.cost_meta_data.ride_end_time);
+          this.start_time = this.moment(ride_data.ride_start_time);
+          this.end_time = this.moment(ride_data.ride_end_time);
           this.time = (this.start_time).diff(this.end_time, 'minutes');
 
           this.cost_meta_data = ride_data.cost_meta_data;
