@@ -43,6 +43,7 @@
     },
     mounted() {
       this.role = this.getRole();
+      this.getHistory();
     },
     methods: {
       async getHistory() {

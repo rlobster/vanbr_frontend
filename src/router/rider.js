@@ -104,6 +104,10 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: '*',
+    redirect: Routes.Booking,
+  },
 ];
 
 const router = new Router({
@@ -112,14 +116,22 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth) {
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      next({ name: 'Login' });
-      return;
+  const token = localStorage.getItem('token');
+  if (token) {
+    if (to.path === '/login' || to.path === '/') {
+      next({ name: 'Booking' });
     }
+    if (to.meta.requiresAuth) {
+      next();
+    }
+    next();
   }
+  if (!token && to.meta.requiresAuth) {
+    next({ name: 'Login' });
+  }
+  // } else {
+  //   next({ name: 'Login' });
+  // }
   next();
 });
 

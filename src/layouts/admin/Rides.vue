@@ -158,7 +158,7 @@
           this.drop = await this.getLocation(dropObj);
           console.log(this.drop);
         } catch (e) {
-          console.log(e);
+          this.checkError(e.response.status);
         }
       },
       getLocation(locationObj) {

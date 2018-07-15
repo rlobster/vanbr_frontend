@@ -91,9 +91,10 @@
             gender: this.gender,
           };
           const responseData = await this.axios.post(`${this.AppURL}/rider/profile`, data);
+          alert('Your profile updated successfully!');
           console.log(responseData);
         } catch (e) {
-          console.log(e);
+          console.log(e.responseData);
         }
       },
     },

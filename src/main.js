@@ -14,7 +14,7 @@ import App from './App';
 import rider from './router/rider';
 import driver from './router/driver';
 import admin from './router/admin';
-// import router from './router';
+import Routes from './router/routes';
 
 Vue.config.productionTip = false;
 
@@ -65,6 +65,13 @@ Vue.mixin({
         role = 'rider';
       }
       return role;
+    },
+    async checkError(status) {
+      if (status === 401 || status === 500) {
+        delete axios.defaults.headers.common.Authorization;
+        await localStorage.clear();
+        window.location = Routes.Login;
+      }
     },
   },
 });

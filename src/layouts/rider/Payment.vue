@@ -90,8 +90,8 @@
       };
     },
     mounted() {
-      this.getRide();
       this.role = this.getRole();
+      this.getRide();
     },
     methods: {
       async getRide() {
@@ -101,8 +101,6 @@
           const ride_data = response.data.data;
 
           this.stripeOptions.name = ride_data.rider.name;
-
-          console.log(this.stripeOptions)
 
           const pickupObj = OpenLocationCode.decode(ride_data.pick_up_point);
           this.pickup = await this.getLocation(pickupObj);
