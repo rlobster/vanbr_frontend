@@ -111,6 +111,7 @@
       };
     },
     mounted() {
+      console.log(this.idx);
       this.getReferences();
       this.getCars();
     },

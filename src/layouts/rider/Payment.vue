@@ -58,7 +58,6 @@
 
 <script>
   /* eslint-disable */
-  import moment from 'moment';
   import { Card as StripeCard, createToken } from 'vue-stripe-elements-plus';
   import Card from '@/components/Card';
   import AppURL from '@/constants';
@@ -111,8 +110,8 @@
           const dropObj = OpenLocationCode.decode(ride_data.drop_point);
           this.drop = await this.getLocation(dropObj);
           
-          this.start_time = moment(ride_data.cost_meta_data.ride_start_time);
-          this.end_time = moment(ride_data.cost_meta_data.ride_end_time);
+          this.start_time = this.moment(ride_data.cost_meta_data.ride_start_time);
+          this.end_time = this.moment(ride_data.cost_meta_data.ride_end_time);
           this.time = (this.start_time).diff(this.end_time, 'minutes');
 
           this.cost_meta_data = ride_data.cost_meta_data;

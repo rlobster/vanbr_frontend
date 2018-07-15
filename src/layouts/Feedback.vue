@@ -44,7 +44,6 @@
 
 <script>
   /* eslint-disable */
-  import moment from 'moment';
   import Card from '@/components/Card';
   import StarRating from 'vue-star-rating';
   import AppURL from '@/constants';
@@ -86,7 +85,7 @@
             this.rider = ride_data.rider.name;
             this.driver = ride_data.driver.name;
             
-            this.date = moment(ride_data.cost_meta_data.ride_end_time).format('YYYY-MM-DD, HH:mm');
+            this.date = this.moment(ride_data.cost_meta_data.ride_end_time).format('YYYY-MM-DD, HH:mm');
           } else {
             this.$router.push(this.Routes.Booking);
           }
