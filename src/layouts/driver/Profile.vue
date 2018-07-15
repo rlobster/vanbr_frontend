@@ -37,7 +37,7 @@
   import Routes from '@/router/routes';
 
   export default {
-    name: 'ProfileView',
+    name: 'Profile',
     components: { Card },
     data() {
       return {

@@ -45,7 +45,7 @@ const routes = [
   },
   {
     path: Routes.Login,
-    name: 'RiderLogin',
+    name: 'Login',
     component: Login,
   },
   {
@@ -127,7 +127,7 @@ const routes = [
   },
   // Driver Routes
   {
-    path: Routes.Status,
+    path: Routes.DriverStatus,
     name: 'DriverStatus',
     component: Status,
     meta: {
@@ -145,8 +145,8 @@ const routes = [
     },
   },
   {
-    path: Routes.DriverLogin,
-    name: 'DriverLogin',
+    path: Routes.Login,
+    name: 'Login',
     component: Login,
   },
   {
@@ -169,13 +169,13 @@ const routes = [
   },
   // Admin Routes
   {
-    path: Routes.AdminLogin,
-    name: 'AdminLogin',
+    path: Routes.Login,
+    name: 'Login',
     component: Login,
   },
   {
-    path: Routes.Admin,
-    name: 'Admin',
+    path: Routes.Dashboard,
+    name: 'Dashboard',
     component: Admin,
     meta: {
       requiresAuth: true,
@@ -240,11 +240,11 @@ router.beforeEach((to, from, next) => {
 
     if (!token) {
       if (to.meta.type === 'Rider') {
-        next({ name: 'RiderLogin' });
+        next({ name: 'Login' });
       } else if (to.meta.type === 'Driver') {
-        next({ name: 'DriverLogin' });
+        next({ name: 'Login' });
       } else if (to.meta.type === 'Admin') {
-        next({ name: 'AdminLogin' });
+        next({ name: 'Login' });
       } else {
         next({ name: 'Home' });
       }
@@ -256,11 +256,11 @@ router.beforeEach((to, from, next) => {
     if (decodedToken.type === to.meta.type) {
       next();
     } else if (to.meta.type === 'Driver') {
-      next({ name: 'DriverLogin' });
+      next({ name: 'Login' });
     } else if (to.meta.type === 'Admin') {
-      next({ name: 'AdminLogin' });
+      next({ name: 'Login' });
     } else {
-      next({ name: 'RiderLogin' });
+      next({ name: 'Login' });
     }
   }
   next();

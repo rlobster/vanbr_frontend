@@ -10,7 +10,7 @@
 <script>
   import vuetable from 'vuetable-2';
   import Navbar from '@/components/Navbar';
-
+  
   export default {
     name: 'app',
     components: { Navbar, vuetablePagination: vuetable.VuetablePagination },

@@ -54,13 +54,13 @@
         }
       }
 
-      if (this.$route.name === 'DriverLogin') {
+      if (this.$route.name === 'Login') {
         this.routeName = 'Driver';
         this.api = 'driver';
-      } else if (this.$route.name === 'AdminLogin') {
+      } else if (this.$route.name === 'Login') {
         this.routeName = 'Admin';
         this.api = 'admin';
-      } else if (this.$route.name === 'RiderLogin') {
+      } else if (this.$route.name === 'Login') {
         this.api = 'rider';
       }
     },
@@ -78,9 +78,9 @@
           if (this.api === 'rider') {
             this.$router.push(Routes.Booking);
           } else if (this.api === 'driver') {
-            this.$router.push(Routes.Status);
+            this.$router.push(Routes.DriverStatus);
           } else if (this.api === 'admin') {
-            this.$router.push(Routes.Admin);
+            this.$router.push(Routes.Dashboard);
           }
         } catch (e) {
           console.warn(e);
