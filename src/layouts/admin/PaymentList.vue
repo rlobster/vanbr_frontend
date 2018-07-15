@@ -70,12 +70,12 @@
         rideObj: [],
         fields: [
           {
-            name: 'payment.ride_id',
+            name: 'id',
             title: '<span class="orange glyphicon glyphicon-user"></span>Ride Id',
             sortField: 'payment.ride_id',
           },
           {
-            name: 'payment.cost',
+            name: 'cost',
             title: '<span class="orange glyphicon glyphicon-user"></span>Ride Cost (in $)',
             sortField: 'payment.cost',
           },
@@ -85,9 +85,14 @@
             sortField: 'payment.stripe_id',
           },
           {
-            name: 'payment.status',
-            title: 'Status',
-            sortField: 'payment.status',
+            name: 'payment_status',
+            title: 'Payment Status',
+            sortField: 'payment_status',
+          },
+          {
+            name: 'ride_status',
+            title: 'Ride Status',
+            sortField: 'ride_status',
           },
           '__slot:actions',
         ],

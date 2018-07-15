@@ -64,7 +64,7 @@
             title: 'Contact',
           },
           {
-            name: 'rider.email',
+            name: 'email',
             title: 'Email',
           },
           {

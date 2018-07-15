@@ -27,10 +27,12 @@
           @vuetable:loaded="onLoaded">
           <template slot="actions" scope="props">
           <div class="table-button-container">
-              <button class="btn btn-warning btn-sm" @click="editRow(props.rowData)">
+              <button class="btn btn-secondary btn-sm" @click="editDriver(props.rowData.id)">
                 <span class="glyphicon glyphicon-pencil"></span> Edit</button>&nbsp;&nbsp;
-              <button class="btn btn-danger btn-sm" @click="deleteRow(props.rowData)">
+              <button class="btn btn-primary btn-sm" @click="deleteDriver(props.rowData.id)">
                 <span class="glyphicon glyphicon-trash"></span> Delete</button>&nbsp;&nbsp;
+              <button class="btn btn-secondary btn-sm" @click="payDriver(props.rowData)">
+                <span class="glyphicon glyphicon-pencil"></span>Pay Driver</button>&nbsp;&nbsp;
           </div>
           </template>
         </vuetable>
@@ -74,7 +76,7 @@
             title: 'Contact',
           },
           {
-            name: 'driver.email',
+            name: 'email',
             title: 'Email',
           },
           {
@@ -84,6 +86,11 @@
           {
             name: 'driver.dob',
             title: 'DoB',
+          },
+          {
+            name: 'driver.name',
+            title: '<span class="orange glyphicon glyphicon-user"></span> Remaining Payment',
+            sortField: 'driver.name',
           },
           '__slot:actions',
         ],
@@ -131,6 +138,21 @@
           this.checkError(e.response.status);
           console.log(e);
         }
+      },
+      async deleteDriver(id) {
+        const choice = confirm('Are you sure you want to delete this driver?');
+        if (choice === true) {
+          try {
+            const driverDel = await this.axios.delete(`${this.AppURL}/admin/driver/${id}/delete`);
+            console.log(driverDel);
+          } catch (e) {
+            this.checkError(e.response.status);
+            console.log(e);
+          }
+        }
+      },
+      async editDriver(driver) {
+        this.$router.push({ name: 'EditDriver', params: { id: driver } });
       },
       doFilter() {
         console.log('doFilter:', this.filterText);

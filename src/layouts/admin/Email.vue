@@ -17,7 +17,7 @@
             </textarea>
           </div>
           <div class="form-group main-app-section-sm">
-            <button type="submit" class="btn btn-custom btn-block" @click="email">Send</button>
+            <button type="submit" class="btn btn-custom btn-block" @click="emailSend">Send</button>
           </div>
         </form>
       </Card>
@@ -41,7 +41,7 @@
       };
     },
     methods: {
-      async email(event) {
+      async emailSend(event) {
         event.preventDefault();
         try {
           const data = {

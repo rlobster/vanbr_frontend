@@ -108,12 +108,10 @@
             ride_id: this.$route.params.id,
           }
           const response = await this.axios.post(`${this.AppURL}/rider/cancel-ride`, data);
-          if (response.data.success) {
-            if (response.data.data.payment_status === 5 && response.data.data.ride_status === 5) {
-              this.$router.push({name: 'Payment', params: {id: response.data.data.id}});
-            } else {
-              this.$router.push(this.Routes.Booking);
-            }
+          if (response.data.data.payment_status === 5 && response.data.data.ride_status === 5) {
+            this.$router.push({name: 'Payment', params: {id: response.data.data.id}});
+          } else {
+            this.$router.push(this.Routes.Booking);
           }
         } catch (e) {
           this.checkError(e.response.status);

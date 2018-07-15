@@ -1,7 +1,7 @@
 <template>
     <div class="register container main-app-section-sm">
       <Card class="mx-auto">
-        <div class="title text-center">Add Driver</div>
+        <div class="title text-center">Edit Driver</div>
         <form>
           <div class="form-group main-app-section-xs">
             <label for="name">Name:</label>
@@ -64,7 +64,7 @@
             <input type="file" class="form-control" @change="onFileChange" id="driverCarImage" name="driverCarImage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
           </div>
           <div class="form-group main-app-section-sm">
-            <button type="submit" class="btn btn-custom btn-block" @click="addDriver">Submit</button>
+            <button type="submit" class="btn btn-custom btn-block" @click="editDriver">Submit</button>
           </div>
         </form>
       </Card>
@@ -78,7 +78,7 @@
   import AppURL from '@/constants';
 
   export default {
-    name: 'AddDriver',
+    name: 'EditDriver',
     components: { Card },
     data() {
       return {
@@ -96,11 +96,33 @@
         licenseExpiry: '',
         insuranceNo: '',
         insuranceExpiry: '',
-        driverImage: '',
-        driverCarImage: '',
       };
     },
+    async mounted() {
+      await this.getDriverDetail();
+    },
     methods: {
+      async getDriverDetail() {
+        try {
+          const driver = await this.axios.get(`${this.AppURL}/admin/users/Driver/${this.$route.params.id}`);
+          console.log(driver);
+          this.name = driver.data.data.driver.name;
+          this.dob = driver.data.data.driver.dob;
+          this.gender = driver.data.data.driver.gender;
+          this.mobile_no = driver.data.data.driver.mobile_no;
+          this.email = driver.data.data.email;
+          this.address = driver.data.data.driver.address;
+          this.carModel = driver.data.data.driver.car_model;
+          this.carNumber = driver.data.data.driver.car_number;
+          this.licenseNumber = driver.data.data.driver.license_number;
+          this.licenseExpiry = driver.data.data.driver.license_expiry_date;
+          this.insuranceNo = driver.data.data.driver.insurance_number;
+          this.insuranceExpiry = driver.data.data.driver.insurance_expiry_date;
+        } catch (e) {
+          this.checkError(e.response.status);
+          console.log(e);
+        }
+      },
       async onFileChange(e) {
         const files = e.target.files || e.dataTransfer.files;
         console.log(files);
@@ -128,7 +150,7 @@
         const output = reader.readAsDataURL(file);
         console.log(output);
       },
-      async addDriver(event) {
+      async editDriver(event) {
         event.preventDefault();
         try {
           const data = {
@@ -139,14 +161,13 @@
             email: this.email,
             address: this.address,
             car_model: this.carModel,
-            city: this.city,
             car_number: this.carNumber,
             license_number: this.licenseNumber,
             license_expiry_date: this.licenseExpiry,
             insurance_number: this.insuranceNo,
             insurance_expiry_date: this.insuranceExpiry,
           };
-          const response = await this.axios.post(`${this.AppURL}/admin/driver/create`, data);
+          const response = await this.axios.put(`${this.AppURL}/admin/driver/${this.$route.params.id}/update`, data);
           console.log(response);
         } catch (e) {
           this.checkError(e.response.status);
