@@ -111,19 +111,16 @@
       };
     },
     mounted() {
-      console.log(this.idx);
       this.getReferences();
       this.getCars();
     },
     methods: {
       async getReferences() {
         try {
-          const response = await this.axios.get(`${this.AppURL}/rider/get-reference`);
-          console.log(response.data.data);
+          const response = await this.axios.get(`${this.AppURL}/rider/get-reference`);          
           this.references = response.data.data;
         } catch (e) {
-          this.checkError(e.response.status);
-          console.log(e);
+          this.checkError(e.response.status);          
         }
       },
       async getCars() {
@@ -131,8 +128,7 @@
           const response = await this.axios.get(`${this.AppURL}/get-cars`);
           this.car_data = response.data.data;
         } catch (e) {
-          this.checkError(e.response.status);
-          console.log(e);
+          this.checkError(e.response.status);          
         }
       },
       async book(event) {
@@ -148,12 +144,10 @@
             drop_point: this.drop,
             reference_id: this.referenceId
           };
-          const response = await this.axios.post(`${this.AppURL}/rider/book-ride`, data);
-          console.log(response);
+          const response = await this.axios.post(`${this.AppURL}/rider/book-ride`, data);          
           this.$router.push({name: 'Ride', params: {id: response.data.data.id}});
         } catch (e) {
-          this.checkError(e.response.status);
-          console.log(e);
+          this.checkError(e.response.status);          
         } finally {
           document.querySelector("#book").disabled = false
         }

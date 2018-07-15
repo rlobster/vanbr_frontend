@@ -123,8 +123,6 @@
 
         } catch (e) {
           this.checkError(e.response.status);
-          // this.$router.push(this.Routes.Error404);
-          console.log(e);
         }
       },
       getLocation(locationObj) {

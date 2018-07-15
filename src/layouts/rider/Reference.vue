@@ -61,15 +61,8 @@
           };
           const response = await this.axios.post(`${this.AppURL}/rider/add-reference`, data);
           this.$router.push({name: 'Booking'});
-          console.log(response.data);
-          // if (response.data.success) {
-          //   alert('Reference added Successfully');
-          // } else {
-          //   alert('Error Occurred');
-          // }
         } catch (e) {
           this.checkError(e.response.status);
-          console.log(e);
         }
       },
       cancel(event) {

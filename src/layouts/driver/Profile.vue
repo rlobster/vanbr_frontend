@@ -60,7 +60,6 @@
       async getProfile() {
         try {
           const profile = await this.axios.get(`${this.AppURL}/driver/profile`);
-          console.log(profile);
           this.id = profile.data.data.user.id;
           this.name = profile.data.data.name;
           this.email = profile.data.data.user.email;
@@ -70,7 +69,6 @@
           this.role = profile.data.data.user.role;
         } catch (e) {
           this.checkError(e.response.status);
-          console.log(e);
         }
       },
     },

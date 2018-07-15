@@ -113,12 +113,8 @@
           const car_data = response.data.data;
           this.sedan = car_data[0];
           this.mini_van = car_data[1];
-          console.log(this.sedan);
-
         } catch (e) {
           this.checkError(e.response.status);
-          // this.$router.push(Routes.Error404);
-          console.log(e);
         }
       },
     }

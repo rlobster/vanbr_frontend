@@ -68,7 +68,6 @@
       async getProfile() {
         try {
           const profile = await this.axios.get(`${this.AppURL}/${this.api}/profile`);
-          console.log(profile);
           this.id = profile.data.data.user.id;
           this.name = profile.data.data.name;
           this.email = profile.data.data.user.email;
@@ -78,7 +77,6 @@
           this.role = profile.data.data.user.role;
         } catch (e) {
           this.checkError(e.response.status);
-          console.log(e);
         }
       },
       async profile(event) {
@@ -93,10 +91,8 @@
           };
           const responseData = await this.axios.post(`${this.AppURL}/rider/profile`, data);
           alert('Your profile updated successfully!');
-          console.log(responseData);
         } catch (e) {
           this.checkError(e.response.status);
-          console.log(e.responseData);
         }
       },
     },

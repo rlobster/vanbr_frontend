@@ -89,10 +89,8 @@
           } else {
             this.$router.push(this.Routes.Booking);
           }
-
         } catch (e) {
           this.checkError(e.response.status);
-          console.log(e);
         }
       },
       getLocation(locationObj) {
@@ -122,10 +120,8 @@
           };
           const response = await this.axios.post(`${this.AppURL}/${this.role}/feedback`, data);
           this.$router.push({name: 'Booking'});
-          console.log(response);
         } catch (e) {
           this.checkError(e.response.status);
-          console.log(e);
         }
       },
     },

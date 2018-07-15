@@ -137,21 +137,16 @@
       async getHistoryDetail() {
         try {
           const history = await this.axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
-          console.log(history);
           this.historyItem = history.data.data;
 
           const pickupObj = OpenLocationCode.decode(this.historyItem.pick_up_point);
           this.pickup = await this.getLocation(pickupObj);
-          console.log(this.pickup);
 
           const dropObj = OpenLocationCode.decode(this.historyItem.drop_point);
           this.drop = await this.getLocation(dropObj);
-          console.log(this.drop);
-
-          console.log(this.historyItem);
+          
         } catch (e) {
           this.checkError(e.response.status);
-          console.log(e);
         }
       },
       getLocation(locationObj) {
