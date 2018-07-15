@@ -89,7 +89,7 @@
             dob: this.dob,
             gender: this.gender,
           };
-          const responseData = await this.axios.post(`${this.AppURL}/rider/profile`, data);
+          await this.axios.post(`${this.AppURL}/rider/profile`, data);
           alert('Your profile updated successfully!');
         } catch (e) {
           this.checkError(e.response.status);

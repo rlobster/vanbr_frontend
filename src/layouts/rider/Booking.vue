@@ -133,11 +133,12 @@
       },
       async book(event) {
         event.preventDefault();
-        document.querySelector("#book").disabled = true
         if (!this.pickup || !this.drop || !this.carId) {
+          alert('Please enter valid details');
           return false;
         }
         try {
+          document.querySelector("#book").disabled = true
           const data = {
             car_id: this.carId,
             pick_up_point: this.pickup,
