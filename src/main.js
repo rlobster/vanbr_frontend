@@ -44,6 +44,30 @@ if (parts.length === 2 || parts[0] === 'www') {
   router = rider;
 }
 
+Vue.mixin({
+  data() {
+    return {
+      HelloURL: 'app',
+    };
+  },
+  methods: {
+    getRole() {
+      const host1 = window.location.host;
+      const parts1 = host1.split('.');
+      let role;
+      if (parts1.length === 2 || parts1[0] === 'www') {
+        role = 'rider';
+      } else if (parts[0] === 'driver') {
+        role = 'driver';
+      } else if (parts[0] === 'admin') {
+        role = 'admin';
+      } else {
+        role = 'rider';
+      }
+      return role;
+    },
+  },
+});
 
 /* eslint-disable no-new */
 new Vue({

@@ -126,21 +126,17 @@
         historyItem: {},
         pickup: '',
         drop: '',
-        api: '',
+        role: '',
       };
     },
     async mounted() {
-      if (this.$route.name === 'DriverHistoryDetail') {
-        this.api = 'driver';
-      } else if (this.$route.name === 'HistoryDetail') {
-        this.api = 'rider';
-      }
+      this.role = this.getRole();
       await this.getHistoryDetail();
     },
     methods: {
       async getHistoryDetail() {
         try {
-          const history = await this.axios.get(`${this.AppURL}/${this.api}/get-single-ride?ride_id=${this.$route.params.id}`);
+          const history = await this.axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
           console.log(history);
           this.historyItem = history.data.data;
 

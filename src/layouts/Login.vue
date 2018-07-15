@@ -34,9 +34,13 @@
       return {
         Routes,
         AppURL,
+        role: '',
         email: '',
         password: '',
       };
+    },
+    mounted() {
+      this.role = this.getRole();
     },
     methods: {
       async login(event) {
@@ -46,14 +50,14 @@
             email: this.email,
             password: this.password,
           };
-          const response = await this.axios.post(`${this.AppURL}/login`, data);
+          const response = await this.axios.post(`${this.AppURL}/${this.role}/login`, data);
           localStorage.setItem('token', response.data.token);
           this.axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          if (this.api === 'rider') {
+          if (this.role === 'rider') {
             this.$router.push(Routes.Booking);
-          } else if (this.api === 'driver') {
+          } else if (this.role === 'driver') {
             this.$router.push(Routes.DriverStatus);
-          } else if (this.api === 'admin') {
+          } else if (this.role === 'admin') {
             this.$router.push(Routes.Dashboard);
           }
         } catch (e) {

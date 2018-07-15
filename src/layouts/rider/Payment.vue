@@ -70,6 +70,7 @@
     data() {
       return {
         AppURL,
+        role: '',
         complete: false,
         pickup: '',
         drop: '',
@@ -90,11 +91,12 @@
     },
     mounted() {
       this.getRide();
+      this.role = this.getRole();
     },
     methods: {
       async getRide() {
         try {
-          const response = await axios.get(`${this.AppURL}/rider/get-single-ride?ride_id=${this.$route.params.id}`);
+          const response = await axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
           
           const ride_data = response.data.data;
 

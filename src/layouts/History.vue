@@ -38,21 +38,16 @@
         AppURL,
         Routes,
         historyItem: [],
-        api: '',
+        role: '',
       };
     },
     mounted() {
-      if (this.$route.name === 'DriverHistory') {
-        this.api = 'driver';
-      } else if (this.$route.name === 'History') {
-        this.api = 'rider';
-      }
-      this.getHistory();
+      this.role = this.getRole();
     },
     methods: {
       async getHistory() {
         try {
-          const history = await this.axios.get(`${this.AppURL}/${this.api}/get-all-rides`);
+          const history = await this.axios.get(`${this.AppURL}/${this.role}/get-all-rides`);
           console.log(history);
           this.historyItem = history.data.data;
         } catch (e) {
