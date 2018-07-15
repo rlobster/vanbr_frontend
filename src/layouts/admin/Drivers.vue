@@ -31,7 +31,7 @@
                 <span class="glyphicon glyphicon-pencil"></span> Edit</button>&nbsp;&nbsp;
               <button class="btn btn-primary btn-sm" @click="deleteDriver(props.rowData.id)">
                 <span class="glyphicon glyphicon-trash"></span> Delete</button>&nbsp;&nbsp;
-              <button class="btn btn-secondary btn-sm" @click="payDriver(props.rowData)">
+              <button class="btn btn-secondary btn-sm" @click="payDriver(props.rowData.id)">
                 <span class="glyphicon glyphicon-pencil"></span>Pay Driver</button>&nbsp;&nbsp;
           </div>
           </template>
@@ -88,9 +88,9 @@
             title: 'DoB',
           },
           {
-            name: 'driver.name',
+            name: 'driver.remaining_amount',
             title: '<span class="orange glyphicon glyphicon-user"></span> Remaining Payment',
-            sortField: 'driver.name',
+            sortField: 'driver.remaining_amount',
           },
           '__slot:actions',
         ],
@@ -149,6 +149,19 @@
             this.checkError(e.response.status);
             console.log(e);
           }
+        }
+      },
+      async payDriver(id) {
+        try {
+          const paymentObj = {
+            month: 0,
+            status: true,
+          };
+          const paymentToDriver = await this.axios.put(`http://vanbr.ca/api/admin/ride/driver/${id}/payment/update`, paymentObj);
+          console.log(paymentToDriver);
+        } catch (e) {
+          this.checkError(e.response.status);
+          console.log(e);
         }
       },
       async editDriver(driver) {
