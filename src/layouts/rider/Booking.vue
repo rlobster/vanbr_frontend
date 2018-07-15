@@ -196,7 +196,7 @@
           const total_cost_per_minute = (Number(car.cost_per_minute) * parseFloat(this.approxTime)).toFixed(2);
           const total_cost = Number(total_cost_per_kilometer) + Number(total_cost_per_minute) + Number(car.service_charges) + Number(car.vanbr_charges);
           const total_tax = (Number(total_cost) * Number(car.tax) / 100).toFixed(2);
-          this.approxCost = Number(total_cost) + Number(total_tax);
+          this.approxCost = (Number(total_cost) + Number(total_tax)).toFixed(2);
         });
       },
     },
