@@ -7,28 +7,18 @@
 
           <div class="main-app-section-sm">
             <div class="d-flex justify-content-between">
-              <div>Ride Pickup:</div><div><strong>{{ pickup || '-' }}</strong></div>
+              <div>Ride Pickup:</div><div><strong>{{ start_point_address }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
-              <div>Ride Drop:</div><div><strong>{{ drop || '-' }}</strong></div>
+              <div>Ride Drop:</div><div><strong>{{ end_point_address }}</strong></div>
             </div>
-            <!-- <div class="d-flex justify-content-between">
-              <div>Date:</div><div><strong>{{ this.idx(historyItem, _ => _.ride_create_time) || '-' }}</strong></div>
-            </div>
-            <div class="d-flex justify-content-between">
-              <div>Date:</div><div><strong>{{ historyItem.ride_create_time || '-' }}</strong></div>
-            </div> -->
-
-            <!-- <div>Kilometers: <strong v-bind="historyItem."></strong></div> -->
             <div class="d-flex justify-content-between">
               <div>Ride Start Time:</div><div><strong>{{ this.idx(historyItem, _ => _.ride_start_time) || '-' }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
               <div>Ride End Time:</div><div><strong>{{ this.idx(historyItem, _ => _.ride_end_time) || '-' }}</strong></div>
             </div>
-
             <hr />
-
             <div class="d-flex justify-content-between">
               <div>Rider:</div><div><strong>{{ this.idx(historyItem, _ => _.rider.name) || '-' }}</strong></div>
             </div>
@@ -64,11 +54,7 @@
             <div class="d-flex justify-content-between">
               <div>Driver Feedback:</div><div><strong>{{ this.idx(historyItem, _ => _.feedback.driver_comments) || '-' }}</strong></div>
             </div>
-
-            <!-- <div>Driver Email: <strong>abc@abc.abc</strong></div> -->
-
             <hr />
-
             <div class="d-flex justify-content-between">
               <div>Per Kilometers($):</div>
               <div>{{ this.idx(historyItem, _ => _.cost_meta_data.cost_per_kilometer) || '-' }}</div>
@@ -124,8 +110,8 @@
         AppURL,
         Routes,
         historyItem: {},
-        pickup: '',
-        drop: '',
+        start_point_address: '',
+        end_point_address: '',
         role: '',
       };
     },
@@ -138,33 +124,12 @@
         try {
           const history = await this.axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
           this.historyItem = history.data.data;
-
-          const pickupObj = OpenLocationCode.decode(this.historyItem.pick_up_point);
-          this.pickup = await this.getLocation(pickupObj);
-
-          const dropObj = OpenLocationCode.decode(this.historyItem.drop_point);
-          this.drop = await this.getLocation(dropObj);
-          
+          const ride_meta_data = this.historyItem.ride_meta_data;
+          this.start_point_address = ride_meta_data.final_start_point_address ? ride_meta_data.final_start_point_address : ride_meta_data.approx_start_point_address;
+          this.end_point_address = ride_meta_data.final_end_point_address ? ride_meta_data.final_end_point_address : ride_meta_data.approx_end_point_address;
         } catch (e) {
           this.checkError(e.response.status);
         }
-      },
-      getLocation(locationObj) {
-        return new Promise( ( resolve => {
-          const geocoder = new google.maps.Geocoder;
-          geocoder.geocode({ location: { lat: locationObj.latitudeCenter, lng: locationObj.longitudeCenter } }, function(results, status) {
-            if (status === 'OK') {
-              if (results[0]) {
-                const address = `${results[0].formatted_address.split(',')[0]} , ${results[0].formatted_address.split(',')[1]}`;
-                resolve(address);
-              } else {
-                window.alert('No results found');
-              }
-            } else {
-              window.alert('Geocoder failed due to: ' + status);
-            }
-          });
-        }));
       },
     },
   };

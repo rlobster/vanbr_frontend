@@ -1,18 +1,18 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import Home from '@/layouts/Home'; // Home Layout
-import Login from '@/layouts/Login';
-import Pricing from '@/layouts/Pricing';
-import Feedback from '@/layouts/Feedback';
-import Profile from '@/layouts/Profile';
-import History from '@/layouts/History';
-import HistoryDetail from '@/layouts/HistoryDetail';
+import Home from '@/layouts/common/Home'; // Home Layout
+import Login from '@/layouts/common/Login';
+import Pricing from '@/layouts/common/Pricing';
+import Feedback from '@/layouts/common/Feedback';
+import History from '@/layouts/common/History';
+import HistoryDetail from '@/layouts/common/HistoryDetail';
 
 // Import all the Rider Layouts
 import Register from '@/layouts/rider/Register';
 import Booking from '@/layouts/rider/Booking';
 import Ride from '@/layouts/rider/Ride';
+import Profile from '@/layouts/rider/Profile';
 import Payment from '@/layouts/rider/Payment';
 import Reference from '@/layouts/rider/Reference';
 import Routes from './routes';

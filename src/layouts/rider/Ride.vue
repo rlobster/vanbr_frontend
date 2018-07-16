@@ -17,11 +17,11 @@
             </tr>
             <tr>
               <td><strong>Pickup</strong>:</td>
-              <td class="text-right">{{ pickup }}</td>
+              <td class="text-right">{{ approx_start_point_address }}</td>
             </tr>
             <tr>
               <td><strong>Drop</strong>:</td>
-              <td class="text-right">{{ drop }}</td>
+              <td class="text-right">{{ approx_end_point_address }}</td>
             </tr>
             <tr>
               <td><strong>Driver</strong>:</td>
@@ -54,8 +54,8 @@
       return {
         AppURL,
         carType: '',
-        pickup: '',
-        drop: '',
+        approx_start_point_address: '',
+        approx_end_point_address: '',
         driver: 'Searching...',
         carDetail: 'Searching...',
       };
@@ -68,39 +68,18 @@
         try {
           const response = await this.axios.get(`${this.AppURL}/rider/get-single-ride?ride_id=${this.$route.params.id}`);
           
-          const ride_data = response.data.data;
+          const ride = response.data.data;
           
-          if (ride_data.ride_status === 0 || ride_data.ride_status === 1 || ride_data.ride_status === 2) {
-            this.carType = ride_data.car.type;
-
-            const pickupObj = OpenLocationCode.decode(ride_data.pick_up_point);
-            this.pickup = await this.getLocation(pickupObj);
-
-            const dropObj = OpenLocationCode.decode(ride_data.drop_point);
-            this.drop = await this.getLocation(dropObj);
+          if (ride.ride_status === 0 || ride.ride_status === 1 || ride.ride_status === 2) {
+            this.carType = ride.car.type;
+            this.approx_start_point_address = ride.ride_meta_data.approx_start_point_address;
+            this.approx_end_point_address = ride.ride_meta_data.approx_end_point_address;
           } else {
             this.$router.push(this.Routes.Booking);
           }
         } catch (e) {
           this.checkError(e.response.status);
         }
-      },
-      getLocation(locationObj) {
-        return new Promise( ( resolve => {
-          const geocoder = new google.maps.Geocoder;
-          geocoder.geocode({ location: { lat: locationObj.latitudeCenter, lng: locationObj.longitudeCenter } }, function(results, status) {
-            if (status === 'OK') {
-              if (results[0]) {
-                const address = `${results[0].formatted_address.split(',')[0]} , ${results[0].formatted_address.split(',')[1]}`;
-                resolve(address);
-              } else {
-                window.alert('No results found');
-              }
-            } else {
-              window.alert('Geocoder failed due to: ' + status);
-            }
-          });
-        }));
       },
       async cancelRide() {
         try {

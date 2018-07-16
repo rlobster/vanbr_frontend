@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import Login from '@/layouts/Login';
+import Login from '@/layouts/common/Login';
 
 // Import all Admin Layouts
 import Dashboard from '@/layouts/admin/Dashboard';

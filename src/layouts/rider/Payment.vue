@@ -8,16 +8,16 @@
             <div class="main-app-section-sm">
               <div class="d-flex justify-content-between">
                 <div>Source:</div>
-                <div><strong>{{pickup}}</strong></div>
+                <div><strong>{{final_start_point_address}}</strong></div>
               </div>
               <div class="d-flex justify-content-between">
                 <div>Destination:</div>
-                <div><strong>{{drop}}</strong></div>
+                <div><strong>{{final_end_point_address}}</strong></div>
               </div>
               <div v-if="is_ride_end">
                 <div class="d-flex justify-content-between">
                   <div>Kilometers:</div>
-                  <div><strong>{{distance}}</strong></div>
+                  <div><strong>{{final_distance}}</strong></div>
                 </div>
                 <div class="d-flex justify-content-between">
                   <div>Time:</div>
@@ -28,11 +28,11 @@
               <div v-if="is_ride_end">
                 <div class="d-flex justify-content-between">
                   <div>Per Kilometers:</div>
-                  <div>{{cost_meta_data.cost_per_kilometer}} * {{distance}} = <strong>${{total_cost_per_kilometer}}</strong></div>
+                  <div>{{cost_meta_data.cost_per_kilometer}} * {{final_distance}} = <strong>${{total_cost_per_kilometer}}</strong></div>
                 </div>
                 <div class="d-flex justify-content-between">
                   <div>Per Minute:</div>
-                  <div>{{cost_meta_data.cost_per_minute}} * {{time}} = <strong>${{total_cost_per_minute}}</strong></div>
+                  <div>{{cost_meta_data.cost_per_minute}} * {{final_time}} = <strong>${{total_cost_per_minute}}</strong></div>
                 </div>
               </div>
               <div class="d-flex justify-content-between">
@@ -89,11 +89,11 @@
         role: '',
         complete: false,
         is_ride_end: '',
-        pickup: '',
-        drop: '',
+        start_point_address: '',
+        end_point_address: '',
         start_time: '',
         end_time: '',
-        distance: 0,
+        final_distance: 0,
         time: '',
         cost_meta_data: {},
         total_cost_per_kilometer: '',
@@ -115,30 +115,28 @@
         try {
           const response = await this.axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
           
-          const ride_data = response.data.data;
+          const ride = response.data.data;
+          const ride_meta_data = ride.ride_meta_data;
           
-          this.stripeOptions.name = ride_data.rider.name;
+          this.stripeOptions.name = ride.rider.name;
           
-          if (ride_data.payment_status === 3) {
+          if (ride.payment_status === 3) {
             this.$router.push(this.Routes.Booking);
           }
 
-          const pickupObj = OpenLocationCode.decode(ride_data.pick_up_point);
-          this.pickup = await this.getLocation(pickupObj);
-
-          const dropObj = OpenLocationCode.decode(ride_data.drop_point);
-          this.drop = await this.getLocation(dropObj);
+          this.start_point_address = ride_meta_data.final_start_point_address ? ride_meta_data.final_start_point_address : ride_meta_data.approx_start_point_address;
+          this.end_point_address = ride_meta_data.final_end_point_address ? ride_meta_data.final_end_point_address : ride_meta_data.approx_end_point_address;
           
-          this.cost_meta_data = ride_data.cost_meta_data;
+          this.cost_meta_data = ride.cost_meta_data;
 
-          if (ride_data.ride_status === 3) {
+          if (ride.ride_status === 3) {
             this.is_ride_end = true;
-            this.start_time = this.moment(ride_data.ride_start_time);
-            this.end_time = this.moment(ride_data.ride_end_time);
-            this.time = (this.start_time).diff(this.end_time, 'minutes');
+            this.start_time = this.moment(ride.ride_start_time);
+            this.end_time = this.moment(ride.ride_end_time);
+            this.final_time = ride_meta_data.final_time;
             
-            this.total_cost_per_kilometer = (Number(this.cost_meta_data.cost_per_kilometer) * Number(this.distance)).toFixed(2);
-            this.total_cost_per_minute = (Number(this.cost_meta_data.cost_per_minute) * Number(this.time)).toFixed(2);
+            this.total_cost_per_kilometer = (Number(this.cost_meta_data.cost_per_kilometer) * Number(this.final_distance)).toFixed(2);
+            this.total_cost_per_minute = (Number(this.cost_meta_data.cost_per_minute) * Number(this.final_time)).toFixed(2);
             this.total_cost = Number(this.total_cost_per_kilometer) + Number(this.total_cost_per_minute) + Number(this.cost_meta_data.service_charges) + Number(this.cost_meta_data.vanbr_charges);
             this.total_tax = (Number(this.total_cost) * Number(this.cost_meta_data.tax) / 100).toFixed(2);
           } else {
@@ -149,23 +147,6 @@
         } catch (e) {
           this.checkError(e.response.status);
         }
-      },
-      getLocation(locationObj) {
-        return new Promise( ((resolve, reject) => {
-          const geocoder = new google.maps.Geocoder;
-          geocoder.geocode({'location': {lat: locationObj.latitudeCenter, lng: locationObj.longitudeCenter}}, function(results, status) {
-            if (status === 'OK') {
-              if (results[0]) {
-                const address = `${results[0].formatted_address.split(',')[0]} , ${results[0].formatted_address.split(',')[1]}`;
-                resolve(address)
-              } else {
-                window.alert('No results found');
-              }
-            } else {
-              window.alert('Geocoder failed due to: ' + status);
-            }
-          });
-        }));
       },
       pay() {
         createToken().then(data => this.endRide(data.token));

@@ -61,10 +61,10 @@
           </div>
           <div class="form-group main-app-section-sm section-container" v-if="showCalculation">
             <div>
-              <label><strong>Distance:</strong> {{ distance }}</label>
+              <label><strong>Distance:</strong> {{ approxDistance }} KM</label>
             </div>
             <div>
-              <label><strong>Approx time:</strong> {{ approxTime }}</label>
+              <label><strong>Approx time:</strong> {{ approxTime }} Minutes</label>
             </div>
             <div>
               <label><strong>Approx Cost:</strong> {{ approxCost }} </label>
@@ -96,15 +96,17 @@
       return {
         AppURL,
         Routes,
-        pickup: '',
+        approx_start_point_code: '',
+        approx_end_point_code: '',
+        approx_start_point_address: '',
+        approx_end_point_address: '',
         pickupCoOrdinates: [],
         dropCoOrdinates: [],
-        drop: '',
         carId: '0',
         car_data: {},
         referenceId: '0',
         showCalculation: false,
-        distance: '',
+        approxDistance: '',
         approxTime: '',
         approxCost: '',
         references: '',
@@ -133,7 +135,7 @@
       },
       async book(event) {
         event.preventDefault();
-        if (!this.pickup || !this.drop || !this.carId) {
+        if (!this.approx_start_point_code || !this.approx_end_point_code || !this.carId) {
           alert('Please enter valid details');
           return false;
         }
@@ -141,9 +143,13 @@
           document.querySelector("#book").disabled = true
           const data = {
             car_id: this.carId,
-            pick_up_point: this.pickup,
-            drop_point: this.drop,
-            reference_id: this.referenceId
+            approx_start_point_code: this.approx_start_point_code,
+            approx_end_point_code: this.approx_end_point_code,
+            approx_start_point_address: this.approx_start_point_address,
+            approx_end_point_address: this.approx_end_point_address,
+            reference_id: this.referenceId,
+            approx_distance: this.approxDistance,
+            approx_time: this.approxTime,
           };
           const response = await this.axios.post(`${this.AppURL}/rider/book-ride`, data);
           this.$socket.emit('getRideRequest', response.data.data.id);
@@ -155,22 +161,24 @@
         }
       },
       setPickup(place) {
+        this.approx_start_point_address = place.formatted_address;
         let lat = place.geometry.location.lat();
         let long = place.geometry.location.lng();
         this.pickupCoOrdinates[0] = lat;
         this.pickupCoOrdinates[1] = long;
-        this.pickup = OpenLocationCode.encode(lat, long);
+        this.approx_start_point_code = OpenLocationCode.encode(lat, long);
       },
       setDrop(place) {
+        this.approx_end_point_address = place.formatted_address;
         let lat = place.geometry.location.lat();
         let long = place.geometry.location.lng();
         this.dropCoOrdinates[0] = lat;
         this.dropCoOrdinates[1] = long;
-        this.drop = OpenLocationCode.encode(lat, long);
+        this.approx_end_point_code = OpenLocationCode.encode(lat, long);
       },
       mapsAPICalculation(event) {
         event.preventDefault();
-        if (!this.pickup || !this.drop || !this.carId) {
+        if (!this.approx_start_point_code || !this.approx_end_point_code || !this.carId) {
           alert('All fields are required');
           return false;
         }
@@ -188,12 +196,12 @@
           avoidHighways: false,
           avoidTolls: false
         }, async (response, status) => {
-          this.distance = response.rows[0].elements[0].distance.text;
-          this.approxTime = response.rows[0].elements[0].duration.text;
-
+          this.approxDistance = (response.rows[0].elements[0].distance.value / 100).toFixed(2);
+          this.approxTime = (response.rows[0].elements[0].duration.value / 60).toFixed(2);
+          
           const car = this.car_data.find(key => key.id == this.carId);
 
-          const total_cost_per_kilometer = (Number(car.cost_per_kilometer) * parseFloat(this.distance)).toFixed(2);
+          const total_cost_per_kilometer = (Number(car.cost_per_kilometer) * parseFloat(this.approxDistance)).toFixed(2);
           const total_cost_per_minute = (Number(car.cost_per_minute) * parseFloat(this.approxTime)).toFixed(2);
           const total_cost = Number(total_cost_per_kilometer) + Number(total_cost_per_minute) + Number(car.service_charges) + Number(car.vanbr_charges);
           const total_tax = (Number(total_cost) * Number(car.tax) / 100).toFixed(2);

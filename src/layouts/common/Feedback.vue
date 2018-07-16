@@ -6,11 +6,11 @@
           <div class="form-group main-app-section-sm p-2">
             <div class="d-flex justify-content-between">
               <div><strong>Source</strong>:</div>
-              <div>{{pickup}}</div>
+              <div>{{start_point_address}}</div>
             </div>
             <div class="d-flex justify-content-between">
               <div><strong>Destination</strong>:</div>
-              <div>{{drop}}</div>
+              <div>{{end_point_address}}</div>
             </div>
             <div class="d-flex justify-content-between">
               <div><strong>Rider</strong>:</div>
@@ -55,8 +55,8 @@
       return {
         AppURL,
         role: '',
-        pickup: '',
-        drop: '',
+        start_point_address: '',
+        end_point_address: '',
         rider: '',
         driver: '',
         date: '',
@@ -73,50 +73,33 @@
         try {
           const response = await this.axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
           
-          const ride_data = response.data.data;
+          const ride = response.data.data;
 
-          if (ride_data.ride_status === 3 && ride_data.payment_status === 3) {
-            const pickupObj = OpenLocationCode.decode(ride_data.pick_up_point);
-            this.pickup = await this.getLocation(pickupObj);
+          if (((this.role === 'rider' && ride.payment_status === 3) || this.role === 'driver') && ride.ride_status === 3) {
 
-            const dropObj = OpenLocationCode.decode(ride_data.drop_point);
-            this.drop = await this.getLocation(dropObj);
-
-            this.rider = ride_data.rider.name;
-            this.driver = ride_data.driver.name;
+            const ride_meta_data = ride.ride_meta_data;
             
-            this.date = this.moment(ride_data.cost_meta_data.ride_end_time).format('YYYY-MM-DD, HH:mm');
+            this.start_point_address = ride_meta_data.final_start_point_address;
+            this.end_point_address = ride_meta_data.final_end_point_address;
+            
+            this.rider = ride.rider.name;
+            this.driver = ride.driver.name;
+            
+            this.date = this.moment(ride.cost_meta_data.ride_end_time).format('YYYY-MM-DD, HH:mm');
           } else {
-            this.$router.push(this.Routes.Booking);
+            this.$router.push('/');
           }
         } catch (e) {
           this.checkError(e.response.status);
         }
-      },
-      getLocation(locationObj) {
-        return new Promise( ((resolve, reject) => {
-          const geocoder = new google.maps.Geocoder;
-          geocoder.geocode({'location': {lat: locationObj.latitudeCenter, lng: locationObj.longitudeCenter}}, function(results, status) {
-            if (status === 'OK') {
-              if (results[0]) {
-                const address = `${results[0].formatted_address.split(',')[0]} , ${results[0].formatted_address.split(',')[1]}`;
-                resolve(address)
-              } else {
-                window.alert('No results found');
-              }
-            } else {
-              window.alert('Geocoder failed due to: ' + status);
-            }
-          });
-        }));
       },
       async feedback(event) {
         event.preventDefault();
         try {
           const data = {
             ride_id: this.$route.params.id,
-            rider_ratings: this.rating,
-            rider_comments: this.comment,
+            ratings: this.rating,
+            comments: this.comment,
           };
           const response = await this.axios.post(`${this.AppURL}/${this.role}/feedback`, data);
           this.$router.push({name: 'Booking'});

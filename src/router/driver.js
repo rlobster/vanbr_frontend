@@ -1,13 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import Login from '@/layouts/Login';
-import Pricing from '@/layouts/Pricing';
-import History from '@/layouts/History';
-import HistoryDetail from '@/layouts/HistoryDetail';
-
+import Login from '@/layouts/common/Login';
+import Pricing from '@/layouts/common/Pricing';
+import Feedback from '@/layouts/common/Feedback';
+import History from '@/layouts/common/History';
+import HistoryDetail from '@/layouts/common/HistoryDetail';
 // Import all Driver Layouts
 import DriverStatus from '@/layouts/driver/DriverStatus';
+import Ride from '@/layouts/driver/Ride';
 import Profile from '@/layouts/driver/Profile';
 
 import Routes from './routes';
@@ -30,9 +31,25 @@ const routes = [
     },
   },
   {
+    path: Routes.Ride,
+    name: 'Ride',
+    component: Ride,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: Routes.Profile,
     name: 'Profile',
     component: Profile,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: Routes.Feedback,
+    name: 'Feedback',
+    component: Feedback,
     meta: {
       requiresAuth: true,
     },
@@ -71,7 +88,6 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token');
-  console.log(to);
   if (token) {
     if (to.path === '/login' || to.path === '/') {
       next({ name: 'DriverStatus' });
