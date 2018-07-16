@@ -12,12 +12,12 @@
             <input type="date" v-model="dob" class="form-control" id="dob"/>
           </div>
           <div class="form-group main-app-section-xs">
-            <label for="name">Mobile Number:</label>
+            <label for="mobile">Mobile Number:</label>
             <input v-model="mobile_no" type="number" class="form-control" placeholder="Mobile" id="mobile"/>
           </div>
           <div class="form-group main-app-section-xs">
-            <label for="name">Gender:</label>
-            <select class="form-control" v-model="gender">
+            <label for="gender">Gender:</label>
+            <select class="form-control" v-model="gender" id="gender">
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>

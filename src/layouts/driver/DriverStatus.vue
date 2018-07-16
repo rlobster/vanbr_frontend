@@ -15,15 +15,15 @@
       <div class="main-app-section-xs">
         <div class="d-flex justify-content-between p-2">
           <div><strong>Name</strong>:</div>
-          <div>John Doe</div>
+          <div>{{ name }}</div>
         </div>
         <div class="d-flex justify-content-between p-2">
           <div><strong>Car Number</strong>:</div>
-          <div>ABC XY 1234</div>
+          <div>{{ carNumber }}</div>
         </div>
         <div class="d-flex justify-content-between p-2">
           <div><strong>Car Type</strong>:</div>
-          <div>Sedan</div>
+          <div>{{ carType }}</div>
         </div>
       </div>
     </Card>
@@ -32,6 +32,7 @@
 
 <script>
   import Card from '@/components/Card';
+  import AppURL from '@/constants';
 
   export default {
     name: 'DriverStatus',
@@ -39,9 +40,16 @@
       return {
         status: false,
         statusContent: 'You are currently Offline',
+        AppURL,
+        name: '',
+        carNumber: '',
+        carType: '',
       };
     },
     components: { Card },
+    mounted() {
+      this.getDriverProfile();
+    },
     methods: {
       changeStatus() {
         this.status = !this.status;
@@ -50,6 +58,17 @@
           this.statusContent = 'You are now Online';
         } else {
           this.statusContent = 'You are currently Offline';
+        }
+      },
+      async getDriverProfile() {
+        try {
+          const response = await this.axios.get(`${this.AppURL}/driver/profile`);
+          console.log(response.data);
+          this.name = response.data.data.name;
+          this.carNumber = response.data.data.car_number;
+          this.carType = response.data.data.car_model;
+        } catch (e) {
+          console.log(e);
         }
       },
     },
