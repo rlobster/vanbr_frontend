@@ -45,6 +45,7 @@
     methods: {
       changeStatus() {
         this.status = !this.status;
+        this.$socket.emit('isOnline', this.status);
         if (this.status) {
           this.statusContent = 'You are now Online';
         } else {
