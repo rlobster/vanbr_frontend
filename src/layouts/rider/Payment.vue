@@ -8,11 +8,11 @@
             <div class="main-app-section-sm">
               <div class="d-flex justify-content-between">
                 <div>Source:</div>
-                <div><strong>{{final_start_point_address}}</strong></div>
+                <div><strong>{{start_point_address}}</strong></div>
               </div>
               <div class="d-flex justify-content-between">
                 <div>Destination:</div>
-                <div><strong>{{final_end_point_address}}</strong></div>
+                <div><strong>{{end_point_address}}</strong></div>
               </div>
               <div v-if="is_ride_end">
                 <div class="d-flex justify-content-between">
@@ -124,8 +124,8 @@
             this.$router.push(this.Routes.Booking);
           }
 
-          this.start_point_address = ride_meta_data.final_start_point_address ? ride_meta_data.final_start_point_address : ride_meta_data.approx_start_point_address;
-          this.end_point_address = ride_meta_data.final_end_point_address ? ride_meta_data.final_end_point_address : ride_meta_data.approx_end_point_address;
+          this.start_point_address = ride_meta_data.final_start_point_address || ride_meta_data.approx_start_point_address;
+          this.end_point_address = ride_meta_data.final_end_point_address || ride_meta_data.approx_end_point_address;
           
           this.cost_meta_data = ride.cost_meta_data;
 
@@ -134,6 +134,7 @@
             this.start_time = this.moment(ride.ride_start_time);
             this.end_time = this.moment(ride.ride_end_time);
             this.final_time = ride_meta_data.final_time;
+            this.final_distance = ride_meta_data.final_distance || ride_meta_data.approx_distance;
             
             this.total_cost_per_kilometer = (Number(this.cost_meta_data.cost_per_kilometer) * Number(this.final_distance)).toFixed(2);
             this.total_cost_per_minute = (Number(this.cost_meta_data.cost_per_minute) * Number(this.final_time)).toFixed(2);

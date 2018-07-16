@@ -79,8 +79,8 @@
       setData(ride) {
           if (ride.ride_status === 1 || ride.ride_status === 2) {
             this.carType = ride.car.type;
-            this.approx_start_point_address = ride.ride_meta_data.final_start_point_address ? ride.ride_meta_data.final_start_point_address : ride.ride_meta_data.approx_start_point_address;
-            this.approx_start_point_code = ride.ride_meta_data.final_start_point_code ? ride.ride_meta_data.final_start_point_code : ride.ride_meta_data.approx_start_point_code;
+            this.approx_start_point_address = ride.ride_meta_data.final_start_point_address || ride.ride_meta_data.approx_start_point_address;
+            this.approx_start_point_code = ride.ride_meta_data.final_start_point_code || ride.ride_meta_data.approx_start_point_code;
             this.approx_end_point_address = ride.ride_meta_data.approx_end_point_address;
             this.approx_end_point_code = ride.ride_meta_data.approx_end_point_code;
             this.rider = ride.rider.name;
@@ -158,7 +158,7 @@
                     this.$router.push(this.Routes.DriverStatus);
                 }
             } catch (e) {
-                this.checkError(e.response.status);
+                // this.checkError(e.response.status);
             }
         },
     },
