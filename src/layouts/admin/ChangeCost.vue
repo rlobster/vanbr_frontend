@@ -3,6 +3,23 @@
       <Card class="mx-auto">
         <div class="title text-center">Change Costs</div>
         <form>
+          <div class="form-group main-app-section-xs">
+            <label for="name">Tax (For all types)</label>
+            <input type="number" class="form-control" placeholder="Tax" v-model="tax" id="tax"/>
+          </div>
+          <div class="form-group main-app-section-xs">
+            <label for="service">Service Charge (For all types)</label>
+            <input type="number" class="form-control" placeholder="Service charge" v-model="serviceCharge" id="serviceCharge"/>
+          </div>
+          <div class="form-group main-app-section-xs">
+            <label for="vanbrcharge">Vanbr Charges (For all types)</label>
+            <input type="number" class="form-control" placeholder="Vanbr Charge" v-model="vanbrCharges" id="vanbrCharges"/>
+          </div>
+          <div class="form-group main-app-section-xs">
+            <label for="commission">Vanbr Commission (For all types)</label>
+            <input type="number" class="form-control" placeholder="Cost Per Km" v-model="vanbrCommision" id="vanbrCommision"/>
+          </div>
+
           <div class="main-app-section-sm"><strong>Sedan:</strong></div>
           <div class="form-group main-app-section-xs">
             <label for="name">Per Kilometer (in $)</label>
@@ -11,6 +28,9 @@
           <div class="form-group main-app-section-xs">
             <label for="smin">Per Minute (in $)</label>
             <input type="number" class="form-control" placeholder="Cost Per Min" id="smin" v-model="sedanMin"/>
+          </div>
+          <div class="form-group main-app-section-sm">
+            <button type="submit" class="btn btn-custom btn-block" @click="changeCostSedan">Set For Sedan</button>
           </div>
           <div class="main-app-section-sm"><strong>Mini Van:</strong></div>
           <div class="form-group main-app-section-xs">
@@ -22,7 +42,7 @@
             <input type="number" class="form-control" placeholder="Cost Per Min" id="vanmin" v-model="vanMin"/>
           </div>
           <div class="form-group main-app-section-sm">
-            <button type="submit" class="btn btn-custom btn-block" @click="changeCost">Submit</button>
+            <button type="submit" class="btn btn-custom btn-block" @click="changeCostVan">Set For Mini Van</button>
           </div>
         </form>
       </Card>
@@ -42,6 +62,10 @@
       return {
         AppURL,
         Routes,
+        tax: '',
+        serviceCharge: '',
+        vanbrCharges: '',
+        vanbrCommision: '',
         sedanKm: '',
         sedanMin: '',
         vanKm: '',
@@ -49,25 +73,36 @@
       };
     },
     methods: {
-      async changeCost(event) {
+      async changeCostSedan(event) {
         event.preventDefault();
         try {
           const data = {
-            name: this.name,
-            dob: this.dob,
-            gender: this.gender,
-            mobile_no: this.mobile_no,
-            email: this.email,
-            address: this.address,
-            car_model: this.carModel,
-            city: this.city,
-            car_number: this.carNumber,
-            license_number: this.licenseNumber,
-            license_expiry_date: this.licenseExpiry,
-            insurance_number: this.insuranceNo,
-            insurance_expiry_date: this.insuranceExpiry,
+            tax: this.tax,
+            cost_per_kilometer: this.sedanKm,
+            cost_per_minute: this.sedanMin,
+            service_charges: this.serviceCharge,
+            vanbr_charges: this.vanbrCharges,
+            vanbr_commission: this.vanbrCommision,
           };
-          const response = await this.axios.post(`${this.AppURL}/admin/driver/create`, data);
+          const response = await this.axios.put(`${this.AppURL}/admin/price/1/update`, data);
+          console.log(response);
+        } catch (e) {
+          this.checkError(e.response.status);
+          console.log(e);
+        }
+      },
+      async changeCostVan(event) {
+        event.preventDefault();
+        try {
+          const data = {
+            tax: this.tax,
+            cost_per_kilometer: this.vanKm,
+            cost_per_minute: this.vanMin,
+            service_charges: this.serviceCharge,
+            vanbr_charges: this.vanbrCharges,
+            vanbr_commission: this.vanbrCommision,
+          };
+          const response = await this.axios.put(`${this.AppURL}/admin/price/2/update`, data);
           console.log(response);
         } catch (e) {
           this.checkError(e.response.status);
