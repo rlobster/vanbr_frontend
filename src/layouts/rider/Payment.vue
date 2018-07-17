@@ -91,8 +91,6 @@
         is_ride_end: '',
         start_point_address: '',
         end_point_address: '',
-        start_time: '',
-        end_time: '',
         final_distance: 0,
         time: '',
         cost_meta_data: {},
@@ -131,8 +129,6 @@
 
           if (ride.ride_status === 3) {
             this.is_ride_end = true;
-            this.start_time = this.moment(ride.ride_start_time);
-            this.end_time = this.moment(ride.ride_end_time);
             this.final_time = ride_meta_data.final_time;
             this.final_distance = ride_meta_data.final_distance || ride_meta_data.approx_distance;
             
