@@ -73,7 +73,10 @@
           const response = await this.axios.get(`${this.AppURL}/driver/get-single-ride?ride_id=${this.$route.params.id}`);
           this.setData(response.data.data);
         } catch (e) {
-          this.checkError(e.response.status);
+          if(e.response) {
+            this.checkError(e.response.status);
+          }
+          console.log(e);
         }
       },
       setData(ride) {

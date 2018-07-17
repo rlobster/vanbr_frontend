@@ -21,6 +21,11 @@
       }
       this.handlePermission();
     },
+    mounted() {
+      if (this.getRole() === 'driver') {
+        this.$socket.emit('isOnline', false);
+      }
+    },
     methods: {
       handlePermission() {
         navigator.geolocation.watchPosition(
