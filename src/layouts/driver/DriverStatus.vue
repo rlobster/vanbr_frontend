@@ -1,5 +1,19 @@
 <template>
   <div class="status container main-app-section-sm">
+    <Card class="mx-auto mb-4" v-if="rideRequest.newRide">
+      <div class="title text-center text-success">New Ride!!!!</div>
+      <div class="d-flex justify-content-between main-app-section-sm">
+        <div>Pickup Location:</div><strong><a :href="'https://plus.codes/' + rideRequest.pickupCode" target="_blank">{{ rideRequest.pickupLocation }}</a></strong>
+      </div>
+      <div class="d-flex justify-content-between main-app-section-sm">
+        <div>Drop Location:</div><strong><a :href="'https://plus.codes/' + rideRequest.dropCode" target="_blank">{{ rideRequest.dropLocation }}</a></strong>
+      </div>
+      <div class="d-flex justify-content-between main-app-section-sm">
+        <button class="btn btn-danger">Reject</button>
+        <button class="btn btn-custom">Accept</button>
+      </div>
+    </Card>
+
     <Card class="mx-auto">
       <div class="title text-center">Current Status</div>
       <div class="d-flex justify-content-between main-app-section-sm">
@@ -44,6 +58,14 @@
         name: '',
         carNumber: '',
         carType: '',
+        rideRequest: {
+          newRide: false,
+          rideId: '',
+          pickupCode: '',
+          pickupLocation: '',
+          dropCode: '',
+          dropLocation: '',
+        },
       };
     },
     components: { Card },
@@ -63,13 +85,23 @@
       async getDriverProfile() {
         try {
           const response = await this.axios.get(`${this.AppURL}/driver/profile`);
-          console.log(response.data);
           this.name = response.data.data.name;
           this.carNumber = response.data.data.car_number;
           this.carType = response.data.data.car_model;
         } catch (e) {
           console.log(e);
         }
+      },
+    },
+    sockets: {
+      rideConfirmation(data) {
+        console.log(data);
+        this.rideRequest.newRide = true;
+        this.rideRequest.rideId = data.id;
+        this.rideRequest.pickupCode = data.ride_meta_data.approx_start_point_code;
+        this.rideRequest.dropCode = data.ride_meta_data.approx_end_point_code;
+        this.rideRequest.pickupLocation = data.ride_meta_data.approx_start_point_address;
+        this.rideRequest.dropLocation = data.ride_meta_data.approx_end_point_address;
       },
     },
   };
@@ -132,5 +164,13 @@
     &:before {
       border-radius: 50%;
     }
+  }
+
+  button {
+    width: 49%;
+  }
+  a {
+    color: black;
+    text-decoration: underline;
   }
 </style>
