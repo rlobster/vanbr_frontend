@@ -19,6 +19,7 @@ import Reference from '@/layouts/rider/Reference';
 // Import all Driver Layouts
 import Status from '@/layouts/driver/Status';
 import ProfileView from '@/layouts/driver/ProfileView';
+import DriverHistoryDetail from '@/layouts/driver/DriverHistoryDetail';
 
 // Import all Admin Layouts
 import Admin from '@/layouts/admin/Admin';
