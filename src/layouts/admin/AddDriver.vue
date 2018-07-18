@@ -57,11 +57,11 @@
           </div>
           <div class="form-group main-app-section-xs">
             <label>Driver Image:</label>
-            <input type="file" class="form-control" @change="onFileChange" id="driverImage" name="driverimage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
+            <input type="file" class="form-control" @change="onFileChange" ref="files" id="files" name="driverimage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
           </div>
           <div class="form-group main-app-section-xs">
             <label>Driver's Car Image:</label>
-            <input type="file" class="form-control" @change="onFileChange" id="driverCarImage" name="driverCarImage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
+            <input type="file" class="form-control" @change="onFileChange" ref="driverCarImage" id="driverCarImage" name="driverCarImage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
           </div>
           <div class="form-group main-app-section-sm">
             <button type="submit" class="btn btn-custom btn-block" @click="addDriver">Submit</button>
@@ -72,7 +72,7 @@
 </template>
 
 <script>
-
+  /* eslint-disable */
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
   import AppURL from '@/constants';
@@ -98,36 +98,41 @@
         insuranceExpiry: '',
         driverImage: '',
         driverCarImage: '',
+        files: '',
       };
     },
     methods: {
-      async onFileChange(e) {
-        const files = e.target.files || e.dataTransfer.files;
-        console.log(files);
-        if (files && files.length) {
-          const reader = new FileReader();
-          reader.onload = (event) => {
-            console.log(event.target.result);
-            if (event.target.result) {
-              console.log('happened');
-              this.createImage(event.target.result);
-              const output = reader.readAsDataURL(event.target.result);
-              console.log(output);
-            }
-          };
-        }
+      onFileChange() {
+        // this.file = this.$refs.file.files[0];
+        this.files = this.$refs.files.files;
       },
-      createImage(file) {
-        console.log(file);
-        // const image = new Image();
-        const reader = new FileReader();
+      // async onFileChange(e) {
+      //   const files = e.target.files || e.dataTransfer.files;
+      //   console.log(files);
+      //   if (files && files.length) {
+      //     const reader = new FileReader();
+      //     reader.onload = (event) => {
+      //       console.log(event.target.result);
+      //       if (event.target.result) {
+      //         console.log('happened');
+      //         this.createImage(event.target.result);
+      //         const output = reader.readAsDataURL(event.target.result);
+      //         console.log(output);
+      //       }
+      //     };
+      //   }
+      // },
+      // createImage(file) {
+      //   console.log(file);
+      //   // const image = new Image();
+      //   const reader = new FileReader();
 
-        // reader.onload = (e) => {
-        //   const image = e.target.result;
-        // };
-        const output = reader.readAsDataURL(file);
-        console.log(output);
-      },
+      //   // reader.onload = (e) => {
+      //   //   const image = e.target.result;
+      //   // };
+      //   const output = reader.readAsDataURL(file);
+      //   console.log(output);
+      // },
       async addDriver(event) {
         event.preventDefault();
         try {
@@ -148,10 +153,43 @@
           };
           const response = await this.axios.post(`${this.AppURL}/admin/driver/create`, data);
           console.log(response);
+          if(response.data.data && response.data.data.id) {
+            uploadImage(response.data.data.id);    
+          }
         } catch (e) {
           this.checkError(e.response.status);
           console.log(e);
         }
+      },
+      uploadImage(id) {
+        console.log('here');
+        const formData = new FormData();
+        
+        // formData.append('file', this.file); -for single file
+        for (let i = 0; i < this.files.length; i++) {
+          const file = this.files[i];
+          formData.append('files[' + i + ']', file);
+        }
+        console.log(formData);
+        axios.post( `${this.AppURL}/admin/upload/image`,
+          {
+            media: formData,
+            resource_id: id,
+            tags: image,
+            resource_type: driver,
+          },
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+
+            }
+          }
+        ).then(function(){
+          console.log('SUCCESS!!');
+        })
+        .catch(function(){
+          console.log('FAILURE!!');
+        });
       },
     },
   };
