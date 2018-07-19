@@ -100,7 +100,7 @@
         try {
             const data = {
                 ride_id: this.$route.params.id,
-            }
+            };
             const response = await this.axios.post(`${this.AppURL}/driver/cancel-ride`, data);
             this.$router.push(this.Routes.DriverStatus);
         } catch (e) {

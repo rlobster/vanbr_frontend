@@ -67,9 +67,9 @@
       async getRide() {
         try {
           const response = await this.axios.get(`${this.AppURL}/rider/get-single-ride?ride_id=${this.$route.params.id}`);
-          
+
           const ride = response.data.data;
-          
+
           if (ride.ride_status === 0 || ride.ride_status === 1 || ride.ride_status === 2) {
             this.carType = ride.car.type;
             this.approx_start_point_address = ride.ride_meta_data.approx_start_point_address;
@@ -85,7 +85,7 @@
         try {
           const data = {
             ride_id: this.$route.params.id,
-          }
+          };
           const response = await this.axios.post(`${this.AppURL}/rider/cancel-ride`, data);
           if (response.data.data.payment_status === 5 && response.data.data.ride_status === 5) {
             this.$router.push({name: 'Payment', params: {id: response.data.data.id}});
@@ -97,6 +97,12 @@
         }
       },
     },
+    sockets: {
+      noDriverFound(value) {
+        alert(value);
+        this.cancelRide();
+      }
+    }
   };
 </script>
 
