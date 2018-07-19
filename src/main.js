@@ -27,7 +27,7 @@ Vue.use(VueGoogleMaps, {
     libraries: 'places',
   },
 });
-Vue.use(VueSocketio, 'http://vanbr.ca:3000');
+Vue.use(VueSocketio, 'https://vanbr.ca/socketio');
 // Vue.use(Vuetable);
 Vue.use(VueEvents);
 Vue.use(VuetablePagination);
