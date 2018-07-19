@@ -83,7 +83,15 @@
               </div>
             <div class="d-flex main-app-section-sm justify-content-between car-details">
               <div><strong>Total charge</strong></div>
-              <div><strong>{{ (Number(total_cost) + Number(total_tax)).toFixed(2) }}</strong></div>
+              <div><strong>${{ (Number(total_cost) + Number(total_tax)).toFixed(2) }}</strong></div>
+            </div>
+            <div class="d-flex main-app-section-sm justify-content-between car-details">
+              <div><strong>Driver Cost</strong></div>
+              <div><strong>${{ride.driver_cost}}</strong></div>
+            </div>
+            <div class="d-flex main-app-section-sm justify-content-between car-details">
+              <div><strong>Driver Paid</strong></div>
+              <div><strong>{{driverPayment}}</strong></div>
             </div>
             <div class="d-flex main-app-section-sm justify-content-between car-details">
               <div><strong>Payment status</strong></div>
@@ -107,7 +115,7 @@
   import AppURL from '@/constants';
 
   export default {
-    name: 'HistoryDetail',
+    name: 'DriverHistoryDetail',
     components: {
       Card,
     },
@@ -129,6 +137,8 @@
         total_cost_per_minute: '',
         total_tax: '',
         total_cost: '',
+        isDriverPaid: false,
+        driverPayment: '',
       };
     },
     async mounted() {
@@ -144,6 +154,12 @@
           const ride_meta_data = this.ride.ride_meta_data;
           this.start_point_address = ride_meta_data.final_start_point_address || ride_meta_data.approx_start_point_address;
           this.end_point_address = ride_meta_data.final_end_point_address || ride_meta_data.approx_end_point_address;
+          
+          if(this.ride && this.ride.is_driver_paid) {
+              this.driverPayment = 'Yes';
+          } else {
+              this.driverPayment = 'No';              
+          }
 
           if (this.ride.ride_status === 3) {
             this.is_ride_end = true;

@@ -10,6 +10,7 @@ import HistoryDetail from '@/layouts/common/HistoryDetail';
 import DriverStatus from '@/layouts/driver/DriverStatus';
 import Ride from '@/layouts/driver/Ride';
 import Profile from '@/layouts/driver/Profile';
+import DriverHistoryDetail from '@/layouts/driver/DriverHistoryDetail';
 
 import Routes from './routes';
 
@@ -71,6 +72,14 @@ const routes = [
     path: Routes.HistoryDetail,
     name: 'HistoryDetail',
     component: HistoryDetail,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: Routes.DriverHistoryDetail,
+    name: 'DriverHistoryDetail',
+    component: DriverHistoryDetail,
     meta: {
       requiresAuth: true,
     },

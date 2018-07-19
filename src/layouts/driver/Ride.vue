@@ -36,7 +36,8 @@
         </div>
           <div class="form-group main-app-section-md">
             <button class="btn btn-outline-danger btn-ride" @click="cancelRide">Cancel</button>
-            <button class="btn btn-ride btn-custom" @click="actionRide">{{ ride_action_text }}</button>
+            <button class="btn btn-ride btn-custom" @click="endRide" v-if="is_start_ride">End Ride</button>
+            <button class="btn btn-ride btn-custom" @click="startRide" v-else>Start Ride</button>
           </div>
       </Card>
     </div>
@@ -60,8 +61,7 @@
         approx_end_point_code: '',
         rider: '',
         mobile_no: '',
-        ride_action_text: 'Start Ride',
-        ride_status: '',
+        is_start_ride: '',
       };
     },
     beforeMount() {
@@ -80,21 +80,23 @@
         }
       },
       setData(ride) {
-          if (ride.ride_status === 1 || ride.ride_status === 2) {
-            this.carType = ride.car.type;
-            this.approx_start_point_address = ride.ride_meta_data.final_start_point_address || ride.ride_meta_data.approx_start_point_address;
-            this.approx_start_point_code = ride.ride_meta_data.final_start_point_code || ride.ride_meta_data.approx_start_point_code;
-            this.approx_end_point_address = ride.ride_meta_data.approx_end_point_address;
-            this.approx_end_point_code = ride.ride_meta_data.approx_end_point_code;
-            this.rider = ride.rider.name;
-            this.mobile_no = ride.rider.mobile_no;
-            this.ride_status = ride.ride_status;
-            if(ride.ride_status === 2) {
-                this.ride_action_text = "End Ride";
-            }
-          } else {
-            this.$router.push(this.Routes.DriverStatus);
+        if (ride.ride_status === 1 || ride.ride_status === 2) {
+          this.carType = ride.car.type;
+          this.approx_start_point_address = ride.ride_meta_data.final_start_point_address || ride.ride_meta_data.approx_start_point_address;
+          this.approx_start_point_code = ride.ride_meta_data.final_start_point_code || ride.ride_meta_data.approx_start_point_code;
+          this.approx_end_point_address = ride.ride_meta_data.approx_end_point_address;
+          this.approx_end_point_code = ride.ride_meta_data.approx_end_point_code;
+          this.rider = ride.rider.name;
+          this.mobile_no = ride.rider.mobile_no;
+          if(ride.ride_status === 1) {
+              this.is_start_ride = false;
           }
+          if(ride.ride_status === 2) {
+              this.is_start_ride = true;
+          }
+        } else {
+          this.$router.push(this.Routes.DriverStatus);
+        }
       },
       async cancelRide() {
         try {
@@ -139,31 +141,37 @@
           });
         }));
       },
-        async actionRide() {
-            try {
-                const data = {
-                    ride_id: this.$route.params.id,
-                }
-                if (this.ride_status === 1) {
-                    data['final_start_point_code'] = this.getLocationPosition() || this.approx_start_point_code;
-                    const start_point_obj = OpenLocationCode.decode(data['final_start_point_code']);
-                    data['final_start_point_address'] = await this.getLocation(start_point_obj);
-                    console.log(data);
-                    const response = await this.axios.post(`${this.AppURL}/driver/start-ride`, data);
-                    this.setData(response.data.data);
-                } else if (this.ride_status === 2) {
-                    data['final_end_point_code'] = this.getLocationPosition() || this.approx_end_point_code;
-                    const end_point_obj = OpenLocationCode.decode(data['final_end_point_code']);
-                    data['final_end_point_address'] = await this.getLocation(end_point_obj);
-                    const response = await this.axios.post(`${this.AppURL}/driver/end-ride`, data);
-                    this.$router.push({name: 'Feedback', params: {id: response.data.data.id}});
-                } else {
-                    this.$router.push(this.Routes.DriverStatus);
-                }
-            } catch (e) {
-                // this.checkError(e.response.status);
-            }
-        },
+      async startRide() {
+        try {
+          const data = {
+              ride_id: this.$route.params.id,
+          }
+          data['final_start_point_code'] = this.getLocationPosition() || this.approx_start_point_code;
+          const start_point_obj = OpenLocationCode.decode(data['final_start_point_code']);
+          data['final_start_point_address'] = await this.getLocation(start_point_obj);
+          const response = await this.axios.post(`${this.AppURL}/driver/start-ride`, data);
+          this.is_start_ride = true;
+          const ride = response.data.data;
+          this.approx_start_point_address = ride.ride_meta_data.final_start_point_address || ride.ride_meta_data.approx_start_point_address;
+          this.approx_start_point_code = ride.ride_meta_data.final_start_point_code || ride.ride_meta_data.approx_start_point_code;
+        } catch (e) {
+          this.checkError(e.response.status);
+        }
+      },
+      async endRide() {
+        try {
+          const data = {
+              ride_id: this.$route.params.id,
+          }
+          data['final_end_point_code'] = this.getLocationPosition() || this.approx_end_point_code;
+          const end_point_obj = OpenLocationCode.decode(data['final_end_point_code']);
+          data['final_end_point_address'] = await this.getLocation(end_point_obj);
+          const response = await this.axios.post(`${this.AppURL}/driver/end-ride`, data);
+          this.$router.push({name: 'Feedback', params: {id: response.data.data.id}});
+        } catch (e) {
+          this.checkError(e.response.status);
+        }
+      },
     },
 };
 </script>

@@ -74,7 +74,10 @@
             this.carType = ride.car.type;
             this.approx_start_point_address = ride.ride_meta_data.approx_start_point_address;
             this.approx_end_point_address = ride.ride_meta_data.approx_end_point_address;
-          } else {
+          } else if (ride.ride_status === 3) {
+            this.$router.push({name: 'Payment', params: {id: ride.id}});
+          }
+          else {
             this.$router.push(this.Routes.Booking);
           }
         } catch (e) {
