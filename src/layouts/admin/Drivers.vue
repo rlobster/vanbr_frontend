@@ -131,7 +131,7 @@
     methods: {
       async getDrivers() {
         try {
-          const driver = await this.axios.get('http://vanbr.ca/api/admin/users/Driver');
+          const driver = await this.axios.get(`${this.AppURL}/admin/users/Driver`);
           console.log(driver);
           this.driverObj = driver.data.data;
         } catch (e) {
@@ -157,7 +157,7 @@
             month: 0,
             status: true,
           };
-          const paymentToDriver = await this.axios.put(`http://vanbr.ca/api/admin/ride/driver/${id}/payment/update`, paymentObj);
+          const paymentToDriver = await this.axios.put(`${this.AppURL}/admin/ride/driver/${id}/payment/update`, paymentObj);
           console.log(paymentToDriver);
         } catch (e) {
           this.checkError(e.response.status);

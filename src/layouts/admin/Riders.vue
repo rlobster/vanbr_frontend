@@ -40,12 +40,14 @@
   import Card from '@/components/Card';
   import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
   import VuetablePaginationBootstrap from '@/components/VuetablePaginationBootstrap';
+  import AppURL from '@/constants';
 
   export default {
     name: 'Riders',
     components: { Card, vuetable, VuetablePagination, VuetablePaginationBootstrap },
     data() {
       return {
+        AppURL,
         filterText: '',
         riderObj: [],
         fields: [
@@ -114,7 +116,7 @@
     methods: {
       async getRiders() {
         try {
-          const rider = await this.axios.get('http://vanbr.ca/api/admin/users/Rider');
+          const rider = await this.axios.get(`${this.AppURL}/admin/users/Rider`);
           console.log(rider.data.data);
           this.riderObj = rider.data.data;
         } catch (e) {
