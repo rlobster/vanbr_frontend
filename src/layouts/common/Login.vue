@@ -14,7 +14,7 @@
         <div class="form-group main-app-section-md">
           <button type="submit" class="btn btn-custom btn-block" @click="login">Login</button>
         </div>
-        <div class="main-app-section-xs">
+        <div class="main-app-section-xs" v-if="role === 'rider'">
           <router-link :to="Routes.Register">Don't have an account?</router-link>
         </div>
       </form>
