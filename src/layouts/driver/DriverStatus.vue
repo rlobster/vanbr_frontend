@@ -97,6 +97,7 @@
           this.$socket.emit('getDriverResponse', true, this.rideRequest.rideId);
           this.$socket.emit('isOnline', false);
           this.status = false;
+          this.statusContent = 'You are currently Offline';
         } else {
           this.$socket.emit('getDriverResponse', false, this.rideRequest.rideId);
         }
@@ -112,6 +113,10 @@
         this.rideRequest.dropCode = data.ride_meta_data.approx_end_point_code;
         this.rideRequest.pickupLocation = data.ride_meta_data.approx_start_point_address;
         this.rideRequest.dropLocation = data.ride_meta_data.approx_end_point_address;
+      },
+      confirmRide(value) {
+        console.log(value);
+        window.navigator.vibrate(200);
       },
     },
   };

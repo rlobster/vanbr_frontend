@@ -104,7 +104,11 @@
       noDriverFound(value) {
         alert(value);
         this.cancelRide();
-      }
+      },
+      confirmRide(value) {
+        console.log(value);
+        window.navigator.vibrate(200);
+      },
     }
   };
 </script>
