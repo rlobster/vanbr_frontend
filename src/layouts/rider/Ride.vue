@@ -69,11 +69,17 @@
           const response = await this.axios.get(`${this.AppURL}/rider/get-single-ride?ride_id=${this.$route.params.id}`);
 
           const ride = response.data.data;
+          console.log('ride data', ride);
 
           if (ride.ride_status === 0 || ride.ride_status === 1 || ride.ride_status === 2) {
             this.carType = ride.car.type;
             this.approx_start_point_address = ride.ride_meta_data.approx_start_point_address;
             this.approx_end_point_address = ride.ride_meta_data.approx_end_point_address;
+
+            if (ride.driver.name) {
+              this.driver = ride.driver.name;
+              this.carDetail = ride.driver.car_number;
+            }
           } else if (ride.ride_status === 3) {
             this.$router.push({name: 'Payment', params: {id: ride.id}});
           }
@@ -81,7 +87,10 @@
             this.$router.push(this.Routes.Booking);
           }
         } catch (e) {
-          this.checkError(e.response.status);
+          if(e.response) {
+            this.checkError(e.response.status);
+          }
+          console.log(e)
         }
       },
       async cancelRide() {
@@ -107,6 +116,8 @@
       },
       confirmRide(value) {
         console.log(value);
+        this.driver = value.driver.name;
+        this.carDetail = value.driver.car_number;
         window.navigator.vibrate(200);
       },
     }
