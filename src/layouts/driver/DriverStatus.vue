@@ -9,8 +9,8 @@
         <div>Drop Location:</div><strong><a :href="'https://plus.codes/' + rideRequest.dropCode" target="_blank">{{ rideRequest.dropLocation }}</a></strong>
       </div>
       <div class="d-flex justify-content-between main-app-section-sm">
-        <button class="btn btn-danger">Reject</button>
-        <button class="btn btn-custom">Accept</button>
+        <button class="btn btn-danger" @click="sendResponse(false)">Reject</button>
+        <button class="btn btn-custom" @click="sendResponse(true)">Accept</button>
       </div>
     </Card>
 
@@ -91,6 +91,16 @@
         } catch (e) {
           console.log(e);
         }
+      },
+      sendResponse(response) {
+        if (response) {
+          this.$socket.emit('getDriverResponse', true, this.rideRequest.rideId);
+          this.$socket.emit('isOnline', false);
+          this.status = false;
+        } else {
+          this.$socket.emit('getDriverResponse', false, this.rideRequest.rideId);
+        }
+        this.rideRequest.newRide = false;
       },
     },
     sockets: {
