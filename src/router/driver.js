@@ -100,14 +100,18 @@ router.beforeEach((to, from, next) => {
   if (token) {
     if (to.path === '/login' || to.path === '/') {
       next({ name: 'DriverStatus' });
+      return;
     }
     if (to.meta.requiresAuth) {
       next();
+      return;
     }
     next();
+    return;
   }
   if (!token && to.path !== '/login') {
     next({ name: 'Login' });
+    return;
   }
   next();
 });
