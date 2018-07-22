@@ -12,7 +12,7 @@
             <div class="d-flex justify-content-between">
               <div>Ride Drop:</div><div><strong>{{ end_point_address }}</strong></div>
             </div>
-            <div v-if="is_ride_end">
+            <div v-if="ride.ride_status === 3">
               <div class="d-flex justify-content-between">
                 <div>Ride Start Time:</div><div><strong>{{ start_time }}</strong></div>
               </div>
@@ -31,71 +31,79 @@
             <div class="d-flex justify-content-between">
               <div>Rider Contact:</div><div><strong>{{ this.idx(ride, _ => _.rider.mobile_no) || '-' }}</strong></div>
             </div>
-            <div class="d-flex justify-content-between">
-              <div>Rider Rating:</div><div><strong>{{ this.idx(ride, _ => _.feedback.rider_ratings) || '-' }}</strong></div>
-            </div>
-            <div class="d-flex justify-content-between">
-              <div>Rider Feedback:</div><div><strong>{{ this.idx(ride, _ => _.feedback.rider_comments) || '-' }}</strong></div>
+            <div v-if="ride.ride_status === 3">
+              <div class="d-flex justify-content-between">
+                <div>Rider Rating:</div><div><strong>{{ this.idx(ride, _ => _.feedback.rider_ratings) || '-' }}</strong></div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <div>Rider Feedback:</div><div><strong>{{ this.idx(ride, _ => _.feedback.rider_comments) || '-' }}</strong></div>
+              </div>
             </div>
             <!-- <div>Rider Email: <strong v-bind="ride.rider."></strong></div> -->
 
             <hr />
 
             <div class="d-flex justify-content-between">
-              <div>Driver:</div><div><strong>{{ this.idx(ride, _ => _.driver.name) || '-' }}</strong></div>
+              <div>Car Type:</div><div><strong>{{ this.idx(ride, _ => _.car.type) || '-' }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
-              <div>Car Type:</div><div><strong>{{ this.idx(ride, _ => _.car.type) || '-' }}</strong></div>
+              <div>Driver:</div><div><strong>{{ this.idx(ride, _ => _.driver.name) || '-' }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
               <div>Driver Contact:</div><div><strong>{{ this.idx(ride, _ => _.driver.mobile_no) || '-' }}</strong></div>
             </div>
-            <div class="d-flex justify-content-between">
-              <div>Driver Rating:</div><div><strong>{{ this.idx(ride, _ => _.feedback.driver_ratings) || '-' }}</strong></div>
-            </div>
-            <div class="d-flex justify-content-between">
-              <div>Driver Feedback:</div><div><strong>{{ this.idx(ride, _ => _.feedback.driver_comments) || '-' }}</strong></div>
+            <div v-if="ride.ride_status === 3">
+              <div class="d-flex justify-content-between">
+                <div>Driver Rating:</div><div><strong>{{ this.idx(ride, _ => _.feedback.driver_ratings) || '-' }}</strong></div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <div>Driver Feedback:</div><div><strong>{{ this.idx(ride, _ => _.feedback.driver_comments) || '-' }}</strong></div>
+              </div>
             </div>
             <hr />
-            <div v-if="is_ride_end">
-                <div class="d-flex justify-content-between">
-                  <div>Per Kilometers:</div>
-                  <div>{{cost_meta_data.cost_per_kilometer}} * {{final_distance}} = <strong>${{total_cost_per_kilometer}}</strong></div>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <div>Per Minute:</div>
-                  <div>{{cost_meta_data.cost_per_minute}} * {{final_time}} = <strong>${{total_cost_per_minute}}</strong></div>
-                </div>
+            <div v-if="ride.ride_status === 3">
+              <div class="d-flex justify-content-between">
+                <div>Per Kilometers:</div>
+                <div>{{cost_meta_data.cost_per_kilometer}} * {{final_distance}} = <strong>${{total_cost_per_kilometer}}</strong></div>
               </div>
+              <div class="d-flex justify-content-between">
+                <div>Per Minute:</div>
+                <div>{{cost_meta_data.cost_per_minute}} * {{final_time}} = <strong>${{total_cost_per_minute}}</strong></div>
+              </div>
+            </div>
+            <div v-if="!total_cost">
               <div class="d-flex justify-content-between">
                 <div>Vanbr charge:</div>
                 <div><strong>${{cost_meta_data.vanbr_charges}}</strong></div>
               </div>
-              <div v-if="is_ride_end">
-                <div class="d-flex justify-content-between">
-                  <div>Service charge:</div>
-                  <div><strong>${{cost_meta_data.service_charges}}</strong></div>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <div>{{cost_meta_data.tax}}% tax:</div>
-                  <div><strong>${{total_tax}}</strong></div>
-                </div>
+            </div>
+            <div v-if="ride.ride_status === 3">
+              <div class="d-flex justify-content-between">
+                <div>Service charge:</div>
+                <div><strong>${{cost_meta_data.service_charges}}</strong></div>
               </div>
-            <div class="d-flex main-app-section-sm justify-content-between car-details">
-              <div><strong>Total charge</strong></div>
-              <div><strong>${{ (Number(total_cost) + Number(total_tax)).toFixed(2) }}</strong></div>
+              <div class="d-flex justify-content-between">
+                <div>{{cost_meta_data.tax}}% tax:</div>
+                <div><strong>${{total_tax}}</strong></div>
+              </div>
             </div>
-            <div class="d-flex main-app-section-sm justify-content-between car-details">
-              <div><strong>Driver Cost</strong></div>
-              <div><strong>${{ride.driver_cost}}</strong></div>
-            </div>
-            <div class="d-flex main-app-section-sm justify-content-between car-details">
-              <div><strong>Driver Paid</strong></div>
-              <div><strong>{{driverPayment}}</strong></div>
-            </div>
-            <div class="d-flex main-app-section-sm justify-content-between car-details">
-              <div><strong>Payment status</strong></div>
-              <div><strong>{{ this.idx(ride, _ => _.payment_status) || '-' }}</strong></div>
+            <div v-if="!total_cost">
+              <div class="d-flex main-app-section-sm justify-content-between car-details">
+                <div><strong>Total charge</strong></div>
+                <div><strong>${{ (Number(total_cost) + Number(total_tax)).toFixed(2) }}</strong></div>
+              </div>
+              <div class="d-flex main-app-section-sm justify-content-between car-details">
+                <div><strong>Driver Cost</strong></div>
+                <div><strong>${{ride.driver_cost}}</strong></div>
+              </div>
+              <div class="d-flex main-app-section-sm justify-content-between car-details">
+                <div><strong>Driver Paid</strong></div>
+                <div><strong>{{driverPayment}}</strong></div>
+              </div>
+              <div class="d-flex main-app-section-sm justify-content-between car-details">
+                <div><strong>Payment status</strong></div>
+                <div><strong>{{ this.idx(ride, _ => _.payment_status) || '-' }}</strong></div>
+              </div>
             </div>
             <div class="d-flex main-app-section-sm justify-content-between car-details">
               <div><strong>Ride status</strong></div>
@@ -125,7 +133,6 @@
         Routes,
         ride: {},
         role: '',
-        is_ride_end: '',
         start_point_address: '',
         end_point_address: '',
         start_time: '',
@@ -162,7 +169,6 @@
           }
 
           if (this.ride.ride_status === 3) {
-            this.is_ride_end = true;
             this.start_time = this.moment(this.ride.ride_start_time).format('YYYY-MM-DD, HH:mm');
             this.end_time = this.moment(this.ride.ride_end_time).format('YYYY-MM-DD, HH:mm');
             this.final_time = ride_meta_data.final_time;
@@ -173,8 +179,7 @@
             this.total_cost = Number(this.total_cost_per_kilometer) + Number(this.total_cost_per_minute) + Number(this.cost_meta_data.service_charges) + Number(this.cost_meta_data.vanbr_charges);
             this.total_tax = (Number(this.total_cost) * Number(this.cost_meta_data.tax) / 100).toFixed(2);
           } else {
-            this.is_ride_end = false;
-            this.total_cost = Number(this.cost_meta_data.vanbr_charges);
+            this.total_cost = this.ride.cost;
             this.total_tax = 0;
           }
         } catch (e) {
