@@ -2,6 +2,9 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import Login from '@/layouts/common/Login';
+import ForgotPassword from '@/layouts/common/ForgotPassword';
+import ResetPassword from '@/layouts/common/ResetPassword';
+import ChangePassword from '@/layouts/common/ChangePassword';
 
 // Import all Admin Layouts
 import Dashboard from '@/layouts/admin/Dashboard';
@@ -26,6 +29,24 @@ const routes = [
     path: Routes.Login,
     name: 'Login',
     component: Login,
+  },
+  {
+    path: Routes.ForgotPassword,
+    name: 'ForgotPassword',
+    component: ForgotPassword,
+  },
+  {
+    path: Routes.ResetPassword,
+    name: 'ResetPassword',
+    component: ResetPassword,
+  },
+  {
+    path: Routes.ChangePassword,
+    name: 'ChangePassword',
+    component: ChangePassword,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: Routes.Dashboard,
