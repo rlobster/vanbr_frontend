@@ -65,7 +65,11 @@
             this.$router.push(Routes.Dashboard);
           }
         } catch (e) {
-          console.warn(e);
+          if (e.response.status === 401) {
+            alert('Invalid Credentials');
+          } else {
+            alert('Invalid Data');
+          }
         }
       },
     },

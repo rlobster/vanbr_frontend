@@ -156,6 +156,7 @@
           if(response.data.data && response.data.data.id) {
             uploadImage(response.data.data.id);    
           }
+          alert('Successfully Driver Added');
         } catch (e) {
           this.checkError(e.response.status);
           console.log(e);
