@@ -1,19 +1,5 @@
 <template>
   <div class="status container main-app-section-sm">
-    <Card class="mx-auto mb-4" v-if="rideRequest.newRide">
-      <div class="title text-center text-success">New Ride!!!!</div>
-      <div class="d-flex justify-content-between main-app-section-sm">
-        <div>Pickup Location:</div><strong><a :href="'https://plus.codes/' + rideRequest.pickupCode" target="_blank">{{ rideRequest.pickupLocation }}</a></strong>
-      </div>
-      <div class="d-flex justify-content-between main-app-section-sm">
-        <div>Drop Location:</div><strong><a :href="'https://plus.codes/' + rideRequest.dropCode" target="_blank">{{ rideRequest.dropLocation }}</a></strong>
-      </div>
-      <div class="d-flex justify-content-between main-app-section-sm">
-        <button class="btn btn-danger" @click="sendResponse(false)">Reject</button>
-        <button class="btn btn-custom" @click="sendResponse(true)">Accept</button>
-      </div>
-    </Card>
-
     <Card class="mx-auto">
       <div class="title text-center">Current Status</div>
       <div class="d-flex justify-content-between main-app-section-sm">
@@ -72,6 +58,15 @@
     components: { Card },
     mounted() {
       this.getDriverProfile();
+      if (window.localStorage.getItem('status') === 'true') {
+        this.status = true;
+        this.statusContent = 'You are now Online';
+        this.$socket.emit('isOnline', true);
+      } else {
+        this.status = false;
+        this.statusContent = 'You are currently Offline';
+        this.$socket.emit('isOnline', false);
+      }
     },
     methods: {
       changeStatus() {
@@ -79,8 +74,10 @@
         this.$socket.emit('isOnline', this.status);
         if (this.status) {
           this.statusContent = 'You are now Online';
+          window.localStorage.setItem('status', true);
         } else {
           this.statusContent = 'You are currently Offline';
+          window.localStorage.setItem('status', false);
         }
       },
       async getDriverProfile() {
@@ -92,34 +89,6 @@
         } catch (e) {
           console.log(e);
         }
-      },
-      sendResponse(response) {
-        if (response) {
-          this.$socket.emit('getDriverResponse', true, this.rideRequest.rideId, this.rideRequest.riderId);
-          this.$socket.emit('isOnline', false);
-          this.status = false;
-          this.statusContent = 'You are currently Offline';
-        } else {
-          this.$socket.emit('getDriverResponse', false, this.rideRequest.rideId, this.rideRequest.riderId);
-        }
-        this.rideRequest.newRide = false;
-      },
-    },
-    sockets: {
-      rideConfirmation(data) {
-        console.log(data);
-        this.rideRequest.newRide = true;
-        this.rideRequest.rideId = data.id;
-        this.rideRequest.pickupCode = data.ride_meta_data.approx_start_point_code;
-        this.rideRequest.dropCode = data.ride_meta_data.approx_end_point_code;
-        this.rideRequest.pickupLocation = data.ride_meta_data.approx_start_point_address;
-        this.rideRequest.dropLocation = data.ride_meta_data.approx_end_point_address;
-        this.rideRequest.riderId = data.rider_user_id;
-      },
-      confirmRide(value) {
-        console.log(value);
-        this.$router.push({ name: 'Ride', params: { id: value.id } });
-        window.navigator.vibrate(200);
       },
     },
   };

@@ -8,14 +8,14 @@
           <router-link :to="{name: 'Ride', params: {id: history.id}}" v-if="history.ride_status === 0 || history.ride_status === 1 || history.ride_status === 2">
             <div class="d-flex justify-content-between">
               <div><span>{{ history.ride_create_time }}</span></div>
-              <div><span class="history-card-detail">${{ history.cost }}</span></div>             
+              <div><span class="history-card-detail">${{ history.cost }}</span></div>
               <div class="d-flex row status">
                 <span class="history-card-detail">Ride Status:{{ history.ride_status }}</span>
                 <span class="history-card-detail">Payment Status:{{ history.payment_status }}</span>
               </div>
             </div>
           </router-link>
-          <router-link :to="{name: 'HistoryDetail', params: {id: history.id}}" v-if="role === 'rider' && history.payment_status === 3">
+          <router-link :to="{name: 'HistoryDetail', params: {id: history.id}}" v-if="role === 'rider' && (history.payment_status === 3 || history.payment_status === 4)">
             <div class="d-flex justify-content-between">
               <span>{{ history.ride_create_time }}</span>
               <span class="history-card-detail">${{ history.cost }}</span>
@@ -55,7 +55,7 @@
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
   import AppURL from '@/constants';
-  
+
   export default {
     name: 'History',
     components: {
@@ -99,11 +99,11 @@
     padding: 20px;
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
   }
-  
+
   .history-card-detail {
     text-align: right;
   }
-  
+
   a {
     color: black;
   }

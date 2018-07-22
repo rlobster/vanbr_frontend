@@ -2,7 +2,22 @@
   <div id="app">
     <Navbar></Navbar>
     <main>
-          <router-view></router-view>
+      <div class="container main-app-section-sm" v-if="rideRequest.newRide">
+        <Card class="mx-auto mb-4">
+          <div class="title text-center text-success">New Ride!!!!</div>
+          <div class="d-flex justify-content-between main-app-section-sm">
+            <div>Pickup Location:</div><strong><a :href="'https://plus.codes/' + rideRequest.pickupCode" target="_blank">{{ rideRequest.pickupLocation }}</a></strong>
+          </div>
+          <div class="d-flex justify-content-between main-app-section-sm">
+            <div>Drop Location:</div><strong><a :href="'https://plus.codes/' + rideRequest.dropCode" target="_blank">{{ rideRequest.dropLocation }}</a></strong>
+          </div>
+          <div class="d-flex justify-content-between main-app-section-sm">
+            <button class="btn btn-danger btn-request" @click="sendResponse(false)">Reject</button>
+            <button class="btn btn-custom btn-request" @click="sendResponse(true)">Accept</button>
+          </div>
+        </Card>
+      </div>
+      <router-view></router-view>
     </main>
 </div>
 </template>
@@ -10,10 +25,28 @@
 <script>
   import vuetable from 'vuetable-2';
   import Navbar from '@/components/Navbar';
+  import Card from '@/components/Card';
 
   export default {
     name: 'app',
-    components: { Navbar, vuetablePagination: vuetable.VuetablePagination },
+    components: {
+      Navbar,
+      vuetablePagination: vuetable.VuetablePagination,
+      Card,
+    },
+    data() {
+      return {
+        rideRequest: {
+          newRide: false,
+          rideId: '',
+          pickupCode: '',
+          pickupLocation: '',
+          dropCode: '',
+          dropLocation: '',
+          riderId: '',
+        },
+      };
+    },
     created() {
       const token = localStorage.getItem('token');
       if (token) {
@@ -23,6 +56,7 @@
     },
     mounted() {
       if (this.getRole() === 'driver') {
+        window.localStorage.setItem('status', false);
         this.$socket.emit('isOnline', false);
       }
     },
@@ -43,6 +77,18 @@
           },
         );
       },
+      sendResponse(response) {
+        if (response) {
+          this.$socket.emit('getDriverResponse', true, this.rideRequest.rideId, this.rideRequest.riderId);
+          this.$socket.emit('isOnline', false);
+          this.status = false;
+          this.statusContent = 'You are currently Offline';
+          window.localStorage.setItem('status', false);
+        } else {
+          this.$socket.emit('getDriverResponse', false, this.rideRequest.rideId, this.rideRequest.riderId);
+        }
+        this.rideRequest.newRide = false;
+      },
     },
     sockets: {
       connect() {
@@ -52,8 +98,22 @@
         }
         console.log('socket connected');
       },
-      customEmit(val) {
-        console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)', val);
+      rideConfirmation(data) {
+        if (this.getRole() === 'driver') {
+          console.log(data);
+          this.rideRequest.newRide = true;
+          this.rideRequest.rideId = data.id;
+          this.rideRequest.pickupCode = data.ride_meta_data.approx_start_point_code;
+          this.rideRequest.dropCode = data.ride_meta_data.approx_end_point_code;
+          this.rideRequest.pickupLocation = data.ride_meta_data.approx_start_point_address;
+          this.rideRequest.dropLocation = data.ride_meta_data.approx_end_point_address;
+          this.rideRequest.riderId = data.rider_user_id;
+        }
+      },
+      confirmRide(value) {
+        console.log(value);
+        this.$router.push({ name: 'Ride', params: { id: value.id } });
+        window.navigator.vibrate(200);
       },
     },
   };
@@ -61,4 +121,8 @@
 
 <style lang="scss">
   @import "styles/main";
+
+  .btn-request {
+    width: 49%;
+  }
 </style>
