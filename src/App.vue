@@ -114,9 +114,11 @@
         }
       },
       confirmRide(value) {
-        console.log(value);
-        this.$router.push({ name: 'Ride', params: { id: value.id } });
-        window.navigator.vibrate(200);
+        if (this.getRole() === 'driver') {
+          console.log(value);
+          this.$router.push({ name: 'Ride', params: { id: value.id } });
+          window.navigator.vibrate(200);
+        }
       },
       cancelRideListener(value) {
         alert(value);

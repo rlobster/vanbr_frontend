@@ -134,12 +134,13 @@
         alert(value);
         this.cancelRide();
       },
-      confirmRide(value) {
-        console.log(value);
-        this.rideStatus = value.ride_status;
-        this.rideStatusText = 'Driver is coming...';
-        this.driver = value.driver.name;
-        this.carDetail = value.driver.car_number;
+      confirmRide() {
+        // console.log(value);
+        // this.rideStatus = value.ride_status;
+        // this.rideStatusText = 'Driver is coming...';
+        // this.driver = value.driver.name;
+        // this.carDetail = value.driver.car_number;
+        this.getRide();
         window.navigator.vibrate(200);
       },
     }
