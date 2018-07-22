@@ -31,6 +31,10 @@
               <td><strong>Mobile No.</strong>:</td>
               <td class="text-right">{{ mobile_no }}</td>
             </tr>
+            <tr>
+              <td><strong>Ride Status</strong>:</td>
+              <td class="text-right">{{ rideStatus }}</td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -54,6 +58,7 @@
     data() {
       return {
         AppURL,
+        rideStatus: '',
         carType: '',
         approx_start_point_address: '',
         approx_end_point_address: '',
@@ -81,6 +86,14 @@
       },
       setData(ride) {
         if (ride.ride_status === 1 || ride.ride_status === 2) {
+          switch (ride.ride_status) {
+            case 2:
+              this.rideStatus = 'Ride Started';
+              break;
+            default:
+              this.rideStatus = 'Ride Confirmed';
+              break;
+          }
           this.carType = ride.car.type;
           this.approx_start_point_address = ride.ride_meta_data.final_start_point_address || ride.ride_meta_data.approx_start_point_address;
           this.approx_start_point_code = ride.ride_meta_data.final_start_point_code || ride.ride_meta_data.approx_start_point_code;
@@ -152,6 +165,7 @@
           const response = await this.axios.post(`${this.AppURL}/driver/start-ride`, data);
           this.is_start_ride = true;
           const ride = response.data.data;
+          this.rideStatus = 'Ride Started';
           this.approx_start_point_address = ride.ride_meta_data.final_start_point_address || ride.ride_meta_data.approx_start_point_address;
           this.approx_start_point_code = ride.ride_meta_data.final_start_point_code || ride.ride_meta_data.approx_start_point_code;
         } catch (e) {

@@ -23,19 +23,23 @@
               <td><strong>Drop</strong>:</td>
               <td class="text-right">{{ approx_end_point_address }}</td>
             </tr>
-            <tr>
+            <tr v-if="rideStatus !== 0">
               <td><strong>Driver</strong>:</td>
               <td class="text-right">{{ driver }}</td>
             </tr>
-            <tr>
+            <tr v-if="rideStatus !== 0">
               <td><strong>Car Detail</strong>:</td>
               <td class="text-right">{{ carDetail }}</td>
+            </tr>
+            <tr>
+              <td><strong>Ride Status</strong>:</td>
+              <td class="text-right">{{ rideStatusText }}</td>
             </tr>
             </tbody>
           </table>
         </div>
           <div class="form-group main-app-section-md">
-            <button class="btn btn-outline-danger btn-ride" @click="cancelRide">Cancel</button>
+            <button class="btn btn-outline-danger btn-ride" v-if="rideStatus !== 2" @click="cancelRide">Cancel</button>
             <router-link :to="Routes.Booking" class="btn btn-ride btn-custom">Book Another</router-link>
           </div>
       </Card>
@@ -56,8 +60,10 @@
         carType: '',
         approx_start_point_address: '',
         approx_end_point_address: '',
-        driver: 'Searching...',
-        carDetail: 'Searching...',
+        driver: '',
+        carDetail: '',
+        rideStatus: '',
+        rideStatusText: '',
       };
     },
     beforeMount() {
@@ -72,6 +78,19 @@
           console.log('ride data', ride);
 
           if (ride.ride_status === 0 || ride.ride_status === 1 || ride.ride_status === 2) {
+            
+            switch (ride.ride_status) {
+              case 1:
+                this.rideStatusText = 'Driver is coming...';
+                break;
+              case 2:
+                this.rideStatusText = 'You are riding...';
+                break;
+              default:
+                this.rideStatusText = 'Searching Driver...';
+                break;
+            }
+            this.rideStatus = ride.ride_status;
             this.carType = ride.car.type;
             this.approx_start_point_address = ride.ride_meta_data.approx_start_point_address;
             this.approx_end_point_address = ride.ride_meta_data.approx_end_point_address;

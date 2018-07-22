@@ -75,6 +75,10 @@ Vue.mixin({
         delete axios.defaults.headers.common.Authorization;
         await localStorage.clear();
         window.location = Routes.Login;
+        return;
+      }
+      if (status === 404) {
+        window.location = Routes.Booking;
       }
     },
   },

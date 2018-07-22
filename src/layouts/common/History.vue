@@ -15,7 +15,7 @@
               </div>
             </div>
           </router-link>
-          <router-link :to="{name: 'HistoryDetail', params: {id: history.id}}" v-if="$route.name === 'History' && role === 'rider' && (history.ride_status === 4 || (history.ride_status === 5 && history.payment_status === 3))">
+          <router-link :to="{name: 'HistoryDetail', params: {id: history.id}}" v-if="role === 'rider' && history.payment_status === 3">
             <div class="d-flex justify-content-between">
               <span>{{ history.ride_create_time }}</span>
               <span class="history-card-detail">${{ history.cost }}</span>

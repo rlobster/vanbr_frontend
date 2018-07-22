@@ -45,8 +45,8 @@
         event.preventDefault();
         try {
           const data = {
-            newPassword: this.newPassword,
-            confirmPassword: this.confirmPassword,
+            new_password: this.newPassword,
+            confirm_password: this.confirmPassword,
             token: this.token,
           };
           const response = await this.axios.post(`${this.AppURL}/${this.role}/reset-password`, data);
