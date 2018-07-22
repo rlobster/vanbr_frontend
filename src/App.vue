@@ -56,8 +56,11 @@
     },
     mounted() {
       if (this.getRole() === 'driver') {
-        window.localStorage.setItem('status', false);
-        this.$socket.emit('isOnline', false);
+        if (window.localStorage.getItem('status') === 'true') {
+          this.$socket.emit('isOnline', true);
+        } else {
+          this.$socket.emit('isOnline', false);
+        }
       }
     },
     methods: {
@@ -114,6 +117,10 @@
         console.log(value);
         this.$router.push({ name: 'Ride', params: { id: value.id } });
         window.navigator.vibrate(200);
+      },
+      cancelRideListener(value) {
+        alert(value);
+        window.location.reload();
       },
     },
   };

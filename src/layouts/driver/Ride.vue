@@ -117,6 +117,7 @@
                 ride_id: this.$route.params.id,
             };
             const response = await this.axios.post(`${this.AppURL}/driver/cancel-ride`, data);
+            this.$socket.emit('cancelRide', response.data.data.rider_user_id);
             this.$router.push(this.Routes.DriverStatus);
         } catch (e) {
             this.checkError(e.response.status);
