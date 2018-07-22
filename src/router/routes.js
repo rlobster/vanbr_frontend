@@ -17,7 +17,6 @@ const Routes = {
   // Driver Routes
   // Login: '/driver/login',
   DriverStatus: '/status',
-  DriverHistoryDetail: '/driver/history/:id',
   // ProfileView: '/driver/profile',
   // DriverHistory: '/driver/history',
   // DriverHistoryDetail: '/driver/history/:id',
