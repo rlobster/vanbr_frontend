@@ -155,7 +155,13 @@
           this.$socket.emit('getRideRequest', response.data.data.id);
           this.$router.push({name: 'Ride', params: {id: response.data.data.id}});
         } catch (e) {
-          this.checkError(e.response.status);
+          if (e.response) {
+            if (e.response.status === 406) {
+              alert('You have some unpaid rides...');
+              this.$router.push(Routes.History);
+            }
+            this.checkError(e.response.status);
+          }
         } finally {
           document.querySelector("#book").disabled = false
         }
@@ -200,7 +206,7 @@
         }, async (response, status) => {
           this.approxDistance = (response.rows[0].elements[0].distance.value / 1000).toFixed(2);
           this.approxTime = (response.rows[0].elements[0].duration.value / 60).toFixed(2);
-          
+
           const car = this.car_data.find(key => key.id == this.carId);
 
           const total_cost_per_kilometer = (Number(car.cost_per_kilometer) * parseFloat(this.approxDistance)).toFixed(2);

@@ -132,6 +132,7 @@
     sockets: {
       noDriverFound(value) {
         this.playNotificationAudio();
+        window.navigator.vibrate(200);
         alert(value);
         this.cancelRide();
       },

@@ -17,11 +17,11 @@
             </tr>
             <tr>
               <td><strong>Pickup</strong>:</td>
-              <td class="text-right">{{ approx_start_point_address }}</td>
+              <td class="text-right"><a :href="'https://plus.codes/' + approx_start_point_code" target="_blank">{{ approx_start_point_address }}</a></td>
             </tr>
             <tr>
               <td><strong>Drop</strong>:</td>
-              <td class="text-right">{{ approx_end_point_address }}</td>
+              <td class="text-right"><a :href="'https://plus.codes/' + approx_end_point_code" target="_blank">{{ approx_end_point_address }}</a></td>
             </tr>
             <tr>
               <td><strong>Rider</strong>:</td>
