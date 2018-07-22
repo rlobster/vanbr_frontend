@@ -78,7 +78,7 @@
           console.log('ride data', ride);
 
           if (ride.ride_status === 0 || ride.ride_status === 1 || ride.ride_status === 2) {
-            
+
             switch (ride.ride_status) {
               case 1:
                 this.rideStatusText = 'Driver is coming...';
@@ -135,6 +135,7 @@
       },
       confirmRide(value) {
         console.log(value);
+        this.rideStatus = value.ride_status;
         this.driver = value.driver.name;
         this.carDetail = value.driver.car_number;
         window.navigator.vibrate(200);
