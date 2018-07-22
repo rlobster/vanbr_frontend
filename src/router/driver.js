@@ -130,7 +130,7 @@ router.beforeEach((to, from, next) => {
     next();
     return;
   }
-  if (!token && to.path !== '/login') {
+  if (!token && to.meta.requiresAuth) {
     next({ name: 'Login' });
     return;
   }

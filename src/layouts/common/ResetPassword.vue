@@ -37,8 +37,14 @@
         token: '',
       };
     },
-    mounted() {
+    beforeMount() {
       this.role = this.getRole();
+      const token = this.$route.params.token;
+      if (token) {
+        this.token = token;
+      } else {
+        this.$router.push(Routes.ForgotPassword);
+      }
     },
     methods: {
       async resetpassword(event) {
@@ -49,8 +55,9 @@
             confirm_password: this.confirmPassword,
             token: this.token,
           };
-          const response = await this.axios.post(`${this.AppURL}/${this.role}/reset-password`, data);
-          console.log(response);
+          await this.axios.post(`${this.AppURL}/${this.role}/reset-password`, data);
+          this.$router.push(Routes.Login);
+          // console.log(response);
         } catch (e) {
           console.warn(e);
         }

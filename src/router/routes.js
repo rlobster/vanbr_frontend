@@ -4,7 +4,7 @@ const Routes = {
   Login: '/login',
   ChangePassword: '/change-password',
   ForgotPassword: '/forgot-password',
-  ResetPassword: '/reset-password',
+  ResetPassword: '/reset-password/:token',
   Register: '/register',
   Profile: '/profile',
   Booking: '/booking',
