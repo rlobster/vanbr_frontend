@@ -117,6 +117,7 @@
                 ride_id: this.$route.params.id,
             };
             const response = await this.axios.post(`${this.AppURL}/driver/cancel-ride`, data);
+            this.$socket.emit('cancelRide', response.data.data.rider_user_id);
             this.$router.push(this.Routes.DriverStatus);
         } catch (e) {
             this.checkError(e.response.status);
@@ -163,6 +164,9 @@
           const start_point_obj = OpenLocationCode.decode(data['final_start_point_code']);
           data['final_start_point_address'] = await this.getLocation(start_point_obj);
           const response = await this.axios.post(`${this.AppURL}/driver/start-ride`, data);
+
+          this.$socket.emit('changeRideStatus', response.data.data.rider_user_id);
+
           this.is_start_ride = true;
           const ride = response.data.data;
           this.rideStatus = 'Ride Started';
@@ -181,6 +185,9 @@
           const end_point_obj = OpenLocationCode.decode(data['final_end_point_code']);
           data['final_end_point_address'] = await this.getLocation(end_point_obj);
           const response = await this.axios.post(`${this.AppURL}/driver/end-ride`, data);
+
+          this.$socket.emit('changeRideStatus', response.data.data.rider_user_id);
+
           this.$router.push({name: 'Feedback', params: {id: response.data.data.id}});
         } catch (e) {
           this.checkError(e.response.status);

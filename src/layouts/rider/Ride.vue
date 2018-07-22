@@ -78,7 +78,7 @@
           console.log('ride data', ride);
 
           if (ride.ride_status === 0 || ride.ride_status === 1 || ride.ride_status === 2) {
-            
+
             switch (ride.ride_status) {
               case 1:
                 this.rideStatusText = 'Driver is coming...';
@@ -123,6 +123,7 @@
           } else {
             this.$router.push(this.Routes.Booking);
           }
+          this.$socket.emit('cancelRide', response.data.data.driver_user_id);
         } catch (e) {
           this.checkError(e.response.status);
         }
@@ -133,10 +134,13 @@
         alert(value);
         this.cancelRide();
       },
-      confirmRide(value) {
-        console.log(value);
-        this.driver = value.driver.name;
-        this.carDetail = value.driver.car_number;
+      confirmRide() {
+        // console.log(value);
+        // this.rideStatus = value.ride_status;
+        // this.rideStatusText = 'Driver is coming...';
+        // this.driver = value.driver.name;
+        // this.carDetail = value.driver.car_number;
+        this.getRide();
         window.navigator.vibrate(200);
       },
     }
