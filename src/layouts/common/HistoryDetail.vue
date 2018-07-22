@@ -71,7 +71,7 @@
                   <div>{{cost_meta_data.cost_per_minute}} * {{final_time}} = <strong>${{total_cost_per_minute}}</strong></div>
                 </div>
               </div>
-              <div v-if="!total_cost">
+              <div v-if="total_cost > 0">
                 <div class="d-flex justify-content-between">
                   <div>Vanbr charge:</div>
                   <div><strong>${{cost_meta_data.vanbr_charges}}</strong></div>
@@ -87,7 +87,7 @@
                   <div><strong>${{total_tax}}</strong></div>
                 </div>
               </div>
-              <div v-if="!total_cost">
+              <div v-if="total_cost > 0">
                 <div class="d-flex main-app-section-sm justify-content-between car-details">
                   <div><strong>Total charge</strong></div>
                   <div><strong>{{ (Number(total_cost) + Number(total_tax)).toFixed(2) }}</strong></div>
