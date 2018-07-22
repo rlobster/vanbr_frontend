@@ -99,7 +99,7 @@
           const data = {
             ride_id: this.$route.params.id,
             ratings: this.rating,
-            comments: this.comment,
+            comments: this.comment || undefined,
           };
           const response = await this.axios.post(`${this.AppURL}/${this.role}/feedback`, data);
           this.$router.push({name: 'Booking'});

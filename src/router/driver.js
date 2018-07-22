@@ -8,7 +8,6 @@ import ChangePassword from '@/layouts/common/ChangePassword';
 import Pricing from '@/layouts/common/Pricing';
 import Feedback from '@/layouts/common/Feedback';
 import History from '@/layouts/common/History';
-import HistoryDetail from '@/layouts/common/HistoryDetail';
 // Import all Driver Layouts
 import DriverStatus from '@/layouts/driver/DriverStatus';
 import Ride from '@/layouts/driver/Ride';
@@ -89,16 +88,16 @@ const routes = [
       requiresAuth: true,
     },
   },
+  // {
+  //   path: Routes.HistoryDetail,
+  //   name: 'HistoryDetail',
+  //   component: HistoryDetail,
+  //   meta: {
+  //     requiresAuth: true,
+  //   },
+  // },
   {
     path: Routes.HistoryDetail,
-    name: 'HistoryDetail',
-    component: HistoryDetail,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: Routes.DriverHistoryDetail,
     name: 'DriverHistoryDetail',
     component: DriverHistoryDetail,
     meta: {
