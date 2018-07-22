@@ -81,6 +81,9 @@ Vue.mixin({
         window.location = Routes.Booking;
       }
     },
+    playNotificationAudio() {
+      document.querySelector('#notification').play();
+    },
   },
 });
 
