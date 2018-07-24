@@ -127,6 +127,16 @@
         alert(value);
         window.location.reload();
       },
+      async logout() {
+        try {
+          await this.axios.post(`${this.AppURL}/logout`);
+          delete this.axios.defaults.headers.common.Authorization;
+          await localStorage.clear();
+          this.$router.push(this.Routes.Login);
+        } catch (e) {
+          this.checkError(e.response.status);
+        }
+      },
     },
   };
 </script>
