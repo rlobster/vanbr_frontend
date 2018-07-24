@@ -17,11 +17,11 @@
             </tr>
             <tr>
               <td><strong>Pickup</strong>:</td>
-              <td class="text-right"><a :href="'https://plus.codes/' + approx_start_point_code" target="_blank">{{ approx_start_point_address }}</a></td>
+              <td class="text-right"><a :href="'https://www.google.com/maps/place/' + approx_start_point_code + '/@' + approx_start_point_code + ',17z'" target="_blank">{{ approx_start_point_address }}</a></td>
             </tr>
             <tr>
               <td><strong>Drop</strong>:</td>
-              <td class="text-right"><a :href="'https://plus.codes/' + approx_end_point_code" target="_blank">{{ approx_end_point_address }}</a></td>
+              <td class="text-right"><a :href="'https://www.google.com/maps/place/' + approx_end_point_code + '/@' + approx_end_point_code + ',17z'" target="_blank">{{ approx_end_point_address }}</a></td>
             </tr>
             <tr>
               <td><strong>Rider</strong>:</td>
@@ -97,8 +97,12 @@
           this.carType = ride.car.type;
           this.approx_start_point_address = ride.ride_meta_data.final_start_point_address || ride.ride_meta_data.approx_start_point_address;
           this.approx_start_point_code = ride.ride_meta_data.final_start_point_code || ride.ride_meta_data.approx_start_point_code;
+          this.approx_start_point_code = OpenLocationCode.decode(this.approx_start_point_code).latitudeCenter + ',' + OpenLocationCode.decode(this.approx_start_point_code).longitudeCenter;
+
           this.approx_end_point_address = ride.ride_meta_data.approx_end_point_address;
           this.approx_end_point_code = ride.ride_meta_data.approx_end_point_code;
+          this.approx_end_point_code = OpenLocationCode.decode(this.approx_end_point_code).latitudeCenter + ',' + OpenLocationCode.decode(this.approx_end_point_code).longitudeCenter;
+
           this.rider = ride.rider.name;
           this.mobile_no = ride.rider.mobile_no;
           if(ride.ride_status === 1) {
@@ -159,7 +163,7 @@
         try {
           const data = {
               ride_id: this.$route.params.id,
-          }
+          };
           data['final_start_point_code'] = this.getLocationPosition() || this.approx_start_point_code;
           const start_point_obj = OpenLocationCode.decode(data['final_start_point_code']);
           data['final_start_point_address'] = await this.getLocation(start_point_obj);
