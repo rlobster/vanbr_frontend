@@ -5,31 +5,37 @@
         <form>
           <div class="form-group main-app-section-xs">
             <label for="name">Name:</label>
-            <input type="text" class="form-control" placeholder="Name" v-model="name" id="name"/>
+            <input v-validate="'required'" name="name" type="text" class="form-control" placeholder="Name" v-model="name" id="name"/>
+            <p class="error-msg">{{ errors.first('name') }}</p>
           </div>
           <div class="form-group main-app-section-xs">
             <label for="dob">Date of Birth:</label>
-            <input type="date" class="form-control" id="dob" v-model="dob"/>
+            <input v-validate="'required'" name="dob" type="date" class="form-control" id="dob" v-model="dob"/>
+            <p class="error-msg">{{ errors.first('dob') }}</p>            
           </div>
           <div class="form-group main-app-section-xs">
             <label for="dob">Mobile Number:</label>
-            <input type="number" class="form-control" id="mobile" v-model="mobile_no"/>
+            <input type="number" v-validate="'required|numeric'" name="mobile" class="form-control" id="mobile" v-model="mobile_no"/>
+            <p class="error-msg">{{ errors.first('mobile') }}</p>            
           </div>
           <div class="form-group main-app-section-xs">
             <label>Gender:</label>
-            <select v-model="gender" class="form-control">
+            <select v-validate="'required'" name="gender" v-model="gender" class="form-control">
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
             </select>
+            <p class="error-msg">{{ errors.first('gender') }}</p>            
           </div>
           <div class="form-group main-app-section-xs">
             <label for="email">Email:</label>
-            <input type="text" class="form-control" placeholder="Email" id="email" v-model="email"/>
+            <input v-validate="'required|email'" name="email" type="text" class="form-control" placeholder="Email" id="email" v-model="email"/>
+            <p class="error-msg">{{ errors.first('email') }}</p>            
           </div>
           <div class="form-group main-app-section-xs">
             <label for="password">Password:</label>
-            <input type="password" class="form-control" v-model="password" placeholder="Password" id="password"/>
+            <input v-validate="'required'" name="password" type="password" class="form-control" v-model="password" placeholder="Password" id="password"/>
+            <p class="error-msg">{{ errors.first('password') }}</p>            
             <input type="checkbox" id="password-check" class="main-app-section-xs"/>
             <label for="password-check">Show/Hide Password</label>
           </div>
@@ -97,5 +103,10 @@
     -moz-appearance: none;
     appearance: none;
     margin: 0;
+  }
+  .error-msg {
+    color: #a30015;
+    font-size: 12px;
+    margin-top: 5px;
   }
 </style>
