@@ -2,6 +2,12 @@
   <div class="main-app-section-sm container">
     <Card class="mx-auto">
       <div class="title">History</div>
+      <div class="history-card" v-if="role === 'driver'">
+        <div class="d-flex justify-content-between">
+          <span>Total Unpaid Amount:</span>
+          <strong><span class="history-card-detail">${{ driverCost }}</span></strong>
+        </div>
+      </div>
       <div v-for="history in historyItem" :key="history.id">
         <div class="history-card">
           <!-- for 0 1 2 -->
@@ -68,6 +74,7 @@
         Routes,
         historyItem: [],
         role: '',
+        driverCost: '',
       };
     },
     // mounted() {
@@ -81,6 +88,10 @@
     methods: {
       async getHistory() {
         try {
+          if (this.role === 'driver') {
+            const driverCost = await this.axios.get(`${this.AppURL}/${this.role}/get-driver-cost`);
+            this.driverCost = driverCost.data.data.driver_cost;
+          }
           const history = await this.axios.get(`${this.AppURL}/${this.role}/get-all-rides`);
           this.historyItem = history.data.data;
         } catch (e) {

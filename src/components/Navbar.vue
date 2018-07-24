@@ -19,9 +19,6 @@
           <router-link :to="Routes.Profile" class="d-flex align-items-center justify-content-center">
             <div class="nav-menu p-2">Profile</div>
           </router-link>
-          <router-link :to="Routes.ChangePassword" class="d-flex align-items-center justify-content-center">
-            <div class="nav-menu p-2">Change Password</div>
-          </router-link>
           <router-link :to="Routes.Login" class="d-flex align-items-center justify-content-center" v-if="authStatus">
             <div class="nav-menu p-2" @click="logout">Logout</div>
           </router-link>
@@ -44,9 +41,6 @@
           </router-link>
           <router-link :to="Routes.Profile" class="d-flex align-items-center justify-content-left">
             <div class="nav-menu p-2" @click="toggleNav">Profile</div>
-          </router-link>
-          <router-link :to="Routes.ChangePassword" class="d-flex align-items-center justify-content-left">
-            <div class="nav-menu p-2" @click="toggleNav">Change Password</div>
           </router-link>
           <router-link :to="Routes.Login" class="d-flex align-items-center justify-content-left" v-if="authStatus">
             <div class="nav-menu p-2" @click="logoutHandler">Logout</div>
