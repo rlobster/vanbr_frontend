@@ -27,6 +27,9 @@
             <label for="email">Email:</label>
             <input type="text" v-model="email" class="form-control" placeholder="Email" id="email"/>
           </div>
+          <router-link :to="Routes.ChangePassword" class="d-flex align-items-center justify-content-left">
+            Change Password
+          </router-link>
           <div class="form-group main-app-section-sm">
             <button type="submit" class="btn btn-custom btn-block" @click="profile">Submit</button>
           </div>
