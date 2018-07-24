@@ -26,6 +26,7 @@
   import vuetable from 'vuetable-2';
   import Navbar from '@/components/Navbar';
   import Card from '@/components/Card';
+  import VeeValidate from 'vee-validate';
 
   export default {
     name: 'app',
@@ -33,6 +34,7 @@
       Navbar,
       vuetablePagination: vuetable.VuetablePagination,
       Card,
+      VeeValidate,
     },
     data() {
       return {

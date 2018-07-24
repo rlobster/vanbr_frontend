@@ -147,9 +147,7 @@
             approx_end_point_code: this.approx_end_point_code,
             approx_start_point_address: this.approx_start_point_address,
             approx_end_point_address: this.approx_end_point_address,
-            reference_id: this.referenceId,
-            approx_distance: this.approxDistance,
-            approx_time: this.approxTime,
+            reference_id: this.referenceId
           };
           const response = await this.axios.post(`${this.AppURL}/rider/book-ride`, data);
           this.$socket.emit('getRideRequest', response.data.data.id);

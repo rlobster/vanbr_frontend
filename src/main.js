@@ -7,6 +7,7 @@ import moment from 'moment';
 import VueAxios from 'vue-axios';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import VueSocketio from 'vue-socket.io';
+import VeeValidate from 'vee-validate';
 // import Vuetable from 'vuetable-2/src/components/Vuetable';
 import VueEvents from 'vue-events';
 import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
@@ -32,6 +33,7 @@ Vue.use(VueSocketio, 'https://vanbr.ca:3001');
 Vue.use(VueEvents);
 Vue.use(VuetablePagination);
 Vue.use(VuetablePaginationInfo);
+Vue.use(VeeValidate);
 
 const host = window.location.host;
 const parts = host.split('.');
