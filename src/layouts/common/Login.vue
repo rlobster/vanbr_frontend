@@ -5,11 +5,13 @@
       <form>
         <div class="form-group main-app-section-xs">
           <label for="email">Email:</label>
-          <input type="email" id="email" class="form-control" placeholder="Email" v-model="email"/>
+          <input v-validate="'required|email'" name="email" type="email" id="email" class="form-control" placeholder="Email" v-model="email"/>
+          <p class="error-msg">{{ errors.first('email') }}</p>
         </div>
         <div class="form-group main-app-section-xs">
           <label for="password">Password:</label>
-          <input type="password" id="password" class="form-control" placeholder="Password" v-model="password"/>
+          <input v-validate="'required'" name="password" type="password" id="password" class="form-control" placeholder="Password" v-model="password"/>
+          <p class="error-msg">{{ errors.first('password') }}</p>          
         </div>
         <div class="form-group main-app-section-md">
           <button type="submit" class="btn btn-custom btn-block" @click="login">Login</button>
@@ -77,7 +79,11 @@
 </script>
 
 <style lang="scss" scoped>
-
+  .error-msg {
+    color: #a30015;
+    font-size: 12px;
+    margin-top: 5px;
+  }
 </style>
 
 
