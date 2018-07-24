@@ -187,6 +187,8 @@
           const response = await this.axios.post(`${this.AppURL}/driver/end-ride`, data);
 
           this.$socket.emit('changeRideStatus', response.data.data.rider_user_id);
+          this.$socket.emit('isOnline', true);
+          localStorage.setItem('status', true);
 
           this.$router.push({name: 'Feedback', params: {id: response.data.data.id}});
         } catch (e) {
