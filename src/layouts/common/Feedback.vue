@@ -31,8 +31,9 @@
           </div>
           <div class="form-group main-app-section-sm">
             <label for="feedback">Feedback</label>
-            <textarea row="4" class="form-control" name="feedback" id="feedback" v-model="comment">
+            <textarea v-validate="'required'" row="4" class="form-control" name="feedback" id="feedback" v-model="comment">
             </textarea>
+            <p class="error-msg">{{ errors.first('feedback') }}</p>
           </div>
           <div class="form-group main-app-section-md">
             <button class="btn btn-custom btn-block" @click="feedback">Submit</button>

@@ -6,8 +6,9 @@
         <div class="lead" :class="[status ? 'text-success' : 'text-danger']">{{ statusContent }}</div>
         <div>
           <label class="switch">
-            <input type="checkbox" @change="changeStatus" :checked="status">
+            <input v-validate="'required'" name="status" type="checkbox" @change="changeStatus" :checked="status">
             <span class="slider round"></span>
+            <p class="error-msg">{{ errors.first('status') }}</p>
           </label>
         </div>
       </div>
@@ -159,5 +160,10 @@
   a {
     color: black;
     text-decoration: underline;
+  }
+  .error-msg {
+    color: #a30015;
+    font-size: 12px;
+    margin-top: 5px;
   }
 </style>

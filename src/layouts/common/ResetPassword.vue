@@ -5,11 +5,13 @@
       <form>
         <div class="form-group main-app-section-xs">
           <label for="newPassword">New Password:</label>
-          <input type="password" id="newPassword" class="form-control" placeholder="New Password" v-model="newPassword"/>
+          <input v-validate="'required|confirmed:confirmation'" name="password" type="password" id="newPassword" class="form-control" placeholder="New Password" v-model="newPassword"/>
+          <p class="error-msg">{{ errors.first('password') }}</p>
         </div>
         <div class="form-group main-app-section-xs">
           <label for="confirmPassword">Confirm Password:</label>
-          <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password" v-model="confirmPassword"/>
+          <input v-validate="'required'" name="passwordConfirmation" ref="confirmation" type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password" v-model="confirmPassword"/>
+          <p class="error-msg">{{ errors.first('passwordConfirmation') }}</p>
         </div>
         <div class="form-group main-app-section-md">
           <button type="submit" class="btn btn-custom btn-block" @click="resetpassword">Reset Password</button>
@@ -23,10 +25,11 @@
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
   import AppURL from '@/constants';
+  import VeeValidate from 'vee-validate';
 
   export default {
     name: 'ResetPassword',
-    components: { Card },
+    components: { Card, VeeValidate },
     data() {
       return {
         Routes,
