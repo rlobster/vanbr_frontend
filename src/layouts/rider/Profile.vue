@@ -5,15 +5,18 @@
         <form>
           <div class="form-group main-app-section-xs">
             <label for="name">Name:</label>
-            <input v-model="name" type="text" class="form-control" placeholder="Name" id="name"/>
+            <input v-validate="'required|alpha'" name="name" v-model="name" type="text" class="form-control" placeholder="Name" id="name"/>
+            <p class="error-msg">{{ errors.first('name') }}</p>
           </div>
           <div class="form-group main-app-section-xs">
             <label for="dob">Date of Birth:</label>
-            <input type="date" v-model="dob" class="form-control" id="dob"/>
+            <input type="date" v-validate="'required'" v-model="dob" name="dob" class="form-control" id="dob"/>
+            <p class="error-msg">{{ errors.first('dob') }}</p>            
           </div>
           <div class="form-group main-app-section-xs">
             <label for="name">Mobile Number:</label>
-            <input v-model="mobile_no" type="number" class="form-control" placeholder="Mobile" id="mobile"/>
+            <input v-validate="'required|length:10'" name="mobile" v-model="mobile_no" type="number" class="form-control" placeholder="Mobile" id="mobile"/>
+            <p class="error-msg">{{ errors.first('mobile') }}</p>          
           </div>
           <div class="form-group main-app-section-xs">
             <label for="name">Gender:</label>
@@ -25,7 +28,8 @@
           </div>
           <div class="form-group main-app-section-xs">
             <label for="email">Email:</label>
-            <input type="text" v-model="email" class="form-control" placeholder="Email" id="email"/>
+            <input v-validate="'required|email'" name="email" type="text" v-model="email" class="form-control" placeholder="Email" id="email"/>
+            <p class="error-msg">{{ errors.first('email') }}</p>
           </div>
           <router-link :to="Routes.ChangePassword" class="d-flex align-items-center justify-content-left">
             Change Password
@@ -103,5 +107,9 @@
 </script>
 
 <style scoped>
-
+  .error-msg {
+    color: #a30015;
+    font-size: 12px;
+    margin-top: 5px;
+  }
 </style>
