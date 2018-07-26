@@ -5,19 +5,23 @@
         <form>
           <div class="form-group main-app-section-xs">
             <label for="name">Tax (For all types)</label>
-            <input type="number" class="form-control" placeholder="Tax" v-model="tax" id="tax"/>
+            <input v-validate="'required'" name="tax" type="number" class="form-control" placeholder="Tax" v-model="tax" id="tax"/>
+            <p class="error-msg">{{ errors.first('tax') }}</p>
           </div>
           <div class="form-group main-app-section-xs">
             <label for="service">Service Charge (For all types)</label>
-            <input type="number" class="form-control" placeholder="Service charge" v-model="serviceCharge" id="serviceCharge"/>
+            <input v-validate="'required'" name="serviceCharge" type="number" class="form-control" placeholder="Service charge" v-model="serviceCharge" id="serviceCharge"/>
+            <p class="error-msg">{{ errors.first('serviceCharge') }}</p>          
           </div>
           <div class="form-group main-app-section-xs">
             <label for="vanbrcharge">Vanbr Charges (For all types)</label>
-            <input type="number" class="form-control" placeholder="Vanbr Charge" v-model="vanbrCharges" id="vanbrCharges"/>
+            <input v-validate="'required'" name="vanbrCharge" type="number" class="form-control" placeholder="Vanbr Charge" v-model="vanbrCharges" id="vanbrCharges"/>
+            <p class="error-msg">{{ errors.first('vanbrCharge') }}</p>                    
           </div>
           <div class="form-group main-app-section-xs">
             <label for="commission">Vanbr Commission (For all types)</label>
-            <input type="number" class="form-control" placeholder="Cost Per Km" v-model="vanbrCommision" id="vanbrCommision"/>
+            <input v-validate="'required'" name="commission" type="number" class="form-control" placeholder="Cost Per Km" v-model="vanbrCommision" id="vanbrCommision"/>
+            <p class="error-msg">{{ errors.first('commission') }}</p>                              
           </div>
 
           <div class="main-app-section-sm"><strong>Sedan:</strong></div>
