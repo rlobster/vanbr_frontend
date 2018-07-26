@@ -5,11 +5,13 @@
         <form>
           <div class="form-group main-app-section-xs">
             <label for="name">Mail Id:</label>
-            <input v-model="email" type="email" class="form-control" placeholder="Email Id" id="email"/>
+            <input v-validate="'required|email'" name="email" v-model="email" type="email" class="form-control" placeholder="Email Id" id="email"/>
+            <p class="error-msg">{{ errors.first('email') }}</p>                 
           </div>
           <div class="form-group main-app-section-xs">
             <label for="name">Mail Subject:</label>
-            <input v-model="subject" type="text" class="form-control" placeholder="Subject Name" id="Subject"/>
+            <input v-validate="'required'" name="sub" v-model="subject" type="text" class="form-control" placeholder="Subject Name" id="Subject"/>
+            <p class="error-msg">{{ errors.first('sub') }}</p>                    
           </div>
           <div class="form-group main-app-section-sm">
             <label for="feedback">Mail Body</label>
