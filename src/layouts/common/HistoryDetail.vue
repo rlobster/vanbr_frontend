@@ -29,7 +29,9 @@
               <div>Gender:</div><div><strong>{{ this.idx(ride, _ => _.rider.gender) || '-' }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
-              <div>Rider Contact:</div><div><strong>{{ this.idx(ride, _ => _.rider.mobile_no) || '-' }}</strong></div>
+              <div>Rider Contact:</div>
+                <img class="contact-icon" src="../../assets/phone.svg"/>
+              <!-- <div><strong>{{ this.idx(ride, _ => _.rider.mobile_no) || '-' }}</strong></div> -->
             </div>
             <div v-if="ride.ride_status === 3">
               <div class="d-flex justify-content-between">
@@ -49,7 +51,9 @@
               <div>Driver:</div><div><strong>{{ this.idx(ride, _ => _.driver.name) || '-' }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
-              <div>Driver Contact:</div><div><strong>{{ this.idx(ride, _ => _.driver.mobile_no) || '-' }}</strong></div>
+              <div>Driver Contact:</div>
+                <img class="contact-icon" src="../../assets/phone.svg"/>              
+              <!-- <div><strong>{{ this.idx(ride, _ => _.driver.mobile_no) || '-' }}</strong></div> -->
             </div>
             <div v-if="ride.ride_status === 3">
               <div class="d-flex justify-content-between">
@@ -178,5 +182,10 @@
 <style lang="scss" scoped>
   .car-details {
     font-size: 18px;
+  }
+  .contact-icon {
+    width: 20px;
+    height: 20px;
+    margin-top: 3px;
   }
 </style>

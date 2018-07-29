@@ -39,7 +39,7 @@
                   <div class="car-logo" :class="{ 'colored-image-div' : (carId == 1) }">
                     <img src="../../assets/sedan.png"/>
                   </div>
-                  <div class="ml-4" :class="{ 'text-secondary' : (carId != 1) }">
+                  <div class="ml-4 car-selected-label" :class="{ 'text-secondary' : (carId != 1) }">
                     Sedan - 4 Seats
                   </div>
                 </label>
@@ -51,7 +51,7 @@
                   <div class="car-logo" :class="{ 'colored-image-div' : (carId == 2) }">
                     <img src="../../assets/van.png"/>
                   </div>
-                  <div class="ml-4" :class="{ 'text-secondary' : (carId != 2) }">
+                  <div class="ml-4 car-selected-label" :class="{ 'text-secondary' : (carId != 2) }">
                     Mini Van - 6 Seats
                   </div>
                 </label>
@@ -253,12 +253,16 @@
     margin: 4px 0;
   }
   .colored-image-div {
-    background-color: #F8F8F8;
+    // background-color: rgb(248, 248, 248);
+    background-color: #9b9b9b;    
     img {
       filter: grayscale(0%);
     }
   }
   .car-type-label {
     margin-bottom: 0;
+  }
+  .car-selected-label {
+    font-weight: 600;
   }
 </style>

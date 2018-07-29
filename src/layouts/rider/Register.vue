@@ -34,9 +34,10 @@
           </div>
           <div class="form-group main-app-section-xs">
             <label for="password">Password:</label>
-            <input v-validate="'required'" name="password" type="password" class="form-control" v-model="password" placeholder="Password" id="password"/>
+            <input v-if="!passwordFlag" v-validate="'required'" name="password" type="password" class="form-control" v-model="password" placeholder="Password" id="password"/>
+            <input v-if="passwordFlag" v-validate="'required'" name="password" type="text" class="form-control" v-model="password" placeholder="Password" id="password"/>
             <p class="error-msg">{{ errors.first('password') }}</p>            
-            <input type="checkbox" id="password-check" class="main-app-section-xs"/>
+            <input v-model="passwordFlag" type="checkbox" id="password-check" class="main-app-section-xs"/>
             <label for="password-check">Show/Hide Password</label>
           </div>
           <div class="form-group main-app-section-sm">
@@ -69,6 +70,7 @@
         mobile_no: '',
         email: '',
         password: '',
+        passwordFlag: false,
       };
     },
     methods: {
