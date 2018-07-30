@@ -41,6 +41,15 @@
             <label for="password-check">Show/Hide Password</label>
           </div>
           <div class="form-group main-app-section-sm">
+            <label>Enter Card details:</label>
+            <StripeCard class='stripe-card'
+              :class='{ complete }'
+              stripe='pk_test_8wgmvT01TU27qZFaMbAny3UF'
+              :options='stripeOptions'
+              @change='complete = $event.complete'
+            />
+          </div>
+          <div class="form-group main-app-section-sm">
             <button type="submit" class="btn btn-custom btn-block" @click="signup">Submit</button>
           </div>
           <div class="main-app-section-xs">
@@ -49,17 +58,18 @@
         </form>
       </Card>
     </div>
-</template>
+</template>complete: false,
 
 <script>
 
   import Routes from '@/router/routes';
+  import { Card as StripeCard, createToken } from 'vue-stripe-elements-plus';
   import Card from '@/components/Card';
   import AppURL from '@/constants';
 
   export default {
     name: 'Register',
-    components: { Card },
+    components: { Card, StripeCard },
     data() {
       return {
         AppURL,
@@ -71,11 +81,20 @@
         email: '',
         password: '',
         passwordFlag: false,
+        complete: false,
+        stripeOptions: {
+          name: '',
+          currency: 'cad',
+        },
       };
     },
     methods: {
       async signup(event) {
         event.preventDefault();
+        const stripeToken = await createToken();
+        if (!stripeToken) {
+          alert('Enter Valid Card Details');
+        }
         try {
           const data = {
             email: this.email,
@@ -84,6 +103,7 @@
             mobile_no: this.mobile_no,
             dob: this.dob,
             gender: this.gender,
+            token: stripeToken.token,
           };
           const response = await this.axios.post(`${this.AppURL}/rider/signup`, data);
           localStorage.setItem('token', response.data.token);
@@ -91,7 +111,7 @@
           this.axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           this.$router.push(Routes.Booking);
         } catch (e) {
-          this.checkError(e.response.status);
+          // this.checkError(e.response.status);
         }
       },
     },
