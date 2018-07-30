@@ -66,7 +66,7 @@
         approx_end_point_code: '',
         rider: '',
         mobile_no: '',
-        is_start_ride: '',
+        is_start_ride: false,
       };
     },
     beforeMount() {
@@ -86,31 +86,24 @@
       },
       setData(ride) {
         if (ride.ride_status === 1 || ride.ride_status === 2) {
-          switch (ride.ride_status) {
-            case 2:
-              this.rideStatus = 'Ride Started';
-              break;
-            default:
-              this.rideStatus = 'Ride Confirmed';
-              break;
+          if (ride.ride_status === 2) {
+            this.rideStatus = 'Ride Started';
+            this.is_start_ride = true;
+          }
+          else {
+            this.rideStatus = 'Ride Confirmed';
+            this.is_start_ride = false;
           }
           this.carType = ride.car.type;
           this.approx_start_point_address = ride.ride_meta_data.final_start_point_address || ride.ride_meta_data.approx_start_point_address;
           this.approx_start_point_code = ride.ride_meta_data.final_start_point_code || ride.ride_meta_data.approx_start_point_code;
-          this.approx_start_point_code = OpenLocationCode.decode(this.approx_start_point_code).latitudeCenter + ',' + OpenLocationCode.decode(this.approx_start_point_code).longitudeCenter;
-
+          // this.approx_start_point_code = OpenLocationCode.decode(this.approx_start_point_code).latitudeCenter + ',' + OpenLocationCode.decode(this.approx_start_point_code).longitudeCenter;
           this.approx_end_point_address = ride.ride_meta_data.approx_end_point_address;
           this.approx_end_point_code = ride.ride_meta_data.approx_end_point_code;
-          this.approx_end_point_code = OpenLocationCode.decode(this.approx_end_point_code).latitudeCenter + ',' + OpenLocationCode.decode(this.approx_end_point_code).longitudeCenter;
+          // this.approx_end_point_code = OpenLocationCode.decode(this.approx_end_point_code).latitudeCenter + ',' + OpenLocationCode.decode(this.approx_end_point_code).longitudeCenter;
 
           this.rider = ride.rider.name;
           this.mobile_no = ride.rider.mobile_no;
-          if(ride.ride_status === 1) {
-              this.is_start_ride = false;
-          }
-          if(ride.ride_status === 2) {
-              this.is_start_ride = true;
-          }
         } else {
           this.$router.push(this.Routes.DriverStatus);
         }
@@ -163,10 +156,13 @@
         try {
           const data = {
               ride_id: this.$route.params.id,
+              final_start_point_code: this.approx_start_point_code,
+              final_start_point_address: this.approx_start_point_address,
           };
-          data['final_start_point_code'] = this.getLocationPosition() || this.approx_start_point_code;
-          const start_point_obj = OpenLocationCode.decode(data['final_start_point_code']);
-          data['final_start_point_address'] = await this.getLocation(start_point_obj);
+          // data['final_start_point_code'] = this.getLocationPosition() || this.approx_start_point_code;
+          // const start_point_obj = OpenLocationCode.decode(data['final_start_point_code']);
+          // data['final_start_point_address'] = await this.getLocation(start_point_obj);
+
           const response = await this.axios.post(`${this.AppURL}/driver/start-ride`, data);
 
           this.$socket.emit('changeRideStatus', response.data.data.rider_user_id);
@@ -184,10 +180,12 @@
         try {
           const data = {
               ride_id: this.$route.params.id,
+              final_end_point_code: this.approx_end_point_code,
+              final_end_point_address: this.approx_end_point_address,
           }
-          data['final_end_point_code'] = this.getLocationPosition() || this.approx_end_point_code;
-          const end_point_obj = OpenLocationCode.decode(data['final_end_point_code']);
-          data['final_end_point_address'] = await this.getLocation(end_point_obj);
+          // data['final_end_point_code'] = this.getLocationPosition() || this.approx_end_point_code;
+          // const end_point_obj = OpenLocationCode.decode(data['final_end_point_code']);
+          // data['final_end_point_address'] = await this.getLocation(end_point_obj);
           const response = await this.axios.post(`${this.AppURL}/driver/end-ride`, data);
 
           this.$socket.emit('changeRideStatus', response.data.data.rider_user_id);

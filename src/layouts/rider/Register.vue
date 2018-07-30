@@ -50,7 +50,7 @@
             />
           </div>
           <div class="form-group main-app-section-sm">
-            <button type="submit" class="btn btn-custom btn-block" @click="signup">Submit</button>
+            <button type="submit" class="btn btn-custom btn-block" @click="signup" :disabled='!complete'>Submit</button>
           </div>
           <div class="main-app-section-xs">
             <router-link :to="Routes.Login">Already have an account?</router-link>
@@ -111,7 +111,7 @@
           this.axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           this.$router.push(Routes.Booking);
         } catch (e) {
-          // this.checkError(e.response.status);
+          this.checkError(e.response.status);
         }
       },
     },
