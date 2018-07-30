@@ -64,11 +64,11 @@
           </div>
           <div class="form-group main-app-section-xs">
             <label>Driver Image:</label>
-            <input type="file" class="form-control" @change="onFileChange" ref="files" id="files" name="driverimage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
+            <input type="file" class="form-control" @change="onDriverFileChange" ref="files" id="files" name="driverimage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
           </div>
           <div class="form-group main-app-section-xs">
             <label>Driver's Car Image:</label>
-            <input type="file" class="form-control" @change="onFileChange" ref="driverCarImage" id="driverCarImage" name="driverCarImage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
+            <input type="file" class="form-control" @change="onCarFileChange" ref="driverCarImage" id="driverCarImage" name="driverCarImage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
           </div>
           <div class="form-group main-app-section-sm">
             <button type="submit" class="btn btn-custom btn-block" @click="addDriver">Submit</button>
@@ -109,26 +109,33 @@
       };
     },
     methods: {
-      onFileChange() {
-        // this.file = this.$refs.file.files[0];
-        this.files = this.$refs.files.files;
-      },
-      // async onFileChange(e) {
-      //   const files = e.target.files || e.dataTransfer.files;
-      //   console.log(files);
-      //   if (files && files.length) {
-      //     const reader = new FileReader();
-      //     reader.onload = (event) => {
-      //       console.log(event.target.result);
-      //       if (event.target.result) {
-      //         console.log('happened');
-      //         this.createImage(event.target.result);
-      //         const output = reader.readAsDataURL(event.target.result);
-      //         console.log(output);
-      //       }
-      //     };
-      //   }
+      // onFileChange() {
+      //   this.file = this.$refs.file.files[0];
+      //   console.log(this.file);
+      //   //this.files = this.$refs.files.files;
       // },
+      async onCarFileChange(e) {
+        const carImage = e.target.files || e.dataTransfer.files;
+        this.driverCarImage = carImage[0];
+        console.log(this.driverCarImage);        
+      }, 
+      async onDriverFileChange(e) {
+        const files = e.target.files || e.dataTransfer.files;
+        this.driverImage = files[0];
+        console.log(this.driverImage);
+        // if (files && files.length) {
+        //   const reader = new FileReader();
+        //   reader.onload = (event) => {
+        //     console.log(event.target.result);
+        //     if (event.target.result) {
+        //       console.log('happened');
+        //       this.createImage(event.target.result);
+        //       const output = reader.readAsDataURL(event.target.result);
+        //       console.log(output);
+        //     }
+        //   };
+        // }
+      },
       // createImage(file) {
       //   console.log(file);
       //   // const image = new Image();
@@ -157,6 +164,8 @@
             license_expiry_date: this.licenseExpiry,
             insurance_number: this.insuranceNo,
             insurance_expiry_date: this.insuranceExpiry,
+            driver_image: this.driverImage,
+            car_image: this.driverCarImage,
           };
           const response = await this.axios.post(`${this.AppURL}/admin/driver/create`, data);
           console.log(response);
@@ -169,36 +178,36 @@
           console.log(e);
         }
       },
-      uploadImage(id) {
-        console.log('here');
-        const formData = new FormData();
+      // uploadImage(id) {
+      //   console.log('here');
+      //   const formData = new FormData();
         
-        // formData.append('file', this.file); -for single file
-        for (let i = 0; i < this.files.length; i++) {
-          const file = this.files[i];
-          formData.append('files[' + i + ']', file);
-        }
-        console.log(formData);
-        axios.post( `${this.AppURL}/admin/upload/image`,
-          {
-            media: formData,
-            resource_id: id,
-            tags: image,
-            resource_type: driver,
-          },
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
+      //   // formData.append('file', this.file); -for single file
+      //   for (let i = 0; i < this.files.length; i++) {
+      //     const file = this.files[i];
+      //     formData.append('files[' + i + ']', file);
+      //   }
+      //   console.log(formData);
+      //   axios.post( `${this.AppURL}/admin/upload/image`,
+      //     {
+      //       media: formData,
+      //       resource_id: id,
+      //       tags: image,
+      //       resource_type: driver,
+      //     },
+      //     {
+      //       headers: {
+      //         'Content-Type': 'multipart/form-data',
 
-            }
-          }
-        ).then(function(){
-          console.log('SUCCESS!!');
-        })
-        .catch(function(){
-          console.log('FAILURE!!');
-        });
-      },
+      //       }
+      //     }
+      //   ).then(function(){
+      //     console.log('SUCCESS!!');
+      //   })
+      //   .catch(function(){
+      //     console.log('FAILURE!!');
+      //   });
+      // },
     },
   };
 </script>
