@@ -37,6 +37,22 @@
           <div class="form-group main-app-section-sm">
             <button type="submit" class="btn btn-custom btn-block" @click="profile">Submit</button>
           </div>
+          <hr />
+          <div class="form-group main-app-section-xs">
+            <label><strong>Payment Card Details:</strong></label>
+            <div class="d-flex justify-content-between">
+              <div>Card Type:</div>
+              <div><strong>{{paymentCard.brand}}</strong></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>Card Number:</div>
+              <div><strong>XXXX XXXX XXXX {{paymentCard.last4}}</strong></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>Card Expiry:</div>
+              <div><strong>{{paymentCard.exp_month}}/{{paymentCard.exp_year}}</strong></div>
+            </div>
+          </div>
         </form>
       </Card>
     </div>
@@ -61,6 +77,7 @@
         id: '',
         mobile_no: '',
         role: '',
+        paymentCard: {},
       };
     },
     mounted() {
@@ -75,6 +92,8 @@
       async getProfile() {
         try {
           const profile = await this.axios.get(`${this.AppURL}/${this.api}/profile`);
+          const cardResponse = await this.axios.get(`${this.AppURL}/${this.api}/get-payment-card`);
+          this.paymentCard = cardResponse.data.card.sources.data[0];
           this.id = profile.data.data.user.id;
           this.name = profile.data.data.name;
           this.email = profile.data.data.user.email;
