@@ -21,17 +21,7 @@
               </div>
             </div>
           </router-link>
-          <router-link :to="{name: 'HistoryDetail', params: {id: history.id}}" v-if="role === 'rider' && history.payment_status === 3">
-            <div class="d-flex justify-content-between">
-              <span>{{ history.ride_create_time }}</span>
-              <span class="history-card-detail">${{ history.cost }}</span>
-              <div class="d-flex row status">
-                <span class="history-card-detail">Ride Status:{{ history.ride_status }}</span>
-                <span class="history-card-detail">Payment Status:{{ history.payment_status }}</span>
-              </div>
-            </div>
-          </router-link>
-          <router-link :to="{name: 'Payment', params: {id: history.id}}" v-if="role === 'rider' && ((history.ride_status === 5 && history.payment_status === 5) || (history.ride_status === 3 && history.payment_status !== 3))">
+          <router-link :to="{name: 'HistoryDetail', params: {id: history.id}}" v-if="role === 'rider' && (history.ride_status === 3 || history.ride_status === 4 || history.ride_status === 5)">
             <div class="d-flex justify-content-between">
               <span>{{ history.ride_create_time }}</span>
               <span class="history-card-detail">${{ history.cost }}</span>

@@ -97,15 +97,9 @@
       async getRide() {
         try {
           const response = await this.axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
-
           
           const ride = response.data.data;
           const ride_meta_data = ride.ride_meta_data;
-          console.log(ride);
-          
-          // if (ride.payment_status === 3) {
-          //   this.$router.push(this.Routes.Booking);
-          // }
 
           this.start_point_address = ride_meta_data.final_start_point_address || ride_meta_data.approx_start_point_address;
           this.end_point_address = ride_meta_data.final_end_point_address || ride_meta_data.approx_end_point_address;
