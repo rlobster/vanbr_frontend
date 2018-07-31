@@ -75,7 +75,6 @@
           const response = await this.axios.get(`${this.AppURL}/rider/get-single-ride?ride_id=${this.$route.params.id}`);
 
           const ride = response.data.data;
-          console.log('ride data', ride);
 
           if (ride.ride_status === 0 || ride.ride_status === 1 || ride.ride_status === 2) {
 

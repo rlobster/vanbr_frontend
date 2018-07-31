@@ -55,8 +55,8 @@
               </div>
               <hr />
               <div class="form-group main-app-section-md">
-                <!--<button class="btn btn-custom btn-block">Pay</button>-->
-                <button class='btn btn-custom btn-block' @click='giveFeedback'>Give Feedback</button>
+                <button class='btn btn-custom btn-block' v-if="is_ride_end" @click='giveFeedback'>Give Feedback</button>
+                <button class='btn btn-custom btn-block' v-else @click='bookRide'>Book Ride</button>
               </div>
             </div>
           </Card>
@@ -97,7 +97,7 @@
       async getRide() {
         try {
           const response = await this.axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
-          
+
           const ride = response.data.data;
           const ride_meta_data = ride.ride_meta_data;
 
@@ -126,6 +126,9 @@
       },
       async giveFeedback() {
         this.$router.push({name: 'Feedback', params: {id: this.$route.params.id}});
+      },
+      async bookRide() {
+        this.$router.push({name: 'Booking'});
       },
     },
   };

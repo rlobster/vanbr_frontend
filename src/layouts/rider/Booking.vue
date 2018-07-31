@@ -171,7 +171,6 @@
         this.pickupCoOrdinates[0] = lat;
         this.pickupCoOrdinates[1] = long;
         this.approx_start_point_code = OpenLocationCode.encode(lat, long);
-        // console.log(this.approx_start_point_code);
       },
       setDrop(place) {
         this.approx_end_point_address = place.formatted_address;
@@ -180,7 +179,6 @@
         this.dropCoOrdinates[0] = lat;
         this.dropCoOrdinates[1] = long;
         this.approx_end_point_code = OpenLocationCode.encode(lat, long);
-        // console.log(this.approx_end_point_code);
       },
       mapsAPICalculation(event) {
         event.preventDefault();

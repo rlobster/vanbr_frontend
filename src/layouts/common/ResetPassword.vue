@@ -60,7 +60,6 @@
           };
           await this.axios.post(`${this.AppURL}/${this.role}/reset-password`, data);
           this.$router.push(Routes.Login);
-          // console.log(response);
         } catch (e) {
           console.warn(e);
         }

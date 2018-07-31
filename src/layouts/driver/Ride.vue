@@ -81,7 +81,6 @@
           if(e.response) {
             this.checkError(e.response.status);
           }
-          console.log(e);
         }
       },
       setData(ride) {
