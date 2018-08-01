@@ -5,19 +5,23 @@
         <form class="main-app-section-sm">
           <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" class="form-control" placeholder="Name of reference" id="name" v-model="name"/>
+            <input v-validate="'required|alpha'" name="name" type="text" class="form-control" placeholder="Name of reference" id="name" v-model="name"/>
+            <p class="error-msg">{{ errors.first('name') }}</p>
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="text" class="form-control" placeholder="Email of reference" id="email" v-model="email"/>
+            <input v-validate="'required|email'" name="email" type="text" class="form-control" placeholder="Email of reference" id="email" v-model="email"/>
+            <p class="error-msg">{{ errors.first('email') }}</p>
           </div>
           <div class="form-group">
             <label for="contact">Contact Number:</label>
-            <input type="text" class="form-control" placeholder="Contact of reference" id="contact" v-model="mobile_no"/>
+            <input v-validate="'required|length:10|numeric'" name="mobile" type="number" class="form-control" placeholder="Contact of reference" id="contact" v-model="mobile_no"/>
+            <p class="error-msg">{{ errors.first('mobile') }}</p>          
           </div>
           <div class="form-group">
             <label for="relationship">Relationship:</label>
-            <input type="text" class="form-control" placeholder="Relationship with reference" id="relationship" v-model="relationship"/>
+            <input v-validate="'alpha'" name="relation" type="text" class="form-control" placeholder="Relationship with reference" id="relationship" v-model="relationship"/>
+            <p class="error-msg">{{ errors.first('relation') }}</p>            
           </div>
           <div class="row form-group main-app-section-md">
             <div class="col">

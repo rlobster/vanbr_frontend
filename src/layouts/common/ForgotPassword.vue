@@ -5,7 +5,8 @@
       <form>
         <div class="form-group main-app-section-xs">
           <label for="email">Email:</label>
-          <input type="email" id="email" class="form-control" placeholder="Email" v-model="email"/>
+          <input v-validate="'required|email'" name="email" type="email" id="email" class="form-control" placeholder="Email" v-model="email"/>
+          <p class="error-msg">{{ errors.first('email') }}</p>
         </div>
         <div class="form-group main-app-section-md">
           <button type="submit" class="btn btn-custom btn-block" @click="forgotpassword">Forgot Password</button>

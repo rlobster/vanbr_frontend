@@ -5,15 +5,18 @@
         <form>
           <div class="form-group main-app-section-xs">
             <label for="name">Name:</label>
-            <input type="text" class="form-control" placeholder="First Name" v-model="name" id="name"/>
+            <input v-validate="'required|alpha'" name="name" type="text" class="form-control" placeholder="First Name" v-model="name" id="name"/>
+            <p class="error-msg">{{ errors.first('name') }}</p>
           </div>
           <div class="form-group main-app-section-xs">
             <label for="dob">Date of Birth:</label>
-            <input type="date" class="form-control" id="dob" v-model="dob"/>
+            <input v-validate="'required'" name="dob" type="date" class="form-control" id="dob" v-model="dob"/>
+            <p class="error-msg">{{ errors.first('dob') }}</p>          
           </div>
           <div class="form-group main-app-section-xs">
             <label for="dob">Phone Number:</label>
-            <input type="number" placeholder="Phone Number" class="form-control" id="mobile" v-model="mobile_no"/>
+            <input v-validate="'required|numeric|length:10'" name="mobile" type="number" placeholder="Phone Number" class="form-control" id="mobile" v-model="mobile_no"/>
+            <p class="error-msg">{{ errors.first('mobile') }}</p>          
           </div>
           <div class="form-group main-app-section-xs">
             <label>Gender:</label>
@@ -25,7 +28,8 @@
           </div>
           <div class="form-group main-app-section-xs">
             <label for="email">Email:</label>
-            <input type="email" class="form-control" placeholder="Email" id="email" v-model="email"/>
+            <input v-validate="'required|email'" name="email" type="email" class="form-control" placeholder="Email" id="email" v-model="email"/>
+            <p class="error-msg">{{ errors.first('email') }}</p>
           </div>
           <div class="form-group main-app-section-xs">
             <label>Address:</label>
@@ -37,11 +41,13 @@
           </div>
           <div class="form-group main-app-section-xs">
             <label>Car Number:</label>
-            <input type="text" class="form-control" v-model="carNumber" placeholder="Car Number" id="number"/>
+            <input v-validate="'required|alpha_num'" name="car" type="text" class="form-control" v-model="carNumber" placeholder="Car Number" id="number"/>
+            <p class="error-msg">{{ errors.first('car') }}</p>          
           </div>
           <div class="form-group main-app-section-xs">
             <label>License Number:</label>
-            <input type="text" class="form-control" v-model="licenseNumber" placeholder="License Number" id="license"/>
+            <input v-validate="'required|alpha_num'" name="license" type="text" class="form-control" v-model="licenseNumber" placeholder="License Number" id="license"/>
+            <p class="error-msg">{{ errors.first('license') }}</p>                    
           </div>
           <div class="form-group main-app-section-xs">
             <label>License Expiry Date:</label>
@@ -49,7 +55,8 @@
           </div>
           <div class="form-group main-app-section-xs">
             <label>Insurance Number:</label>
-            <input type="text" class="form-control" v-model="insuranceNo" placeholder="Insurance Number" id="insuranceNo"/>
+            <input v-validate="'required|alpha_num'" name="insurance" type="text" class="form-control" v-model="insuranceNo" placeholder="Insurance Number" id="insuranceNo"/>
+            <p class="error-msg">{{ errors.first('insurance') }}</p>                    
           </div>
           <div class="form-group main-app-section-xs">
             <label>Insurance Expiry Date:</label>
@@ -57,11 +64,11 @@
           </div>
           <div class="form-group main-app-section-xs">
             <label>Driver Image:</label>
-            <input type="file" class="form-control" @change="onFileChange" ref="files" id="files" name="driverimage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
+            <input type="file" class="form-control" @change="onDriverFileChange" ref="files" id="files" name="driverimage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
           </div>
           <div class="form-group main-app-section-xs">
             <label>Driver's Car Image:</label>
-            <input type="file" class="form-control" @change="onFileChange" ref="driverCarImage" id="driverCarImage" name="driverCarImage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
+            <input type="file" class="form-control" @change="onCarFileChange" ref="driverCarImage" id="driverCarImage" name="driverCarImage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
           </div>
           <div class="form-group main-app-section-sm">
             <button type="submit" class="btn btn-custom btn-block" @click="addDriver">Submit</button>
@@ -102,26 +109,33 @@
       };
     },
     methods: {
-      onFileChange() {
-        // this.file = this.$refs.file.files[0];
-        this.files = this.$refs.files.files;
-      },
-      // async onFileChange(e) {
-      //   const files = e.target.files || e.dataTransfer.files;
-      //   console.log(files);
-      //   if (files && files.length) {
-      //     const reader = new FileReader();
-      //     reader.onload = (event) => {
-      //       console.log(event.target.result);
-      //       if (event.target.result) {
-      //         console.log('happened');
-      //         this.createImage(event.target.result);
-      //         const output = reader.readAsDataURL(event.target.result);
-      //         console.log(output);
-      //       }
-      //     };
-      //   }
+      // onFileChange() {
+      //   this.file = this.$refs.file.files[0];
+      //   console.log(this.file);
+      //   //this.files = this.$refs.files.files;
       // },
+      async onCarFileChange(e) {
+        const carImage = e.target.files || e.dataTransfer.files;
+        this.driverCarImage = carImage[0];
+        console.log(this.driverCarImage);        
+      }, 
+      async onDriverFileChange(e) {
+        const files = e.target.files || e.dataTransfer.files;
+        this.driverImage = files[0];
+        console.log(this.driverImage);
+        // if (files && files.length) {
+        //   const reader = new FileReader();
+        //   reader.onload = (event) => {
+        //     console.log(event.target.result);
+        //     if (event.target.result) {
+        //       console.log('happened');
+        //       this.createImage(event.target.result);
+        //       const output = reader.readAsDataURL(event.target.result);
+        //       console.log(output);
+        //     }
+        //   };
+        // }
+      },
       // createImage(file) {
       //   console.log(file);
       //   // const image = new Image();
@@ -150,6 +164,8 @@
             license_expiry_date: this.licenseExpiry,
             insurance_number: this.insuranceNo,
             insurance_expiry_date: this.insuranceExpiry,
+            driver_image: this.driverImage,
+            car_image: this.driverCarImage,
           };
           const response = await this.axios.post(`${this.AppURL}/admin/driver/create`, data);
           console.log(response);
@@ -162,36 +178,36 @@
           console.log(e);
         }
       },
-      uploadImage(id) {
-        console.log('here');
-        const formData = new FormData();
+      // uploadImage(id) {
+      //   console.log('here');
+      //   const formData = new FormData();
         
-        // formData.append('file', this.file); -for single file
-        for (let i = 0; i < this.files.length; i++) {
-          const file = this.files[i];
-          formData.append('files[' + i + ']', file);
-        }
-        console.log(formData);
-        axios.post( `${this.AppURL}/admin/upload/image`,
-          {
-            media: formData,
-            resource_id: id,
-            tags: image,
-            resource_type: driver,
-          },
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
+      //   // formData.append('file', this.file); -for single file
+      //   for (let i = 0; i < this.files.length; i++) {
+      //     const file = this.files[i];
+      //     formData.append('files[' + i + ']', file);
+      //   }
+      //   console.log(formData);
+      //   axios.post( `${this.AppURL}/admin/upload/image`,
+      //     {
+      //       media: formData,
+      //       resource_id: id,
+      //       tags: image,
+      //       resource_type: driver,
+      //     },
+      //     {
+      //       headers: {
+      //         'Content-Type': 'multipart/form-data',
 
-            }
-          }
-        ).then(function(){
-          console.log('SUCCESS!!');
-        })
-        .catch(function(){
-          console.log('FAILURE!!');
-        });
-      },
+      //       }
+      //     }
+      //   ).then(function(){
+      //     console.log('SUCCESS!!');
+      //   })
+      //   .catch(function(){
+      //     console.log('FAILURE!!');
+      //   });
+      // },
     },
   };
 </script>

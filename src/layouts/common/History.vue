@@ -2,6 +2,12 @@
   <div class="main-app-section-sm container">
     <Card class="mx-auto">
       <div class="title">History</div>
+      <div class="history-card" v-if="role === 'driver'">
+        <div class="d-flex justify-content-between">
+          <span>Total Unpaid Amount:</span>
+          <strong><span class="history-card-detail">${{ driverCost }}</span></strong>
+        </div>
+      </div>
       <div v-for="history in historyItem" :key="history.id">
         <div class="history-card">
           <!-- for 0 1 2 -->
@@ -15,17 +21,7 @@
               </div>
             </div>
           </router-link>
-          <router-link :to="{name: 'HistoryDetail', params: {id: history.id}}" v-if="role === 'rider' && history.payment_status === 3">
-            <div class="d-flex justify-content-between">
-              <span>{{ history.ride_create_time }}</span>
-              <span class="history-card-detail">${{ history.cost }}</span>
-              <div class="d-flex row status">
-                <span class="history-card-detail">Ride Status:{{ history.ride_status }}</span>
-                <span class="history-card-detail">Payment Status:{{ history.payment_status }}</span>
-              </div>
-            </div>
-          </router-link>
-          <router-link :to="{name: 'Payment', params: {id: history.id}}" v-if="role === 'rider' && ((history.ride_status === 5 && history.payment_status === 5) || (history.ride_status === 3 && history.payment_status !== 3))">
+          <router-link :to="{name: 'HistoryDetail', params: {id: history.id}}" v-if="role === 'rider' && (history.ride_status === 3 || history.ride_status === 4 || history.ride_status === 5)">
             <div class="d-flex justify-content-between">
               <span>{{ history.ride_create_time }}</span>
               <span class="history-card-detail">${{ history.cost }}</span>
@@ -68,6 +64,7 @@
         Routes,
         historyItem: [],
         role: '',
+        driverCost: '',
       };
     },
     // mounted() {
@@ -81,6 +78,10 @@
     methods: {
       async getHistory() {
         try {
+          if (this.role === 'driver') {
+            const driverCost = await this.axios.get(`${this.AppURL}/${this.role}/get-driver-cost`);
+            this.driverCost = driverCost.data.data.driver_cost;
+          }
           const history = await this.axios.get(`${this.AppURL}/${this.role}/get-all-rides`);
           this.historyItem = history.data.data;
         } catch (e) {

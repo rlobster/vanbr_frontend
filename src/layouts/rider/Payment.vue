@@ -21,7 +21,7 @@
                 </div>
                 <div class="d-flex justify-content-between">
                   <div>Time:</div>
-                  <div><strong>{{time}} minute</strong></div>
+                  <div><strong>{{final_time}} minute</strong></div>
                 </div>
               </div>
               <hr />
@@ -54,18 +54,9 @@
                 <div><strong>${{(Number(total_cost) + Number(total_tax)).toFixed(2)}}</strong></div>
               </div>
               <hr />
-              <div class="form-group main-app-section-sm">
-                <label>Enter Card details:</label>
-                <StripeCard class='stripe-card'
-                  :class='{ complete }'
-                  stripe='pk_test_8wgmvT01TU27qZFaMbAny3UF'
-                  :options='stripeOptions'
-                  @change='complete = $event.complete'
-                />
-              </div>
               <div class="form-group main-app-section-md">
-                <!--<button class="btn btn-custom btn-block">Pay</button>-->
-                <button class='pay-with-stripe btn btn-custom btn-block' @click='pay' :disabled='!complete'>Pay with credit card</button>
+                <button class='btn btn-custom btn-block' v-if="is_ride_end" @click='giveFeedback'>Give Feedback</button>
+                <button class='btn btn-custom btn-block' v-else @click='bookRide'>Book Ride</button>
               </div>
             </div>
           </Card>
@@ -76,32 +67,26 @@
 
 <script>
   /* eslint-disable */
-  import { Card as StripeCard, createToken } from 'vue-stripe-elements-plus';
   import Card from '@/components/Card';
   import AppURL from '@/constants';
 
   export default {
     name: 'Payment',
-    components: { Card, StripeCard },
+    components: { Card },
     data() {
       return {
         AppURL,
         role: '',
-        complete: false,
         is_ride_end: '',
         start_point_address: '',
         end_point_address: '',
         final_distance: 0,
-        time: '',
+        final_time: '',
         cost_meta_data: {},
         total_cost_per_kilometer: '',
         total_cost_per_minute: '',
         total_tax: '',
         total_cost: '',
-        stripeOptions: {
-          name: '',
-          currency: 'cad',
-        },
       };
     },
     beforeMount() {
@@ -112,15 +97,9 @@
       async getRide() {
         try {
           const response = await this.axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
-          
+
           const ride = response.data.data;
           const ride_meta_data = ride.ride_meta_data;
-          
-          this.stripeOptions.name = ride.rider.name;
-          
-          if (ride.payment_status === 3) {
-            this.$router.push(this.Routes.Booking);
-          }
 
           this.start_point_address = ride_meta_data.final_start_point_address || ride_meta_data.approx_start_point_address;
           this.end_point_address = ride_meta_data.final_end_point_address || ride_meta_data.approx_end_point_address;
@@ -142,19 +121,14 @@
             this.total_tax = 0;
           }
         } catch (e) {
-          this.checkError(e.response.status);
+          this.checkError(e);
         }
       },
-      pay() {
-        createToken().then(data => this.endRide(data.token));
+      async giveFeedback() {
+        this.$router.push({name: 'Feedback', params: {id: this.$route.params.id}});
       },
-      async endRide(token) {
-        const data = {
-          token,
-          ride_id: this.$route.params.id
-        };
-        const response = await this.axios.post(`${this.AppURL}/rider/end-ride`, data);
-        this.$router.push({name: 'Feedback', params: {id: response.data.data.id}});
+      async bookRide() {
+        this.$router.push({name: 'Booking'});
       },
     },
   };
