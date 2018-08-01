@@ -17,11 +17,11 @@
             </tr>
             <tr>
               <td><strong>Pickup</strong>:</td>
-              <td class="text-right"><a :href="'https://www.google.com/maps/place/' + approx_start_point_code + '/@' + approx_start_point_code + ',17z'" target="_blank">{{ approx_start_point_address }}</a></td>
+              <td class="text-right"><a :href="'https://www.google.com/maps/place/' + approx_start_point_coord + '/@' + approx_start_point_coord + ',17z'" target="_blank">{{ approx_start_point_address }}</a></td>
             </tr>
             <tr>
               <td><strong>Drop</strong>:</td>
-              <td class="text-right"><a :href="'https://www.google.com/maps/place/' + approx_end_point_code + '/@' + approx_end_point_code + ',17z'" target="_blank">{{ approx_end_point_address }}</a></td>
+              <td class="text-right"><a :href="'https://www.google.com/maps/place/' + approx_end_point_coord + '/@' + approx_end_point_coord + ',17z'" target="_blank">{{ approx_end_point_address }}</a></td>
             </tr>
             <tr>
               <td><strong>Rider</strong>:</td>
@@ -63,7 +63,9 @@
         approx_start_point_address: '',
         approx_end_point_address: '',
         approx_start_point_code: '',
+        approx_start_point_coord: '',
         approx_end_point_code: '',
+        approx_end_point_coord: '',
         rider: '',
         mobile_no: '',
         is_start_ride: false,
@@ -96,10 +98,11 @@
           this.carType = ride.car.type;
           this.approx_start_point_address = ride.ride_meta_data.final_start_point_address || ride.ride_meta_data.approx_start_point_address;
           this.approx_start_point_code = ride.ride_meta_data.final_start_point_code || ride.ride_meta_data.approx_start_point_code;
-          // this.approx_start_point_code = OpenLocationCode.decode(this.approx_start_point_code).latitudeCenter + ',' + OpenLocationCode.decode(this.approx_start_point_code).longitudeCenter;
+          this.approx_start_point_coord = OpenLocationCode.decode(this.approx_start_point_code).latitudeCenter + ',' + OpenLocationCode.decode(this.approx_start_point_code).longitudeCenter;
+
           this.approx_end_point_address = ride.ride_meta_data.approx_end_point_address;
           this.approx_end_point_code = ride.ride_meta_data.approx_end_point_code;
-          // this.approx_end_point_code = OpenLocationCode.decode(this.approx_end_point_code).latitudeCenter + ',' + OpenLocationCode.decode(this.approx_end_point_code).longitudeCenter;
+          this.approx_end_point_coord = OpenLocationCode.decode(this.approx_end_point_code).latitudeCenter + ',' + OpenLocationCode.decode(this.approx_end_point_code).longitudeCenter;
 
           this.rider = ride.rider.name;
           this.mobile_no = ride.rider.mobile_no;
@@ -172,7 +175,10 @@
           this.approx_start_point_address = ride.ride_meta_data.final_start_point_address || ride.ride_meta_data.approx_start_point_address;
           this.approx_start_point_code = ride.ride_meta_data.final_start_point_code || ride.ride_meta_data.approx_start_point_code;
         } catch (e) {
-          this.checkError(e.response.status);
+          if (e.response) {
+            this.checkError(e.response.status);
+          }
+          console.log(e);
         }
       },
       async endRide() {
