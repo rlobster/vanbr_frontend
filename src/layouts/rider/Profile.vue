@@ -164,12 +164,12 @@
         if (stripeToken.error) {
           alert(stripeToken.error.message);
         }
-        this.isEditCard = false;
         try {
           const data = {
             token: stripeToken.token,
           };
           const cardResponse = await this.axios.post(`${this.AppURL}/rider/update-payment-card`, data);
+          this.isEditCard = false;
           this.paymentCard = cardResponse.data.card.sources.data[0];
           alert('Your Payment Card updated successfully!');
         } catch (e) {
