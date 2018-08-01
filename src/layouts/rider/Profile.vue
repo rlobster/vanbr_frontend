@@ -53,6 +53,28 @@
               <div><strong>{{paymentCard.exp_month}}/{{paymentCard.exp_year}}</strong></div>
             </div>
           </div>
+          <div v-if="isEditCard">
+            <div class="form-group main-app-section-sm">
+              <label><strong>Enter Card details:</strong></label>
+              <StripeCard class='stripe-card'
+                :class='{ complete }'
+                stripe='pk_test_8wgmvT01TU27qZFaMbAny3UF'
+                :options='stripeOptions'
+                @change='complete = $event.complete'
+              />
+            </div>
+            <div class="row form-group main-app-section-sm">
+              <div class="col">
+                <button class="btn btn-block btn-outline-danger" @click="editCardDetails">Cancel</button>
+              </div>
+              <div class="col">
+                <button class="btn btn-custom btn-block" v-if="isEditCard" @click="updateCardDetails" :disabled='!complete'>Update Card Details</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group main-app-section-sm" v-else>
+            <button type="submit" class="btn btn-custom btn-block" @click="editCardDetails">Edit Card Details</button>
+          </div>
         </form>
       </Card>
     </div>
@@ -60,12 +82,13 @@
 
 <script>
   import Card from '@/components/Card';
+  import { Card as StripeCard, createToken } from 'vue-stripe-elements-plus';
   import Routes from '@/router/routes';
   import AppURL from '@/constants';
 
   export default {
     name: 'Profile',
-    components: { Card },
+    components: { Card, StripeCard },
     data() {
       return {
         AppURL,
@@ -78,6 +101,12 @@
         mobile_no: '',
         role: '',
         paymentCard: {},
+        isEditCard: false,
+        complete: false,
+        stripeOptions: {
+          name: '',
+          currency: 'cad',
+        },
       };
     },
     mounted() {
@@ -117,6 +146,32 @@
           };
           await this.axios.post(`${this.AppURL}/rider/profile`, data);
           alert('Your profile updated successfully!');
+        } catch (e) {
+          this.checkError(e.response.status);
+        }
+      },
+      async editCardDetails(event) {
+        event.preventDefault();
+        this.isEditCard = !this.isEditCard;
+      },
+      async updateCardDetails(event) {
+        event.preventDefault();
+        const stripeToken = await createToken();
+        console.log(stripeToken);
+        if (!stripeToken) {
+          alert('Enter Valid Card Details');
+        }
+        if (stripeToken.error) {
+          alert(stripeToken.error.message);
+        }
+        this.isEditCard = false;
+        try {
+          const data = {
+            token: stripeToken.token,
+          };
+          const cardResponse = await this.axios.post(`${this.AppURL}/rider/update-payment-card`, data);
+          this.paymentCard = cardResponse.data.card.sources.data[0];
+          alert('Your Payment Card updated successfully!');
         } catch (e) {
           this.checkError(e.response.status);
         }

@@ -41,7 +41,7 @@
             <label for="password-check">Show/Hide Password</label>
           </div>
           <div class="form-group main-app-section-sm">
-            <label>Enter Card details:</label>
+            <label><strong>Enter Card details:</strong></label>
             <StripeCard class='stripe-card'
               :class='{ complete }'
               stripe='pk_test_8wgmvT01TU27qZFaMbAny3UF'
@@ -94,6 +94,9 @@
         const stripeToken = await createToken();
         if (!stripeToken) {
           alert('Enter Valid Card Details');
+        }
+        if (stripeToken.error) {
+          alert(stripeToken.error.message);
         }
         try {
           const data = {
