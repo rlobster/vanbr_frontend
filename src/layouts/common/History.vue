@@ -17,7 +17,7 @@
               <div><span class="history-card-detail">${{ history.cost }}</span></div>
             </div>
             <div class="d-flex">
-              <span class="history-card-detail">Ride Status:{{ history.ride_status }}</span>
+              <span class="history-card-detail">Ride Status:{{ getRideStatus(history.ride_status) }}</span>
               <!-- <span class="history-card-detail">Payment Status:{{ history.payment_status }}</span> -->
             </div>
           </router-link>
@@ -27,7 +27,7 @@
               <span class="history-card-detail">${{ history.cost }}</span>
             </div>
             <div class="d-flex">
-              <span class="history-card-detail">Ride Status:{{ history.ride_status }}</span>
+              <span class="history-card-detail">Ride Status:{{ getRideStatus(history.ride_status) }}</span>
             </div>
           </router-link>
           <router-link :to="{name: 'DriverHistoryDetail', params: {id: history.id}}" v-if="role === 'driver' && (history.ride_status === 3 || history.ride_status === 4 || history.ride_status === 5)">
@@ -36,7 +36,7 @@
               <span class="history-card-detail">${{ history.cost }}</span>
             </div>
             <div class="d-flex">
-              <span class="history-card-detail">Ride Status:{{ history.ride_status }}</span>
+              <span class="history-card-detail">Ride Status:{{ getRideStatus(history.ride_status) }}</span>
             </div>
           </router-link>
         </div>
@@ -65,10 +65,6 @@
         driverCost: '',
       };
     },
-    // mounted() {
-    //   this.role = this.getRole();
-    //   this.getHistory();
-    // },
     beforeMount() {
       this.role = this.getRole();
       this.getHistory();
@@ -82,6 +78,8 @@
           }
           const history = await this.axios.get(`${this.AppURL}/${this.role}/get-all-rides`);
           this.historyItem = history.data.data;
+          this.xxx = this.getRideStatus(1);
+          console.log(this.xxx);
         } catch (e) {
           this.checkError(e.response.status);
         }

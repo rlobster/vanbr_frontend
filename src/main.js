@@ -72,6 +72,24 @@ Vue.mixin({
       }
       return role;
     },
+    getRideStatus(status) {
+      console.log(status);
+      this.rideStatus = '';
+      if (status === 0) {
+        this.rideStatus = 'Created';
+      } else if (status === 1) {
+        this.rideStatus = 'Confirmed';
+      } else if (status === 2) {
+        this.rideStatus = 'Riding';
+      } else if (status === 3) {
+        this.rideStatus = 'Ended';
+      } else if (status === 4) {
+        this.rideStatus = 'Canceled by Driver';
+      } else if (status === 5) {
+        this.rideStatus = 'Canceled by Rider';
+      }
+      return this.rideStatus;
+    },
     async checkError(status) {
       if (status === 401 || status === 500) {
         delete axios.defaults.headers.common.Authorization;
