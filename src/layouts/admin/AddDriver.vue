@@ -109,47 +109,24 @@
       };
     },
     methods: {
-      // onFileChange() {
-      //   this.file = this.$refs.file.files[0];
-      //   console.log(this.file);
-      //   //this.files = this.$refs.files.files;
-      // },
       async onCarFileChange(e) {
         const carImage = e.target.files || e.dataTransfer.files;
         this.driverCarImage = carImage[0];
-        console.log(this.driverCarImage);        
+        console.log("onCarFileChange",this.driverCarImage);        
       }, 
       async onDriverFileChange(e) {
-        const files = e.target.files || e.dataTransfer.files;
-        this.driverImage = files[0];
-        console.log(this.driverImage);
-        // if (files && files.length) {
-        //   const reader = new FileReader();
-        //   reader.onload = (event) => {
-        //     console.log(event.target.result);
-        //     if (event.target.result) {
-        //       console.log('happened');
-        //       this.createImage(event.target.result);
-        //       const output = reader.readAsDataURL(event.target.result);
-        //       console.log(output);
-        //     }
-        //   };
-        // }
+        return new Promise ( (resolve, reject) => {
+          this.driverImage = e.target.files || e.dataTransfer.files;
+          this.driverImage = files[0];
+          console.log("here!!!",this.driverImage);
+          resolve(this.driverImage);
+        })
       },
-      // createImage(file) {
-      //   console.log(file);
-      //   // const image = new Image();
-      //   const reader = new FileReader();
-
-      //   // reader.onload = (e) => {
-      //   //   const image = e.target.result;
-      //   // };
-      //   const output = reader.readAsDataURL(file);
-      //   console.log(output);
-      // },
       async addDriver(event) {
         event.preventDefault();
         try {
+          console.log("car",this.driverCarImage);                  
+          console.log("driver",this.driverImage);          
           const data = {
             name: this.name,
             dob: this.dob,

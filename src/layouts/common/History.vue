@@ -15,30 +15,28 @@
             <div class="d-flex justify-content-between">
               <div><span>{{ history.ride_create_time }}</span></div>
               <div><span class="history-card-detail">${{ history.cost }}</span></div>
-              <div class="d-flex row status">
-                <span class="history-card-detail">Ride Status:{{ history.ride_status }}</span>
-                <span class="history-card-detail">Payment Status:{{ history.payment_status }}</span>
-              </div>
+            </div>
+            <div class="d-flex">
+              <span class="history-card-detail">Ride Status:{{ history.ride_status }}</span>
+              <!-- <span class="history-card-detail">Payment Status:{{ history.payment_status }}</span> -->
             </div>
           </router-link>
           <router-link :to="{name: 'HistoryDetail', params: {id: history.id}}" v-if="role === 'rider' && (history.ride_status === 3 || history.ride_status === 4 || history.ride_status === 5)">
             <div class="d-flex justify-content-between">
               <span>{{ history.ride_create_time }}</span>
               <span class="history-card-detail">${{ history.cost }}</span>
-              <div class="d-flex row status">
-                <span class="history-card-detail">Ride Status:{{ history.ride_status }}</span>
-                <span class="history-card-detail">Payment Status:{{ history.payment_status }}</span>
-              </div>
+            </div>
+            <div class="d-flex">
+              <span class="history-card-detail">Ride Status:{{ history.ride_status }}</span>
             </div>
           </router-link>
           <router-link :to="{name: 'DriverHistoryDetail', params: {id: history.id}}" v-if="role === 'driver' && (history.ride_status === 3 || history.ride_status === 4 || history.ride_status === 5)">
             <div class="d-flex justify-content-between">
               <span>{{ history.ride_create_time }}</span>
               <span class="history-card-detail">${{ history.cost }}</span>
-              <div class="d-flex row status">
-                <span class="history-card-detail">Ride Status:{{ history.ride_status }}</span>
-                <span class="history-card-detail">Payment Status:{{ history.payment_status }}</span>
-              </div>
+            </div>
+            <div class="d-flex">
+              <span class="history-card-detail">Ride Status:{{ history.ride_status }}</span>
             </div>
           </router-link>
         </div>
