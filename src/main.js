@@ -73,7 +73,7 @@ Vue.mixin({
       return role;
     },
     async checkError(status) {
-      if (status === 401 || status === 500) {
+      if (status === 401) {
         delete axios.defaults.headers.common.Authorization;
         await localStorage.clear();
         window.location = Routes.Login;

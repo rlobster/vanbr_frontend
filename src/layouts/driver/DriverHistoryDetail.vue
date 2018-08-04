@@ -176,7 +176,7 @@
             this.start_time = this.moment(this.ride.ride_start_time).format('YYYY-MM-DD, HH:mm');
             this.end_time = this.moment(this.ride.ride_end_time).format('YYYY-MM-DD, HH:mm');
             this.final_time = ride_meta_data.final_time;
-            this.final_distance = ride_meta_data.final_distance || ride_meta_data.approx_distance;
+            this.final_distance = ride_meta_data.final_distance;
             
             this.total_cost_per_kilometer = (Number(this.cost_meta_data.cost_per_kilometer) * Number(this.final_distance)).toFixed(2);
             this.total_cost_per_minute = (Number(this.cost_meta_data.cost_per_minute) * Number(this.final_time)).toFixed(2);
