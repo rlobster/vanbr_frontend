@@ -6,12 +6,15 @@
         </router-link>
       </div>
       <Desktop class="ml-auto">
-        <div class="nav-menus d-flex">
+        <div class="nav-menus d-flex" v-if="role === 'rider' || role === 'driver'">
           <router-link :to="Routes.Pricing" class="d-flex align-items-center justify-content-center">
             <div class="nav-menu p-2">Pricing</div>
           </router-link>
-          <router-link :to="Routes.Booking" class="d-flex align-items-center justify-content-center">
+          <router-link :to="Routes.Booking" class="d-flex align-items-center justify-content-center" v-if="role === 'rider'">
             <div class="nav-menu p-2">Book</div>
+          </router-link>
+          <router-link :to="Routes.DriverStatus" class="d-flex align-items-center justify-content-center" v-if="role === 'driver'">
+            <div class="nav-menu p-2">Status</div>
           </router-link>
           <router-link :to="Routes.History" class="d-flex align-items-center justify-content-center">
             <div class="nav-menu p-2">History</div>
@@ -19,9 +22,23 @@
           <router-link :to="Routes.Profile" class="d-flex align-items-center justify-content-center">
             <div class="nav-menu p-2">Profile</div>
           </router-link>
-          <router-link :to="Routes.Login" class="d-flex align-items-center justify-content-center" v-if="authStatus">
-            <div class="nav-menu p-2" @click="logout">Logout</div>
+          <router-link :to="Routes.Login" class="d-flex align-items-center justify-content-center" v-if="!auth">
+            <div class="nav-menu p-2">Login</div>
           </router-link>
+          <router-link :to="Routes.Register" class="d-flex align-items-center justify-content-center" v-if="!auth && role === 'rider'">
+            <div class="nav-menu p-2">Register</div>
+          </router-link>
+          <a href="javascript:void(0);" class="d-flex align-items-center justify-content-center" @click="logout" v-if="auth">
+            <div class="nav-menu p-2">Logout</div>
+          </a>
+        </div>
+        <div class="nav-menus d-flex" v-if="role === 'admin'">
+          <router-link :to="Routes.Login" class="d-flex align-items-center justify-content-center" v-if="!auth">
+            <div class="nav-menu p-2">Login</div>
+          </router-link>
+          <a href="javascript:void(0);" class="d-flex align-items-center justify-content-center" @click="logout" v-if="auth">
+            <div class="nav-menu p-2">Logout</div>
+          </a>
         </div>
       </Desktop>
       <MobileTablet class="d-flex ml-auto align-items-center">
@@ -29,12 +46,15 @@
       </MobileTablet>
 
       <MobileTablet class="nav-slide" :class="{'active': isActive}">
-        <div class="nav-slide-menus">
+        <div class="nav-slide-menus" v-if="role === 'rider' || role === 'driver'">
           <router-link :to="Routes.Pricing" class="d-flex align-items-center justify-content-left">
             <div class="nav-menu p-2" @click="toggleNav">Pricing</div>
           </router-link>
-          <router-link :to="Routes.Booking" class="d-flex align-items-center justify-content-left">
+          <router-link :to="Routes.Booking" class="d-flex align-items-center justify-content-left" v-if="role === 'rider'">
             <div class="nav-menu p-2" @click="toggleNav">Book</div>
+          </router-link>
+          <router-link :to="Routes.DriverStatus" class="d-flex align-items-center justify-content-left" v-if="role === 'driver'">
+            <div class="nav-menu p-2" @click="toggleNav">Status</div>
           </router-link>
           <router-link :to="Routes.History" class="d-flex align-items-center justify-content-left">
             <div class="nav-menu p-2" @click="toggleNav">History</div>
@@ -42,9 +62,23 @@
           <router-link :to="Routes.Profile" class="d-flex align-items-center justify-content-left">
             <div class="nav-menu p-2" @click="toggleNav">Profile</div>
           </router-link>
-          <router-link :to="Routes.Login" class="d-flex align-items-center justify-content-left" v-if="authStatus">
-            <div class="nav-menu p-2" @click="logoutHandler">Logout</div>
+          <router-link :to="Routes.Login" class="d-flex align-items-center justify-content-left" v-if="!auth">
+            <div class="nav-menu p-2" @click="toggleNav">Login</div>
           </router-link>
+          <router-link :to="Routes.Register" class="d-flex align-items-center justify-content-left" v-if="!auth && role === 'rider'">
+            <div class="nav-menu p-2" @click="toggleNav">Register</div>
+          </router-link>
+          <a href="javascript:void(0);" class="d-flex align-items-center justify-content-left" @click="logout" v-if="auth">
+            <div class="nav-menu p-2" @click="toggleNav">Logout</div>
+          </a>
+        </div>
+        <div class="nav-slide-menus" v-if="role === 'admin'">
+          <router-link :to="Routes.Login" class="d-flex align-items-center justify-content-left" v-if="!auth">
+            <div class="nav-menu p-2" @click="toggleNav">Login</div>
+          </router-link>
+          <a href="javascript:void(0);" class="d-flex align-items-center justify-content-left" @click="logout" v-if="auth">
+            <div class="nav-menu p-2" @click="toggleNav">Logout</div>
+          </a>
         </div>
       </MobileTablet>
 
@@ -65,7 +99,14 @@
         Routes,
         AppURL,
         isActive: false,
+        role: '',
       };
+    },
+    beforeMount() {
+      this.role = this.getRole();
+    },
+    mounted() {
+      this.$root.$on('auth', () => { this.auth = this.authStatus(); });
     },
     methods: {
       toggleNav() {
@@ -76,6 +117,7 @@
           await this.axios.post(`${this.AppURL}/logout`);
           delete this.axios.defaults.headers.common.Authorization;
           await localStorage.clear();
+          this.$root.$emit('auth');
           this.$router.push(Routes.Login);
         } catch (e) {
           this.checkError(e.response.status);
@@ -84,14 +126,6 @@
       logoutHandler() {
         this.toggleNav();
         this.logout();
-      },
-    },
-    computed: {
-      authStatus() {
-        if (localStorage.getItem('token')) {
-          return true;
-        }
-        return false;
       },
     },
   };

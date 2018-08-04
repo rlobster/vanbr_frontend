@@ -54,7 +54,11 @@ Vue.mixin({
       Routes,
       moment,
       idx,
+      auth: false,
     };
+  },
+  beforeMount() {
+    this.auth = this.authStatus();
   },
   methods: {
     getRole() {
@@ -71,6 +75,12 @@ Vue.mixin({
         role = 'rider';
       }
       return role;
+    },
+    authStatus() {
+      if (localStorage.getItem('token')) {
+        return true;
+      }
+      return false;
     },
     async checkError(status) {
       if (status === 401) {

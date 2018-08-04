@@ -109,8 +109,9 @@
             token: stripeToken.token,
           };
           const response = await this.axios.post(`${this.AppURL}/rider/signup`, data);
-          localStorage.setItem('token', response.data.token);
+          await localStorage.setItem('token', response.data.token);
           this.$socket.emit('join', response.data.token);
+          this.$root.$emit('auth');
           this.axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           this.$router.push(Routes.Booking);
         } catch (e) {

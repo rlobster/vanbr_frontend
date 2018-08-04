@@ -143,7 +143,7 @@
         total_cost: '',
       };
     },
-    async mounted() {
+    async beforeMount() {
       this.role = this.getRole();
       await this.getHistoryDetail();
     },
