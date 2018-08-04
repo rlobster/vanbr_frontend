@@ -54,7 +54,11 @@ Vue.mixin({
       Routes,
       moment,
       idx,
+      auth: false,
     };
+  },
+  beforeMount() {
+    this.auth = this.authStatus();
   },
   methods: {
     getRole() {
@@ -73,7 +77,6 @@ Vue.mixin({
       return role;
     },
     getRideStatus(status) {
-      console.log(status);
       this.rideStatus = '';
       if (status === 0) {
         this.rideStatus = 'Created';
@@ -90,8 +93,14 @@ Vue.mixin({
       }
       return this.rideStatus;
     },
+    authStatus() {
+      if (localStorage.getItem('token')) {
+        return true;
+      }
+      return false;
+    },
     async checkError(status) {
-      if (status === 401 || status === 500) {
+      if (status === 401) {
         delete axios.defaults.headers.common.Authorization;
         await localStorage.clear();
         window.location = Routes.Login;
