@@ -5,7 +5,7 @@
         <form>
           <div class="form-group main-app-section-xs">
             <label for="name">Name:</label>
-            <input v-validate="'required|alpha'" name="name" type="text" class="form-control" placeholder="Name" v-model="name" id="name"/>
+            <input v-validate="'required|alpha_spaces'" name="name" type="text" class="form-control" placeholder="Name" v-model="name" id="name"/>
             <p class="error-msg">{{ errors.first('name') }}</p>
           </div>
           <div class="form-group main-app-section-xs">

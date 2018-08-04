@@ -5,7 +5,7 @@
         <form class="main-app-section-sm">
           <div class="form-group">
             <label for="name">Name:</label>
-            <input v-validate="'required|alpha'" name="name" type="text" class="form-control" placeholder="Name of reference" id="name" v-model="name"/>
+            <input v-validate="'required|alpha_spaces'" name="name" type="text" class="form-control" placeholder="Name of reference" id="name" v-model="name"/>
             <p class="error-msg">{{ errors.first('name') }}</p>
           </div>
           <div class="form-group">
@@ -20,7 +20,7 @@
           </div>
           <div class="form-group">
             <label for="relationship">Relationship:</label>
-            <input v-validate="'alpha'" name="relation" type="text" class="form-control" placeholder="Relationship with reference" id="relationship" v-model="relationship"/>
+            <input v-validate="'alpha_spaces'" name="relation" type="text" class="form-control" placeholder="Relationship with reference" id="relationship" v-model="relationship"/>
             <p class="error-msg">{{ errors.first('relation') }}</p>            
           </div>
           <div class="row form-group main-app-section-md">
