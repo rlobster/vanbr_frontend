@@ -123,19 +123,21 @@
         }
       },
       getLocationPosition() {
-        navigator.geolocation.getCurrentPosition(
-          (success) => {
-            console.log('success.coords');
-            console.log(success.coords);
-            const lat = success.coords.latitude;
-            const long = success.coords.longitude;
-            return OpenLocationCode.encode(lat,long);
-          },
-          (failure) => {
-            console.log(failure);
-            // window.location = 'https://google.com/';
-          },
-        );
+        return new Promise( (resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(
+            (success) => {
+              console.log('success.coords');
+              console.log(success.coords);
+              const lat = success.coords.latitude;
+              const long = success.coords.longitude;
+              resolve(OpenLocationCode.encode(lat,long));
+            },
+            (failure) => {
+              reject(failure);
+              // window.location = 'https://google.com/';
+            },
+          );
+        });
       },
       getLocation(locationObj) {
         return new Promise( ( resolve => {
