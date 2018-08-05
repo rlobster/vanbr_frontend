@@ -81,6 +81,7 @@
 </template>
 
 <script>
+  /* eslint-disable */
   import Card from '@/components/Card';
   import { Card as StripeCard, createToken } from 'vue-stripe-elements-plus';
   import Routes from '@/router/routes';
