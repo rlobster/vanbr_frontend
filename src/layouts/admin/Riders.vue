@@ -2,7 +2,7 @@
   <div class="users container main-app-section-sm">
     <div class="row">
       <div class="col-md">
-        <template>
+        <!-- <template>
           <div class="filter-bar ui basic segment grid main-app-section-sm search-box">
             <div class="ui form">
               <div class="inline field">
@@ -13,7 +13,7 @@
               </div>
             </div>
           </div>
-        </template>
+        </template> -->
         <vuetable ref="vuetable"
           :api-mode="false"
           :css="css.table"

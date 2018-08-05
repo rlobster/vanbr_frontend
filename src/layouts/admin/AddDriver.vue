@@ -71,7 +71,7 @@
             <input type="file" class="form-control" @change="onCarFileChange" ref="driverCarImage" id="driverCarImage" name="driverCarImage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
           </div>
           <div class="form-group main-app-section-sm">
-            <button type="submit" class="btn btn-custom btn-block" @click="addDriver">Submit</button>
+            <button type="submit" class="btn btn-custom btn-block" id="submit" @click="addDriver">Submit</button>
           </div>
         </form>
       </Card>
@@ -125,6 +125,7 @@
       async addDriver(event) {
         event.preventDefault();
         try {
+          document.querySelector("#submit").disabled = true
           console.log("car",this.driverCarImage);                  
           console.log("driver",this.driverImage);          
           const data = {
@@ -153,6 +154,8 @@
         } catch (e) {
           this.checkError(e.response.status);
           console.log(e);
+        } finally {
+          document.querySelector("#submit").disabled = false
         }
       },
       // uploadImage(id) {

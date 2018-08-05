@@ -2,18 +2,18 @@
   <div class="users container main-app-section-sm">
     <div class="row">
       <div class="col-md">
-         <template>
+         <!-- <template>
           <div class="filter-bar ui basic segment grid main-app-section-sm search-box">
             <div class="ui form">
               <div class="inline field">
                 <label>Search for:</label>
-                <input type="text" v-model="search" class="three wide column" placeholder="Text to filter">
+                <input type="text" v-model="search" class="three wide column" placeholder="Text to filter"> -->
                 <!-- <button class="btn btn-primary" @click="setFilter(filterText)">Go</button> -->
                 <!-- <button class="btn btn-secondary" @click="resetFilter(filterText)">Reset</button> -->
-              </div>
+              <!-- </div>
             </div>
           </div>
-        </template>
+        </template> -->
 
         <vuetable ref="vuetable"
           :api-mode="false"

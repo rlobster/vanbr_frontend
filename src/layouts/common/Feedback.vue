@@ -36,7 +36,7 @@
             <p class="error-msg">{{ errors.first('feedback') }}</p>
           </div>
           <div class="form-group main-app-section-md">
-            <button class="btn btn-custom btn-block" @click="feedback">Submit</button>
+            <button class="btn btn-custom btn-block" id="submit" @click="feedback">Submit</button>
           </div>
         </form>
       </Card>
@@ -72,6 +72,7 @@
     methods: {
       async getRide() {
         try {
+          document.querySelector("#submit").disabled = true;
           const response = await this.axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
           
           const ride = response.data.data;
@@ -92,6 +93,8 @@
           }
         } catch (e) {
           this.checkError(e.response.status);
+        } finally {
+          document.querySelector("#submit").disabled = false;
         }
       },
       async feedback(event) {

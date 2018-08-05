@@ -50,7 +50,7 @@
             />
           </div>
           <div class="form-group main-app-section-sm">
-            <button type="submit" class="btn btn-custom btn-block" @click="signup" :disabled='!complete'>Submit</button>
+            <button type="submit" id="submit" class="btn btn-custom btn-block" @click="signup" :disabled='!complete'>Submit</button>
           </div>
           <div class="main-app-section-xs">
             <router-link :to="Routes.Login">Already have an account?</router-link>
@@ -61,7 +61,7 @@
 </template>complete: false,
 
 <script>
-
+  /* eslint-disable */
   import Routes from '@/router/routes';
   import { Card as StripeCard, createToken } from 'vue-stripe-elements-plus';
   import Card from '@/components/Card';
@@ -99,6 +99,7 @@
           alert(stripeToken.error.message);
         }
         try {
+          document.querySelector("#submit").disabled = true;
           const data = {
             email: this.email,
             password: this.password,
@@ -116,6 +117,8 @@
           this.$router.push(Routes.Booking);
         } catch (e) {
           this.checkError(e.response.status);
+        } finally {
+          document.querySelector("#cancel").disabled = false;
         }
       },
     },

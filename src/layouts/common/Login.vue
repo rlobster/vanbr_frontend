@@ -14,7 +14,7 @@
           <p class="error-msg">{{ errors.first('password') }}</p>          
         </div>
         <div class="form-group main-app-section-md">
-          <button type="submit" class="btn btn-custom btn-block" @click="login">Login</button>
+          <button type="submit" class="btn btn-custom btn-block" id="login" @click="login">Login</button>
         </div>
         <div class="main-app-section-xs">
           <router-link :to="Routes.ForgotPassword">Forgot Password?</router-link>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+  /* eslint-disable */
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
   import AppURL from '@/constants';
@@ -51,6 +52,7 @@
       async login(event) {
         event.preventDefault();
         try {
+          document.querySelector("#login").disabled = true
           const data = {
             email: this.email,
             password: this.password,
@@ -73,6 +75,8 @@
           } else {
             alert('Invalid Data');
           }
+        } finally {
+          document.querySelector("#login").disabled = false
         }
       },
     },

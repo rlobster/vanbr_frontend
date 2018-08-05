@@ -34,7 +34,7 @@
             </div>
             <div class="main-app-section-sm car-details">
               <router-link :to="Routes.Booking">
-                <button class="btn btn-custom btn-block">
+                <button id="submit" class="btn btn-custom btn-block">
                   Book Now
                 </button>
               </router-link>
@@ -73,7 +73,7 @@
               </div>
               <div class="main-app-section-sm car-details">
                 <router-link :to="Routes.Booking">
-                  <button class="btn btn-custom btn-block">
+                  <button id="submit1" class="btn btn-custom btn-block">
                     Book Now
                   </button>
                 </router-link>
@@ -108,6 +108,8 @@
     methods: {
       async getCars() {
         try {
+          document.querySelector("#submit").disabled = true;
+          document.querySelector("#submit1").disabled = true;
           const response = await this.axios.get(`${this.AppURL}/get-cars`);
           
           const car_data = response.data.data;
@@ -115,6 +117,9 @@
           this.mini_van = car_data[1];
         } catch (e) {
           this.checkError(e.response.status);
+        } finally {
+          document.querySelector("#submit").disabled = false;
+          document.querySelector("#submit1").disabled = false;
         }
       },
     }

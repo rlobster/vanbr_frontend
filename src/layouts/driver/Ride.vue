@@ -39,9 +39,9 @@
           </table>
         </div>
           <div class="form-group main-app-section-md">
-            <button class="btn btn-outline-danger btn-ride" @click="cancelRide">Cancel</button>
-            <button class="btn btn-ride btn-custom" @click="endRide" v-if="is_start_ride">End Ride</button>
-            <button class="btn btn-ride btn-custom" @click="startRide" v-else>Start Ride</button>
+            <button id="cancel" class="btn btn-outline-danger btn-ride" @click="cancelRide">Cancel</button>
+            <button id="endRide" class="btn btn-ride btn-custom" @click="endRide" v-if="is_start_ride">End Ride</button>
+            <button id="startRide" class="btn btn-ride btn-custom" @click="startRide" v-else>Start Ride</button>
           </div>
       </Card>
     </div>
@@ -112,6 +112,7 @@
       },
       async cancelRide() {
         try {
+            document.querySelector("#cancel").disabled = true;
             const data = {
                 ride_id: this.$route.params.id,
             };
@@ -120,6 +121,8 @@
             this.$router.push(this.Routes.DriverStatus);
         } catch (e) {
             this.checkError(e.response.status);
+        } finally {
+          document.querySelector("#cancel").disabled = false;
         }
       },
       getLocationPosition() {
@@ -158,6 +161,7 @@
       },
       async startRide() {
         try {
+          document.querySelector("#startRide").disabled = true;
           const data = {
             ride_id: this.$route.params.id
           };
@@ -179,10 +183,13 @@
             this.checkError(e.response.status);
           }
           console.log(e);
+        } finally {
+          document.querySelector("#startRide").disabled = false;
         }
       },
       async endRide() {
         try {
+          document.querySelector("#endRide").disabled = true;
           const data = {
               ride_id: this.$route.params.id,
           }
@@ -198,6 +205,8 @@
           this.$router.push({name: 'Feedback', params: {id: response.data.data.id}});
         } catch (e) {
           this.checkError(e.response.status);
+        } finally {
+          document.querySelector("#endRide").disabled = false;
         }
       },
     },

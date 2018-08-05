@@ -71,7 +71,7 @@
             <input type="file" class="form-control" @change="onFileChange" id="driverCarImage" name="driverCarImage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
           </div>
           <div class="form-group main-app-section-sm">
-            <button type="submit" class="btn btn-custom btn-block" @click="editDriver">Submit</button>
+            <button type="submit" id="submit" class="btn btn-custom btn-block" @click="editDriver">Submit</button>
           </div>
         </form>
       </Card>
@@ -79,7 +79,7 @@
 </template>
 
 <script>
-
+  /* eslint-disable */
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
   import AppURL from '@/constants';
@@ -111,6 +111,7 @@
     methods: {
       async getDriverDetail() {
         try {
+          document.querySelector("#submit").disabled = true
           const driver = await this.axios.get(`${this.AppURL}/admin/users/Driver/${this.$route.params.id}`);
           console.log(driver);
           this.name = driver.data.data.driver.name;
@@ -128,6 +129,8 @@
         } catch (e) {
           this.checkError(e.response.status);
           console.log(e);
+        } finally {
+          document.querySelector("#submit").disabled = false
         }
       },
       async onFileChange(e) {

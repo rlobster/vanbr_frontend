@@ -39,7 +39,7 @@
           </table>
         </div>
           <div class="form-group main-app-section-md">
-            <button class="btn btn-outline-danger btn-ride" v-if="rideStatus !== 2" @click="cancelRide">Cancel</button>
+            <button id="cancel" class="btn btn-outline-danger btn-ride" v-if="rideStatus !== 2" @click="cancelRide">Cancel</button>
             <router-link :to="Routes.Booking" class="btn btn-ride btn-custom">Book Another</router-link>
           </div>
       </Card>
@@ -113,6 +113,7 @@
       },
       async cancelRide() {
         try {
+          document.querySelector("#cancel").disabled = true;
           const data = {
             ride_id: this.$route.params.id,
           };
@@ -121,6 +122,8 @@
           this.$socket.emit('cancelRide', response.data.data.driver_user_id);
         } catch (e) {
           this.checkError(e.response.status);
+        } finally {
+          document.querySelector("#cancel").disabled = false;
         }
       },
     },

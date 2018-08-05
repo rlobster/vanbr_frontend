@@ -14,7 +14,7 @@
           <p class="error-msg">{{ errors.first('passwordConfirmation') }}</p>
         </div>
         <div class="form-group main-app-section-md">
-          <button type="submit" class="btn btn-custom btn-block" @click="resetpassword">Reset Password</button>
+          <button type="submit" id="submit" class="btn btn-custom btn-block" @click="resetpassword">Reset Password</button>
         </div>
       </form>
     </Card>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+  /* eslint-disable */
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
   import AppURL from '@/constants';
@@ -53,6 +54,7 @@
       async resetpassword(event) {
         event.preventDefault();
         try {
+          document.querySelector("#submit").disabled = true;
           const data = {
             new_password: this.newPassword,
             confirm_password: this.confirmPassword,
@@ -62,6 +64,8 @@
           this.$router.push(Routes.Login);
         } catch (e) {
           console.warn(e);
+        } finally {
+          document.querySelector("#submit").disabled = false;
         }
       },
     },

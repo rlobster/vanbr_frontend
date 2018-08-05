@@ -14,7 +14,7 @@
           <p class="error-msg">{{ errors.first('passwordNew') }}</p>
         </div>
         <div class="form-group main-app-section-md">
-          <button type="submit" class="btn btn-custom btn-block" @click="changepassword">Change Password</button>
+          <button type="submit" id="submit" class="btn btn-custom btn-block" @click="changepassword">Change Password</button>
         </div>
       </form>
     </Card>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+  /* eslint-disable */
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
   import AppURL from '@/constants';
@@ -45,6 +46,7 @@
       async changepassword(event) {
         event.preventDefault();
         try {
+          document.querySelector("#submit").disabled = true
           const data = {
             old_password: this.oldPassword,
             new_password: this.newPassword,
@@ -60,6 +62,8 @@
           console.log(response);
         } catch (e) {
           console.warn(e);
+        } finally {
+          document.querySelector("#submit").disabled = false
         }
       },
     },

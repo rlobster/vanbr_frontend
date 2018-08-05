@@ -35,7 +35,7 @@
             Change Password
           </router-link>
           <div class="form-group main-app-section-sm">
-            <button type="submit" class="btn btn-custom btn-block" @click="profile">Submit</button>
+            <button type="submit" id="submit" class="btn btn-custom btn-block" @click="profile">Submit</button>
           </div>
           <hr />
           <div class="form-group main-app-section-xs">
@@ -65,10 +65,10 @@
             </div>
             <div class="row form-group main-app-section-sm">
               <div class="col">
-                <button class="btn btn-block btn-outline-danger" @click="editCardDetails">Cancel</button>
+                <button class="btn btn-block btn-outline-danger" id="cancel" @click="editCardDetails">Cancel</button>
               </div>
               <div class="col">
-                <button class="btn btn-custom btn-block" v-if="isEditCard" @click="updateCardDetails" :disabled='!complete'>Update Card Details</button>
+                <button class="btn btn-custom btn-block" id="editCard" v-if="isEditCard" @click="updateCardDetails" :disabled='!complete'>Update Card Details</button>
               </div>
             </div>
           </div>
@@ -137,6 +137,7 @@
       async profile(event) {
         event.preventDefault();
         try {
+          document.querySelector("#submit").disabled = true;
           const data = {
             name: this.name,
             email: this.email,
@@ -148,6 +149,8 @@
           alert('Your profile updated successfully!');
         } catch (e) {
           this.checkError(e.response.status);
+        } finally {
+          document.querySelector("#submit").disabled = false;
         }
       },
       async editCardDetails(event) {
@@ -165,6 +168,7 @@
           alert(stripeToken.error.message);
         }
         try {
+          document.querySelector("#editCard").disabled = true;
           const data = {
             token: stripeToken.token,
           };
@@ -174,6 +178,8 @@
           alert('Your Payment Card updated successfully!');
         } catch (e) {
           this.checkError(e.response.status);
+        } finally {
+          document.querySelector("#editCard").disabled = false;
         }
       },
     },

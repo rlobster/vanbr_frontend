@@ -34,7 +34,7 @@
             <input type="number" class="form-control" placeholder="Cost Per Min" id="smin" v-model="sedanMin"/>
           </div>
           <div class="form-group main-app-section-sm">
-            <button type="submit" class="btn btn-custom btn-block" @click="changeCostSedan">Set For Sedan</button>
+            <button type="submit" id="sedanSubmit" class="btn btn-custom btn-block" @click="changeCostSedan">Set For Sedan</button>
           </div>
           <div class="main-app-section-sm"><strong>Mini Van:</strong></div>
           <div class="form-group main-app-section-xs">
@@ -46,7 +46,7 @@
             <input type="number" class="form-control" placeholder="Cost Per Min" id="vanmin" v-model="vanMin"/>
           </div>
           <div class="form-group main-app-section-sm">
-            <button type="submit" class="btn btn-custom btn-block" @click="changeCostVan">Set For Mini Van</button>
+            <button type="submit" id="vanSubmit" class="btn btn-custom btn-block" @click="changeCostVan">Set For Mini Van</button>
           </div>
         </form>
       </Card>
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-
+  /* eslint-disable */
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
   import AppURL from '@/constants';
@@ -80,6 +80,8 @@
       async changeCostSedan(event) {
         event.preventDefault();
         try {
+          document.querySelector("#sedanSubmit").disabled = true
+          document.querySelector("#vanSubmit").disabled = true
           const data = {
             tax: this.tax,
             cost_per_kilometer: this.sedanKm,
@@ -93,6 +95,9 @@
         } catch (e) {
           this.checkError(e.response.status);
           console.log(e);
+        } finally {
+          document.querySelector("#sedanSubmit").disabled = false
+          document.querySelector("#vanSubmit").disabled = false          
         }
       },
       async changeCostVan(event) {

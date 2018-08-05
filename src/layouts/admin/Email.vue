@@ -19,7 +19,7 @@
             </textarea>
           </div>
           <div class="form-group main-app-section-sm">
-            <button type="submit" class="btn btn-custom btn-block" @click="emailSend">Send</button>
+            <button type="submit" id="submit" class="btn btn-custom btn-block" @click="emailSend">Send</button>
           </div>
         </form>
       </Card>
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+  /* eslint-disable */
   import Card from '@/components/Card';
   // import Routes from '@/router/routes';
   import AppURL from '@/constants';
@@ -46,6 +47,7 @@
       async emailSend(event) {
         event.preventDefault();
         try {
+          document.querySelector("#submit").disabled = true;
           const data = {
             email: this.email,
             subject: this.subject,
@@ -56,6 +58,8 @@
         } catch (e) {
           this.checkError(e.response.status);
           console.log(e);
+        } finally {
+          document.querySelector("#submit").disabled = false;
         }
       },
     },

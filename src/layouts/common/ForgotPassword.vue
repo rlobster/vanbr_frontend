@@ -9,7 +9,7 @@
           <p class="error-msg">{{ errors.first('email') }}</p>
         </div>
         <div class="form-group main-app-section-md">
-          <button type="submit" class="btn btn-custom btn-block" @click="forgotpassword">Forgot Password</button>
+          <button type="submit" id="submit" class="btn btn-custom btn-block" @click="forgotpassword">Forgot Password</button>
         </div>
       </form>
     </Card>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+  /* eslint-disable */
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
   import AppURL from '@/constants';
@@ -39,6 +40,7 @@
       async forgotpassword(event) {
         event.preventDefault();
         try {
+          document.querySelector("#submit").disabled = true;
           const data = {
             email: this.email,
           };
@@ -46,6 +48,8 @@
           console.log(response);
         } catch (e) {
           console.warn(e);
+        } finally {
+          document.querySelector("#submit").disabled = false;
         }
       },
     },
