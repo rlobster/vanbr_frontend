@@ -28,11 +28,11 @@
             <div class="d-flex justify-content-between">
               <div>Gender:</div><div><strong>{{ this.idx(ride, _ => _.rider.gender) || '-' }}</strong></div>
             </div>
-            <div class="d-flex justify-content-between">
+            <!-- <div class="d-flex justify-content-between">
               <div>Rider Contact:</div>
-                <img class="contact-icon" src="../../assets/phone.svg"/>            
+                <img class="contact-icon" src="../../assets/phone.svg"/>             -->
               <!-- <div><strong>{{ this.idx(ride, _ => _.rider.mobile_no) || '-' }}</strong></div> -->
-            </div>
+            <!-- </div> -->
             <div v-if="ride.ride_status === 3">
               <div class="d-flex justify-content-between">
                 <div>Rider Rating:</div><div><strong>{{ this.idx(ride, _ => _.feedback.rider_ratings) || '-' }}</strong></div>
@@ -51,11 +51,11 @@
             <div class="d-flex justify-content-between">
               <div>Driver:</div><div><strong>{{ this.idx(ride, _ => _.driver.name) || '-' }}</strong></div>
             </div>
-            <div class="d-flex justify-content-between">
+            <!-- <div class="d-flex justify-content-between">
               <div>Driver Contact:</div>
-                <img class="contact-icon" src="../../assets/phone.svg"/>             
+                <img class="contact-icon" src="../../assets/phone.svg"/>              -->
               <!-- <div><strong>{{ this.idx(ride, _ => _.driver.mobile_no) || '-' }}</strong></div> -->
-            </div>
+            <!-- </div> -->
             <div v-if="ride.ride_status === 3">
               <div class="d-flex justify-content-between">
                 <div>Driver Rating:</div><div><strong>{{ this.idx(ride, _ => _.feedback.driver_ratings) || '-' }}</strong></div>

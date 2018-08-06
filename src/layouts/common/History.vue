@@ -9,14 +9,14 @@
         </div>
       </div>
       <div v-for="history in historyItem" :key="history.id">
-        <div class="history-card">
+        <div class="history-card" >
           <!-- for 0 1 2 -->
           <router-link :to="{name: 'Ride', params: {id: history.id}}" v-if="history.ride_status === 0 || history.ride_status === 1 || history.ride_status === 2">
-            <div class="d-flex justify-content-between">
-              <div><span>{{ history.ride_create_time }}</span></div>
+            <div class="d-flex justify-content-between ride-going">
+              <div class="ride-going"><span>{{ history.ride_create_time }}</span></div>
               <div><span class="history-card-detail">${{ history.cost }}</span></div>
             </div>
-            <div class="d-flex">
+            <div class="d-flex ride-going">
               <span class="history-card-detail">Ride Status:{{ getRideStatus(history.ride_status) }}</span>
               <!-- <span class="history-card-detail">Payment Status:{{ history.payment_status }}</span> -->
             </div>
@@ -106,5 +106,8 @@
   }
   .status {
     margin-left: 10px;
+  }
+  .ride-going {
+    color: #6D7ED8;
   }
 </style>

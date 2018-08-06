@@ -62,14 +62,14 @@
             <label>Insurance Expiry Date:</label>
             <input type="date" class="form-control" v-model="insuranceExpiry" placeholder="Insurance Expiry Date" id="insuranceExpiry"/>
           </div>
-          <div class="form-group main-app-section-xs">
+          <!-- <div class="form-group main-app-section-xs">
             <label>Driver Image:</label>
             <input type="file" class="form-control" @change="onFileChange" id="driverImage" name="driverimage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
           </div>
           <div class="form-group main-app-section-xs">
             <label>Driver's Car Image:</label>
             <input type="file" class="form-control" @change="onFileChange" id="driverCarImage" name="driverCarImage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
-          </div>
+          </div> -->
           <div class="form-group main-app-section-sm">
             <button type="submit" id="submit" class="btn btn-custom btn-block" @click="editDriver">Submit</button>
           </div>
