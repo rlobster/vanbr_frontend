@@ -4,63 +4,75 @@
       <div class="col-md">
         <Card class="mx-auto">
           <div class="title text-center">Ride History</div>
-
+  
           <div class="main-app-section-sm">
             <div class="d-flex justify-content-between">
-              <div>Ride Pickup:</div><div><strong>{{ start_point_address }}</strong></div>
+              <div>Ride Pickup:</div>
+              <div><strong>{{ start_point_address }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
-              <div>Ride Drop:</div><div><strong>{{ end_point_address }}</strong></div>
+              <div>Ride Drop:</div>
+              <div><strong>{{ end_point_address }}</strong></div>
             </div>
             <div v-if="ride.ride_status === 3">
               <div class="d-flex justify-content-between">
-                <div>Ride Start Time:</div><div><strong>{{ start_time }}</strong></div>
+                <div>Ride Start Time:</div>
+                <div><strong>{{ start_time }}</strong></div>
               </div>
               <div class="d-flex justify-content-between">
-                <div>Ride End Time:</div><div><strong>{{ end_time }}</strong></div>
+                <div>Ride End Time:</div>
+                <div><strong>{{ end_time }}</strong></div>
               </div>
             </div>
             <hr />
             <div class="d-flex justify-content-between">
-              <div>Rider:</div><div><strong>{{ this.idx(ride, _ => _.rider.name) || '-' }}</strong></div>
+              <div>Rider:</div>
+              <div><strong>{{ this.idx(ride, _ => _.rider.name) || '-' }}</strong></div>
             </div>
             <!-- <div>Ride Booked for: <strong v-bind="ride.rider."></strong></div> -->
             <div class="d-flex justify-content-between">
-              <div>Gender:</div><div><strong>{{ this.idx(ride, _ => _.rider.gender) || '-' }}</strong></div>
+              <div>Gender:</div>
+              <div><strong>{{ this.idx(ride, _ => _.rider.gender) || '-' }}</strong></div>
             </div>
             <!-- <div class="d-flex justify-content-between">
-              <div>Rider Contact:</div>
-                <img class="contact-icon" src="../../assets/phone.svg"/> -->
-              <!-- <div><strong>{{ this.idx(ride, _ => _.rider.mobile_no) || '-' }}</strong></div> -->
+                <div>Rider Contact:</div>
+                  <img class="contact-icon" src="../../assets/phone.svg"/> -->
+            <!-- <div><strong>{{ this.idx(ride, _ => _.rider.mobile_no) || '-' }}</strong></div> -->
             <!-- </div> -->
             <div v-if="ride.ride_status === 3">
               <div class="d-flex justify-content-between">
-                <div>Rider Rating:</div><div><strong>{{ this.idx(ride, _ => _.feedback.rider_ratings) || '-' }}</strong></div>
+                <div>Rider Rating:</div>
+                <div><strong>{{ this.idx(ride, _ => _.feedback.rider_ratings) || '-' }}</strong></div>
               </div>
               <div class="d-flex justify-content-between">
-                <div>Rider Feedback:</div><div><strong>{{ this.idx(ride, _ => _.feedback.rider_comments) || '-' }}</strong></div>
+                <div>Rider Feedback:</div>
+                <div><strong>{{ this.idx(ride, _ => _.feedback.rider_comments) || '-' }}</strong></div>
               </div>
             </div>
             <!-- <div>Rider Email: <strong v-bind="ride.rider."></strong></div> -->
-
+  
             <hr />
             <div class="d-flex justify-content-between">
-              <div>Car Type:</div><div><strong>{{ this.idx(ride, _ => _.car.type) || '-' }}</strong></div>
+              <div>Car Type:</div>
+              <div><strong>{{ this.idx(ride, _ => _.car.type) || '-' }}</strong></div>
             </div>
             <div class="d-flex justify-content-between">
-              <div>Driver:</div><div><strong>{{ this.idx(ride, _ => _.driver.name) || '-' }}</strong></div>
+              <div>Driver:</div>
+              <div><strong>{{ this.idx(ride, _ => _.driver.name) || '-' }}</strong></div>
             </div>
             <!-- <div class="d-flex justify-content-between">
-              <div>Driver Contact:</div>
-                <img class="contact-icon" src="../../assets/phone.svg"/>               -->
-              <!-- <div><strong>{{ this.idx(ride, _ => _.driver.mobile_no) || '-' }}</strong></div> -->
+                <div>Driver Contact:</div>
+                  <img class="contact-icon" src="../../assets/phone.svg"/>               -->
+            <!-- <div><strong>{{ this.idx(ride, _ => _.driver.mobile_no) || '-' }}</strong></div> -->
             <!-- </div> -->
             <div v-if="ride.ride_status === 3">
               <div class="d-flex justify-content-between">
-                <div>Driver Rating:</div><div><strong>{{ this.idx(ride, _ => _.feedback.driver_ratings) || '-' }}</strong></div>
+                <div>Driver Rating:</div>
+                <div><strong>{{ this.idx(ride, _ => _.feedback.driver_ratings) || '-' }}</strong></div>
               </div>
               <div class="d-flex justify-content-between">
-                <div>Driver Feedback:</div><div><strong>{{ this.idx(ride, _ => _.feedback.driver_comments) || '-' }}</strong></div>
+                <div>Driver Feedback:</div>
+                <div><strong>{{ this.idx(ride, _ => _.feedback.driver_comments) || '-' }}</strong></div>
               </div>
             </div>
             <hr />
@@ -98,13 +110,15 @@
                 </div>
                 <div class="d-flex main-app-section-sm justify-content-between car-details">
                   <div><strong>Payment status</strong></div>
-                  <div><strong>{{ this.idx(ride, _ => _.payment_status) || '-' }}</strong></div>
+                  <div><strong>{{ getRideStatus(this.ride.payment_status) }}</strong></div>                                
+                  <!-- <div><strong>{{ this.idx(ride, _ => _.payment_status) || '-' }}</strong></div> -->
                 </div>
               </div>
             </div>
             <div class="d-flex main-app-section-sm justify-content-between car-details">
               <div><strong>Ride status</strong></div>
-              <div><strong>{{ this.idx(ride, _ => _.ride_status) || '-' }}</strong></div>
+              <div><strong>{{ getRideStatus(this.ride.ride_status) }}</strong></div>              
+              <!-- <div><strong>{{ this.idx(ride, _ => _.ride_status) || '-' }}</strong></div> -->
             </div>
           </div>
         </Card>
@@ -118,7 +132,7 @@
   import Card from '@/components/Card';
   import Routes from '@/router/routes';
   import AppURL from '@/constants';
-
+  
   export default {
     name: 'HistoryDetail',
     components: {
@@ -152,17 +166,17 @@
         try {
           const response = await this.axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
           this.ride = response.data.data;
-          this.cost_meta_data = this.ride.cost_meta_data;          
+          this.cost_meta_data = this.ride.cost_meta_data;
           const ride_meta_data = this.ride.ride_meta_data;
           this.start_point_address = ride_meta_data.final_start_point_address || ride_meta_data.approx_start_point_address;
           this.end_point_address = ride_meta_data.final_end_point_address || ride_meta_data.approx_end_point_address;
-          
+  
           if (this.ride.ride_status === 3) {
             this.start_time = this.moment(this.ride.ride_start_time).format('YYYY-MM-DD, HH:mm');
             this.end_time = this.moment(this.ride.ride_end_time).format('YYYY-MM-DD, HH:mm');
             this.final_time = ride_meta_data.final_time;
             this.final_distance = ride_meta_data.final_distance;
-            
+  
             this.total_cost_per_kilometer = (Number(this.cost_meta_data.cost_per_kilometer) * Number(this.final_distance)).toFixed(2);
             this.total_cost_per_minute = (Number(this.cost_meta_data.cost_per_minute) * Number(this.final_time)).toFixed(2);
             this.total_cost = Number(this.total_cost_per_kilometer) + Number(this.total_cost_per_minute) + Number(this.cost_meta_data.service_charges) + Number(this.cost_meta_data.vanbr_charges);
@@ -183,6 +197,7 @@
   .car-details {
     font-size: 18px;
   }
+  
   .contact-icon {
     width: 20px;
     height: 20px;

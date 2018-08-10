@@ -15,7 +15,7 @@
           </div>
           <div class="form-group main-app-section-sm">
             <label for="feedback">Mail Body</label>
-            <textarea row="4" class="form-control" name="body" id="body">
+            <textarea v-model="body" row="4" class="form-control" name="body" id="body">
             </textarea>
           </div>
           <div class="form-group main-app-section-sm">
@@ -49,7 +49,7 @@
         try {
           document.querySelector("#submit").disabled = true;
           const data = {
-            email: this.email,
+            to: this.email,
             subject: this.subject,
             body: this.body,
           };
@@ -59,6 +59,10 @@
           this.checkError(e.response.status);
           console.log(e);
         } finally {
+          this.email = '';
+          this.subject = '';
+          this.body = '';
+          e.preventDefault();
           document.querySelector("#submit").disabled = false;
         }
       },
