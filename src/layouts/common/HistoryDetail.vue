@@ -34,11 +34,12 @@
               <div>Gender:</div>
               <div><strong>{{ this.idx(ride, _ => _.rider.gender) || '-' }}</strong></div>
             </div>
-            <!-- <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between">
                 <div>Rider Contact:</div>
-                  <img class="contact-icon" src="../../assets/phone.svg"/> -->
-            <!-- <div><strong>{{ this.idx(ride, _ => _.rider.mobile_no) || '-' }}</strong></div> -->
-            <!-- </div> -->
+                <a :href="'tel' + this.idx(ride, _ => _.rider.mobile_no) || '-'">Call 
+                  <img class="contact-icon" src="../../assets/phone.svg"/>
+                </a>
+            </div>
             <div v-if="ride.ride_status === 3">
               <div class="d-flex justify-content-between">
                 <div>Rider Rating:</div>
@@ -60,11 +61,14 @@
               <div>Driver:</div>
               <div><strong>{{ this.idx(ride, _ => _.driver.name) || '-' }}</strong></div>
             </div>
-            <!-- <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between">
                 <div>Driver Contact:</div>
-                  <img class="contact-icon" src="../../assets/phone.svg"/>               -->
+                 <a :href="'tel' + this.idx(ride, _ => _.driver.mobile_no) || '-'">Call 
+                  <img class="contact-icon" src="../../assets/phone.svg"/>
+                </a>
+                  <!-- <img class="contact-icon" src="../../assets/phone.svg"/>               -->
             <!-- <div><strong>{{ this.idx(ride, _ => _.driver.mobile_no) || '-' }}</strong></div> -->
-            <!-- </div> -->
+            </div>
             <div v-if="ride.ride_status === 3">
               <div class="d-flex justify-content-between">
                 <div>Driver Rating:</div>
@@ -199,8 +203,7 @@
   }
   
   .contact-icon {
-    width: 20px;
-    height: 20px;
-    margin-top: 3px;
+    width: 15px;
+    height: 12px;
   }
 </style>
