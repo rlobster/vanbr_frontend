@@ -58,7 +58,7 @@
               <label><strong>Enter Card details:</strong></label>
               <StripeCard class='stripe-card'
                 :class='{ complete }'
-                stripe='pk_test_8wgmvT01TU27qZFaMbAny3UF'
+                stripe='pk_live_sdXOBGnhdpvzV9QOpTWnJgij'
                 :options='stripeOptions'
                 @change='complete = $event.complete'
               />
