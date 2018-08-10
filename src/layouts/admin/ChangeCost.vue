@@ -76,7 +76,26 @@
         vanMin: '',
       };
     },
+    beforeMount() {
+      this.getCost();
+    },
     methods: {
+      async getCost() {
+        try {
+          const costResponse = await this.axios.get(`${this.AppURL}/get-cars`);
+          this.tax = costResponse.data.data[0].tax;
+          this.serviceCharge = costResponse.data.data[0].service_charges;
+          this.vanbrCharges = costResponse.data.data[0].vanbr_charges;
+          this.vanbrCommision = costResponse.data.data[0].vanbr_commission;
+          this.sedanKm = costResponse.data.data[0].cost_per_kilometer;
+          this.sedanMin = costResponse.data.data[0].cost_per_minute;
+          this.vanKm = costResponse.data.data[1].cost_per_kilometer;
+          this.vanMin = costResponse.data.data[1].cost_per_minute;
+        } catch (e) {
+          this.checkError(e.response.status);
+          console.log(e);
+        }
+      },
       async changeCostSedan(event) {
         event.preventDefault();
         try {

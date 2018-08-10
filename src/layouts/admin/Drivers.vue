@@ -159,6 +159,7 @@
           };
           const paymentToDriver = await this.axios.put(`${this.AppURL}/admin/ride/driver/${id}/payment/update`, paymentObj);
           console.log(paymentToDriver);
+          this.getDrivers();
         } catch (e) {
           this.checkError(e.response.status);
           console.log(e);
