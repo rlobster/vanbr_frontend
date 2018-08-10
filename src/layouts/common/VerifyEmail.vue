@@ -7,8 +7,10 @@
 </template>
 
 <script>
-
+    /* eslint-disable */
+    import Routes from '@/router/routes';
     import Card from '@/components/Card';
+    import AppURL from '@/constants';
     
     export default {
         name: 'VerifyEmail',
@@ -20,7 +22,7 @@
                 status: 'verifing'
             };
         },
-        mounted() {
+        async mounted() {
             const token = this.$route.params.token;
             if (token) {
                 this.token = token;
@@ -29,16 +31,17 @@
             }
             const data = { token };
             try {
-                await this.axios.post(`${this.AppURL}/email-verify`, data);
+                console.log(`${this.AppURL}/verify-email`);
+                await this.axios.post(`${this.AppURL}/verify-email`, data);
                 this.status = 'verified';
                 setTimeout(() =>{
                     this.$router.push(Routes.Login);
-                }, 1000)
+                }, 2000)
             } catch (e) {
                 this.status = 'not verified';
                 setTimeout(() =>{
                     this.$router.push(Routes.Login);
-                }, 1000)
+                }, 2000)
                 console.warn(e);
             }
         },
