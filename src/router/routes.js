@@ -5,6 +5,7 @@ const Routes = {
   ChangePassword: '/change-password',
   ForgotPassword: '/forgot-password',
   ResetPassword: '/reset-password/:token',
+  VerifyEmail: '/verify-email/:token',
   Register: '/register',
   Profile: '/profile',
   Booking: '/booking',

@@ -6,6 +6,7 @@ import Login from '@/layouts/common/Login';
 import ForgotPassword from '@/layouts/common/ForgotPassword';
 import ResetPassword from '@/layouts/common/ResetPassword';
 import ChangePassword from '@/layouts/common/ChangePassword';
+import VerifyEmail from '@/layouts/common/VerifyEmail';
 import Pricing from '@/layouts/common/Pricing';
 import Feedback from '@/layouts/common/Feedback';
 import History from '@/layouts/common/History';
@@ -47,6 +48,11 @@ const routes = [
     path: Routes.ResetPassword,
     name: 'ResetPassword',
     component: ResetPassword,
+  },
+  {
+    path: Routes.VerifyEmail,
+    name: 'VerifyEmail',
+    component: VerifyEmail,
   },
   {
     path: Routes.ChangePassword,
