@@ -2,7 +2,7 @@
     <nav class="d-flex">
       <div class="logo">
         <router-link :to="Routes.Home">
-          <img src="@/assets/logo.png" class="logo-image"/>
+          <img src="@/assets/logo.svg" class="logo-image"/>
         </router-link>
       </div>
       <Desktop class="ml-auto">
