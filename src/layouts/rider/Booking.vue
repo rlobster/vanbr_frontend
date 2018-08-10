@@ -155,8 +155,7 @@
         } catch (e) {
           if (e.response) {
             if (e.response.status === 406) {
-              alert('You have some unpaid rides...');
-              this.$router.push(Routes.History);
+              alert('Please verify your email!');
             }
             this.checkError(e.response.status);
           }
