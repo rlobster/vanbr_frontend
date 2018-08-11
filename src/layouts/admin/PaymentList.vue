@@ -28,10 +28,12 @@
           @vuetable:loaded="onLoaded">
           <template slot="actions" scope="props">
           <div class="table-button-container">
-            <button class="btn btn-secondary btn-sm" @click="getPickupPoint(props.rowData.pick_up_point)">
-              <span class="glyphicon glyphicon-pencil"></span>Pickup Point</button>&nbsp;&nbsp;
-            <button class="btn btn-secondary btn-sm" @click="getDropPoint(props.rowData.drop_point)">
-              <span class="glyphicon glyphicon-trash"></span>Drop Point</button>&nbsp;&nbsp;
+            <div class="d-flex justify-content-between">
+              <div>Ride Status:</div><div><strong>{{ getRideStatus(props.rowData.ride_status) }}</strong></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>Payment Status:</div><div><strong>{{ getRideStatus(props.rowData.payment_status) }}</strong></div>
+            </div>
           </div>
           </template>
         </vuetable>
@@ -73,6 +75,8 @@
         AppURL,
         filterText: '',
         moreParams: {},
+        rideStatus: '',
+        paymentStatus: '',
         pickup: '',
         drop: '',
         rideObj: [],
@@ -92,16 +96,16 @@
             title: 'Stripe Id',
             sortField: 'payment.stripe_id',
           },
-          {
-            name: 'payment_status',
-            title: 'Payment Status',
-            sortField: 'payment_status',
-          },
-          {
-            name: 'ride_status',
-            title: 'Ride Status',
-            sortField: 'ride_status',
-          },
+          // {
+          //   name: 'payment_status',
+          //   title: 'Payment Status',
+          //   sortField: 'payment_status',
+          // },
+          // {
+          //   name: 'ride_status',
+          //   title: 'Ride Status',
+          //   sortField: 'ride_status',
+          // },
           '__slot:actions',
         ],
         sortOrder: [
@@ -142,9 +146,11 @@
       async getRides() {
         try {
           const ride = await this.axios.get(`${this.AppURL}/admin/rides/list`);
-          console.log(ride);
+          
           this.rideObj = ride.data.data;
+          console.log(rideObj);
 
+          this.paymentStatus = this.rideObj.payment_status;
           const pickupObj = OpenLocationCode.decode(this.rideObj.pick_up_point);
           this.pickup = await this.getLocation(pickupObj);
           this.rideObj.pick_up_point = this.pickup;
