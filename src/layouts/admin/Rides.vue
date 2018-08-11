@@ -28,10 +28,10 @@
           @vuetable:loaded="onLoaded">
           <template slot="actions" scope="props">
           <div class="table-button-container">
-              <button class="btn btn-secondary btn-sm" @click="getPickupPoint(props.rowData.pick_up_point)">
-                <span class="glyphicon glyphicon-pencil"></span>Pickup Point</button>&nbsp;&nbsp;
-              <button class="btn btn-secondary btn-sm" @click="getDropPoint(props.rowData.drop_point)">
-                <span class="glyphicon glyphicon-trash"></span>Drop Point</button>&nbsp;&nbsp;
+            <button class="btn btn-secondary btn-sm" @click="getPickupPoint(props.rowData.pick_up_point)">
+              <span class="glyphicon glyphicon-pencil"></span>Pickup Point</button>&nbsp;&nbsp;
+            <button class="btn btn-secondary btn-sm" @click="getDropPoint(props.rowData.drop_point)">
+              <span class="glyphicon glyphicon-trash"></span>Drop Point</button>&nbsp;&nbsp;
           </div>
           </template>
         </vuetable>

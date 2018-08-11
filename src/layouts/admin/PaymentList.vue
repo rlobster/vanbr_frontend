@@ -2,18 +2,18 @@
   <div class="users container main-app-section-sm">
     <div class="row">
       <div class="col-md">
-         <template>
+         <!-- <template>
           <div class="filter-bar ui basic segment grid main-app-section-sm search-box">
             <div class="ui form">
               <div class="inline field">
                 <label>Search for:</label>
-                <input type="text" v-model="search" class="three wide column" placeholder="Text to filter">
+                <input type="text" v-model="search" class="three wide column" placeholder="Text to filter"> -->
                 <!-- <button class="btn btn-primary" @click="setFilter(filterText)">Go</button> -->
                 <!-- <button class="btn btn-secondary" @click="resetFilter(filterText)">Reset</button> -->
-              </div>
+              <!-- </div>
             </div>
           </div>
-        </template>
+        </template> -->
 
         <vuetable ref="vuetable"
           :api-mode="false"
@@ -26,6 +26,14 @@
           @vuetable:pagination-data="onPaginationData"
           @vuetable:loading="onLoading"
           @vuetable:loaded="onLoaded">
+          <template slot="actions" scope="props">
+          <div class="table-button-container">
+            <button class="btn btn-secondary btn-sm" @click="getPickupPoint(props.rowData.pick_up_point)">
+              <span class="glyphicon glyphicon-pencil"></span>Pickup Point</button>&nbsp;&nbsp;
+            <button class="btn btn-secondary btn-sm" @click="getDropPoint(props.rowData.drop_point)">
+              <span class="glyphicon glyphicon-trash"></span>Drop Point</button>&nbsp;&nbsp;
+          </div>
+          </template>
         </vuetable>
         <vuetable-pagination-bootstrap ref="pagination"
           @vuetable-pagination:change-page="onChangePage">

@@ -28,14 +28,14 @@
             <div class="d-flex justify-content-between">
               <div>Gender:</div><div><strong>{{ this.idx(ride, _ => _.rider.gender) || '-' }}</strong></div>
             </div>
-            <div class="d-flex justify-content-between">
+            <div v-if="ride.ride_status === 0 || ride.ride_status === 1 || ride.ride_status === 2" class="d-flex justify-content-between">
               <div>Rider Contact:</div>
                 <a :href="'tel' + this.idx(ride, _ => _.rider.mobile_no) || '-'">Call 
                   <img class="contact-icon" src="../../assets/phone.svg"/>
                 </a>          
               <!-- <div><strong>{{ this.idx(ride, _ => _.rider.mobile_no) || '-' }}</strong></div> -->
             </div>
-            <div v-if="ride.ride_status === 3">
+            <div v-if="ride.ride_status === 3 && role === 'rider'">
               <div class="d-flex justify-content-between">
                 <div>Rider Rating:</div><div><strong>{{ this.idx(ride, _ => _.feedback.rider_ratings) || '-' }}</strong></div>
               </div>
@@ -53,14 +53,14 @@
             <div class="d-flex justify-content-between">
               <div>Driver:</div><div><strong>{{ this.idx(ride, _ => _.driver.name) || '-' }}</strong></div>
             </div>
-            <div class="d-flex justify-content-between">
+            <div v-if="ride.ride_status === 0 || ride.ride_status === 1 || ride.ride_status === 2" class="d-flex justify-content-between">
               <div>Driver Contact:</div>
                 <a :href="'tel' + this.idx(ride, _ => _.driver.mobile_no) || '-'">Call 
                   <img class="contact-icon" src="../../assets/phone.svg"/>
                 </a>
               <!-- <div><strong>{{ this.idx(ride, _ => _.driver.mobile_no) || '-' }}</strong></div> -->
             </div>
-            <div v-if="ride.ride_status === 3">
+            <div v-if="ride.ride_status === 3 && role === 'driver'">
               <div class="d-flex justify-content-between">
                 <div>Driver Rating:</div><div><strong>{{ this.idx(ride, _ => _.feedback.driver_ratings) || '-' }}</strong></div>
               </div>
