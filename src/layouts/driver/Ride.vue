@@ -163,11 +163,13 @@
         try {
           document.querySelector("#startRide").disabled = true;
           const data = {
-            ride_id: this.$route.params.id
+            ride_id: this.$route.params.id,
+            final_start_point_code: this.approx_start_point_code,
+            final_start_point_address: this.approx_start_point_address
           };
-          data['final_start_point_code'] = await this.getLocationPosition();
-          const start_point_obj = OpenLocationCode.decode(data['final_start_point_code']);
-          data['final_start_point_address'] = await this.getLocation(start_point_obj);
+          // data['final_start_point_code'] = await this.getLocationPosition();
+          // const start_point_obj = OpenLocationCode.decode(data['final_start_point_code']);
+          // data['final_start_point_address'] = await this.getLocation(start_point_obj);
 
           const response = await this.axios.post(`${this.AppURL}/driver/start-ride`, data);
 
@@ -192,10 +194,13 @@
           document.querySelector("#endRide").disabled = true;
           const data = {
               ride_id: this.$route.params.id,
+              final_end_point_code: this.approx_end_point_code,
+              final_end_point_address: this.approx_end_point_address
           }
-          data['final_end_point_code'] = await this.getLocationPosition();
-          const end_point_obj = OpenLocationCode.decode(data['final_end_point_code']);
-          data['final_end_point_address'] = await this.getLocation(end_point_obj);
+          // data['final_end_point_code'] = await this.getLocationPosition();
+          // const end_point_obj = OpenLocationCode.decode(data['final_end_point_code']);
+          // data['final_end_point_address'] = await this.getLocation(end_point_obj);
+          
           const response = await this.axios.post(`${this.AppURL}/driver/end-ride`, data);
 
           this.$socket.emit('changeRideStatus', response.data.data.rider_user_id);
