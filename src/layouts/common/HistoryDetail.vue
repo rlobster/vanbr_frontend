@@ -36,7 +36,7 @@
             </div>
             <div v-if="ride.ride_status === 0 || ride.ride_status === 1 || ride.ride_status === 2" class="d-flex justify-content-between">
                 <div>Rider Contact:</div>
-                <a :href="'tel' + this.idx(ride, _ => _.rider.mobile_no) || '-'">Call 
+                <a :href="'tel:' + this.idx(ride, _ => _.rider.mobile_no) || '-'">Call 
                   <img class="contact-icon" src="../../assets/phone.svg"/>
                 </a>
             </div>
@@ -63,7 +63,7 @@
             </div>
             <div v-if="ride.ride_status === 0 || ride.ride_status === 1 || ride.ride_status === 2" class="d-flex justify-content-between">
                 <div>Driver Contact:</div>
-                 <a :href="'tel' + this.idx(ride, _ => _.driver.mobile_no) || '-'">Call 
+                 <a :href="'tel:' + this.idx(ride, _ => _.driver.mobile_no) || '-'">Call 
                   <img class="contact-icon" src="../../assets/phone.svg"/>
                 </a>
                   <!-- <img class="contact-icon" src="../../assets/phone.svg"/>               -->
