@@ -28,6 +28,10 @@
               <td class="text-right">{{ driver }}</td>
             </tr>
             <tr v-if="rideStatus !== 0">
+              <td><strong>Mobile No.</strong>:</td>
+              <td class="text-right">{{ mobile_no }}</td>
+            </tr>
+            <tr v-if="rideStatus !== 0">
               <td><strong>Car Detail</strong>:</td>
               <td class="text-right">{{ carDetail }}</td>
             </tr>
