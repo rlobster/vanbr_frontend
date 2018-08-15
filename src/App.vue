@@ -118,7 +118,9 @@
 
           // Cancel ride after 15 seconds if not accepted.
           setTimeout(() => {
-            this.sendResponse(false);
+            if (this.rideRequest.newRide) {
+              this.sendResponse(false);
+            }
           }, 15000);
         }
       },
