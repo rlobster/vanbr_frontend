@@ -67,6 +67,7 @@
         driver: '',
         carDetail: '',
         rideStatus: '',
+        mobile_no: '',
         rideStatusText: '',
       };
     },
@@ -101,6 +102,7 @@
             if (ride.driver.name) {
               this.driver = ride.driver.name;
               this.carDetail = ride.driver.car_number;
+              this.mobile_no = ride.driver.mobile_number;
             }
           } else if (ride.ride_status === 3) {
             this.$router.push({name: 'Payment', params: {id: ride.id}});
