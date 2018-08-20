@@ -29,12 +29,14 @@
             </tr>
             <tr>
               <td><strong>Mobile No.</strong>:</td>
-              <a :href="'tel:' + mobile_no"></a>
+              <td class="text-right">
+                <a :href="'tel:' + mobile_no">{{ mobile_no }}</a>
+              </td>
               <!-- <td class="text-right">{{ mobile_no }}</td> -->
             </tr>
             <tr>
               <td><strong>Ride Status</strong>:</td>
-              <td class="text-right">{{ getRideStatus(rideStatus) }}</td>
+              <td class="text-right">{{ rideStatus }}</td>
             </tr>
             </tbody>
           </table>

@@ -29,7 +29,9 @@
             </tr>
             <tr v-if="rideStatus !== 0">
               <td><strong>Mobile No.</strong>:</td>
-              <a :href="'tel:' + mobile_no"></a>
+              <td class="text-right">
+                <a :href="'tel:' + mobile_no">{{ mobile_no }}</a>
+              </td>
               <!-- <td class="text-right">{{ mobile_no }}</td> -->
             </tr>
             <tr v-if="rideStatus !== 0">
@@ -38,7 +40,7 @@
             </tr>
             <tr>
               <td><strong>Ride Status</strong>:</td>
-              <td class="text-right">{{ getRideStatus(rideStatusText) }}</td>
+              <td class="text-right">{{ rideStatusText }}</td>
             </tr>
             </tbody>
           </table>
