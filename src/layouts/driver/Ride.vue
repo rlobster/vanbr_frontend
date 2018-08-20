@@ -33,7 +33,7 @@
             </tr>
             <tr>
               <td><strong>Ride Status</strong>:</td>
-              <td class="text-right">{{ rideStatus }}</td>
+              <td class="text-right">{{ getRideStatus(rideStatus) }}</td>
             </tr>
             </tbody>
           </table>

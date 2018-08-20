@@ -110,12 +110,14 @@
               </div>
               <div class="d-flex main-app-section-sm justify-content-between car-details">
                 <div><strong>Payment status</strong></div>
-                <div><strong>{{ this.idx(ride, _ => _.payment_status) || '-' }}</strong></div>
+                <div><strong>{{ getRideStatus(this.ride.payment_status) }}</strong></div>                           
+                <!-- <div><strong>{{ this.idx(ride, _ => _.payment_status) || '-' }}</strong></div> -->
               </div>
             </div>
             <div class="d-flex main-app-section-sm justify-content-between car-details">
               <div><strong>Ride status</strong></div>
-              <div><strong>{{ this.idx(ride, _ => _.ride_status) || '-' }}</strong></div>
+              <div><strong>{{ getRideStatus(this.ride.ride_status) }}</strong></div>                                
+              <!-- <div><strong>{{ this.idx(ride, _ => _.ride_status) || '-' }}</strong></div> -->
             </div>
           </div>
         </Card>
