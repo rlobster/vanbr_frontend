@@ -50,7 +50,7 @@
   import Vuetable from 'vuetable-2/src/components/Vuetable';
   import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
   import VuetablePaginationBootstrap from '@/components/VuetablePaginationBootstrap';
-  import AppURL from '@/constants';
+  import { AppURL } from '@/constants';
 
   export default {
     name: 'Users',

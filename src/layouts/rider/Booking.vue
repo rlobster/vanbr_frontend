@@ -87,7 +87,7 @@
   /* eslint-disable */
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
-  import AppURL from '@/constants';
+  import { AppURL } from '@/constants';
 
   export default {
     name: 'Booking',

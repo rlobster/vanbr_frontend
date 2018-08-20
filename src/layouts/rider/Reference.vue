@@ -39,7 +39,7 @@
 <script>
   /* eslint-disable */
   import Card from '@/components/Card';
-  import AppURL from '@/constants';
+  import { AppURL } from '@/constants';
 
   export default {
     name: 'Reference',

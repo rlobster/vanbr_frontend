@@ -50,7 +50,7 @@
 <script>
   /* eslint-disable */
   import Card from '@/components/Card';
-  import AppURL from '@/constants';
+  import { AppURL } from '@/constants';
 
   export default {
     name: 'Ride',
@@ -71,7 +71,7 @@
         is_start_ride: false,
       };
     },
-    beforeMount() {
+    mounted() {
       this.getRide();
     },
     methods: {

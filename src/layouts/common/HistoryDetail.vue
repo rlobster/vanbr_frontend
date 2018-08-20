@@ -135,7 +135,7 @@
   /* eslint-disable */
   import Card from '@/components/Card';
   import Routes from '@/router/routes';
-  import AppURL from '@/constants';
+  import { AppURL } from '@/constants';
   
   export default {
     name: 'HistoryDetail',

@@ -47,7 +47,7 @@
   /* eslint-disable */
   import Card from '@/components/Card';
   import StarRating from 'vue-star-rating';
-  import AppURL from '@/constants';
+  import { AppURL } from '@/constants';
 
   export default {
     name: 'Payment',
@@ -65,14 +65,14 @@
         comment: ''
       };
     },
-    beforeMount() {
+    mounted() {
       this.role = this.getRole();
       this.getRide();
     },
     methods: {
       async getRide() {
         try {
-          document.querySelector("#submit").disabled = true;
+          document.querySelector('#submit').disabled = true;
           const response = await this.axios.get(`${this.AppURL}/${this.role}/get-single-ride?ride_id=${this.$route.params.id}`);
           
           const ride = response.data.data;
@@ -94,11 +94,15 @@
         } catch (e) {
           this.checkError(e.response.status);
         } finally {
-          document.querySelector("#submit").disabled = false;
+          document.querySelector('#submit').disabled = false;
         }
       },
       async feedback(event) {
         event.preventDefault();
+        if(!this.rating) {
+          alert('Please Give Rating!!!');
+          return false;
+        }
         try {
           const data = {
             ride_id: this.$route.params.id,

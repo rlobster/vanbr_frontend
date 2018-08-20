@@ -25,7 +25,7 @@
   /* eslint-disable */
   import Routes from '@/router/routes';
   import Card from '@/components/Card';
-  import AppURL from '@/constants';
+  import { AppURL } from '@/constants';
   import VeeValidate from 'vee-validate';
 
   export default {
@@ -41,7 +41,7 @@
         token: '',
       };
     },
-    beforeMount() {
+    mounted() {
       this.role = this.getRole();
       const token = this.$route.params.token;
       if (token) {

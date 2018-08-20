@@ -58,7 +58,7 @@
               <label><strong>Enter Card details:</strong></label>
               <StripeCard class='stripe-card'
                 :class='{ complete }'
-                stripe='pk_live_sdXOBGnhdpvzV9QOpTWnJgij'
+                stripe={STRIPE_PUBLISHABLE_KEY}
                 :options='stripeOptions'
                 @change='complete = $event.complete'
               />
@@ -85,7 +85,7 @@
   import Card from '@/components/Card';
   import { Card as StripeCard, createToken } from 'vue-stripe-elements-plus';
   import Routes from '@/router/routes';
-  import AppURL from '@/constants';
+  import { AppURL, STRIPE_PUBLISHABLE_KEY } from '@/constants';
 
   export default {
     name: 'Profile',
