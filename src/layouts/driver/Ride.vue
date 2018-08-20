@@ -29,7 +29,10 @@
             </tr>
             <tr>
               <td><strong>Mobile No.</strong>:</td>
-              <td class="text-right">{{ mobile_no }}</td>
+              <td class="text-right">
+                <a :href="'tel:' + mobile_no">{{ mobile_no }}</a>
+              </td>
+              <!-- <td class="text-right">{{ mobile_no }}</td> -->
             </tr>
             <tr>
               <td><strong>Ride Status</strong>:</td>
@@ -118,6 +121,8 @@
             };
             const response = await this.axios.post(`${this.AppURL}/driver/cancel-ride`, data);
             this.$socket.emit('cancelRide', response.data.data.rider_user_id);
+            this.$socket.emit('isOnline', true);
+            localStorage.setItem('status', true);
             this.$router.push(this.Routes.DriverStatus);
         } catch (e) {
             this.checkError(e.response.status);

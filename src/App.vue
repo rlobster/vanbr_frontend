@@ -115,6 +115,13 @@
           this.rideRequest.pickupLocation = data.ride_meta_data.approx_start_point_address;
           this.rideRequest.dropLocation = data.ride_meta_data.approx_end_point_address;
           this.rideRequest.riderId = data.rider_user_id;
+
+          // Cancel ride after 15 seconds if not accepted.
+          setTimeout(() => {
+            if (this.rideRequest.newRide) {
+              this.sendResponse(false);
+            }
+          }, 15000);
         }
       },
       confirmRide(value) {

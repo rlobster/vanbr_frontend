@@ -28,10 +28,13 @@
           @vuetable:loaded="onLoaded">
           <template slot="actions" scope="props">
           <div class="table-button-container">
-              <button class="btn btn-secondary btn-sm" @click="getPickupPoint(props.rowData.pick_up_point)">
-                <span class="glyphicon glyphicon-pencil"></span>Pickup Point</button>&nbsp;&nbsp;
-              <button class="btn btn-secondary btn-sm" @click="getDropPoint(props.rowData.drop_point)">
-                <span class="glyphicon glyphicon-trash"></span>Drop Point</button>&nbsp;&nbsp;
+            <div class="d-flex justify-content-between">
+              <div>Ride Status:</div><div><strong>{{ getRideStatus(props.rowData.ride_status) }}</strong></div>
+            </div>
+            <button class="btn btn-secondary btn-sm" @click="getPickupPoint(props.rowData.pick_up_point)">
+              <span class="glyphicon glyphicon-pencil"></span>Pickup Point</button>&nbsp;&nbsp;
+            <button class="btn btn-secondary btn-sm" @click="getDropPoint(props.rowData.drop_point)">
+              <span class="glyphicon glyphicon-trash"></span>Drop Point</button>&nbsp;&nbsp;
           </div>
           </template>
         </vuetable>
@@ -104,11 +107,11 @@
           },
           'ride_create_time',
           'cost',
-          {
-            name: 'ride_status',
-            title: 'Status',
-            sortField: 'Status',
-          },
+          // {
+          //   name: 'ride_status',
+          //   title: 'Status',
+          //   sortField: 'Status',
+          // },
           '__slot:actions',
         ],
         sortOrder: [

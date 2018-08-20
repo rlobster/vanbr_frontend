@@ -28,6 +28,13 @@
               <td class="text-right">{{ driver }}</td>
             </tr>
             <tr v-if="rideStatus !== 0">
+              <td><strong>Mobile No.</strong>:</td>
+              <td class="text-right">
+                <a :href="'tel:' + mobile_no">{{ mobile_no }}</a>
+              </td>
+              <!-- <td class="text-right">{{ mobile_no }}</td> -->
+            </tr>
+            <tr v-if="rideStatus !== 0">
               <td><strong>Car Detail</strong>:</td>
               <td class="text-right">{{ carDetail }}</td>
             </tr>
@@ -63,6 +70,7 @@
         driver: '',
         carDetail: '',
         rideStatus: '',
+        mobile_no: '',
         rideStatusText: '',
       };
     },
@@ -97,6 +105,7 @@
             if (ride.driver.name) {
               this.driver = ride.driver.name;
               this.carDetail = ride.driver.car_number;
+              this.mobile_no = ride.driver.mobile_no;
             }
           } else if (ride.ride_status === 3) {
             this.$router.push({name: 'Payment', params: {id: ride.id}});

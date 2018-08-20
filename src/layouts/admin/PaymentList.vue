@@ -2,18 +2,18 @@
   <div class="users container main-app-section-sm">
     <div class="row">
       <div class="col-md">
-         <template>
+         <!-- <template>
           <div class="filter-bar ui basic segment grid main-app-section-sm search-box">
             <div class="ui form">
               <div class="inline field">
                 <label>Search for:</label>
-                <input type="text" v-model="search" class="three wide column" placeholder="Text to filter">
+                <input type="text" v-model="search" class="three wide column" placeholder="Text to filter"> -->
                 <!-- <button class="btn btn-primary" @click="setFilter(filterText)">Go</button> -->
                 <!-- <button class="btn btn-secondary" @click="resetFilter(filterText)">Reset</button> -->
-              </div>
+              <!-- </div>
             </div>
           </div>
-        </template>
+        </template> -->
 
         <vuetable ref="vuetable"
           :api-mode="false"
@@ -26,6 +26,16 @@
           @vuetable:pagination-data="onPaginationData"
           @vuetable:loading="onLoading"
           @vuetable:loaded="onLoaded">
+          <template slot="actions" scope="props">
+          <div class="table-button-container">
+            <div class="d-flex justify-content-between">
+              <div>Ride Status:</div><div><strong>{{ getRideStatus(props.rowData.ride_status) }}</strong></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>Payment Status:</div><div><strong>{{ getRideStatus(props.rowData.payment_status) }}</strong></div>
+            </div>
+          </div>
+          </template>
         </vuetable>
         <vuetable-pagination-bootstrap ref="pagination"
           @vuetable-pagination:change-page="onChangePage">
@@ -65,6 +75,8 @@
         AppURL,
         filterText: '',
         moreParams: {},
+        rideStatus: '',
+        paymentStatus: '',
         pickup: '',
         drop: '',
         rideObj: [],
@@ -84,16 +96,16 @@
             title: 'Stripe Id',
             sortField: 'payment.stripe_id',
           },
-          {
-            name: 'payment_status',
-            title: 'Payment Status',
-            sortField: 'payment_status',
-          },
-          {
-            name: 'ride_status',
-            title: 'Ride Status',
-            sortField: 'ride_status',
-          },
+          // {
+          //   name: 'payment_status',
+          //   title: 'Payment Status',
+          //   sortField: 'payment_status',
+          // },
+          // {
+          //   name: 'ride_status',
+          //   title: 'Ride Status',
+          //   sortField: 'ride_status',
+          // },
           '__slot:actions',
         ],
         sortOrder: [
@@ -134,9 +146,11 @@
       async getRides() {
         try {
           const ride = await this.axios.get(`${this.AppURL}/admin/rides/list`);
-          console.log(ride);
+          
           this.rideObj = ride.data.data;
+          console.log(rideObj);
 
+          this.paymentStatus = this.rideObj.payment_status;
           const pickupObj = OpenLocationCode.decode(this.rideObj.pick_up_point);
           this.pickup = await this.getLocation(pickupObj);
           this.rideObj.pick_up_point = this.pickup;

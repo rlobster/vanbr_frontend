@@ -78,8 +78,6 @@
           }
           const history = await this.axios.get(`${this.AppURL}/${this.role}/get-all-rides`);
           this.historyItem = history.data.data;
-          this.xxx = this.getRideStatus(1);
-          console.log(this.xxx);
         } catch (e) {
           this.checkError(e.response.status);
         }
