@@ -12,7 +12,7 @@
             <div>Drop Location:</div><strong><a :href="'https://plus.codes/' + rideRequest.dropCode" target="_blank">{{ rideRequest.dropLocation }}</a></strong>
           </div>
           <div class="d-flex justify-content-between main-app-section-sm">
-            <button class="btn btn-danger btn-request" @click="sendResponse(false)">Reject</button>
+            <button class="btn btn-danger btn-request" id="rejectButton" @click="sendResponse(false)">Reject</button>
             <button class="btn btn-custom btn-request" @click="sendResponse(true)">Accept</button>
           </div>
         </Card>
@@ -119,7 +119,8 @@
           // Cancel ride after 15 seconds if not accepted.
           setTimeout(() => {
             if (this.rideRequest.newRide) {
-              this.sendResponse(false);
+              // this.sendResponse(false);
+              document.getElementById('rejectButton').click();
             }
           }, 15000);
         }
