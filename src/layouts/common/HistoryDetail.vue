@@ -176,8 +176,8 @@
           this.end_point_address = ride_meta_data.final_end_point_address || ride_meta_data.approx_end_point_address;
   
           if (this.ride.ride_status === 3) {
-            this.start_time = this.moment(this.ride.ride_start_time).format('YYYY-MM-DD, HH:mm');
-            this.end_time = this.moment(this.ride.ride_end_time).format('YYYY-MM-DD, HH:mm');
+            this.start_time = this.moment.utc(this.ride.ride_start_time).local().format('YYYY-MM-DD, HH:mm');
+            this.end_time = this.moment.utc(this.ride.ride_end_time).local().format('YYYY-MM-DD, HH:mm');
             this.final_time = ride_meta_data.final_time;
             this.final_distance = ride_meta_data.final_distance;
   

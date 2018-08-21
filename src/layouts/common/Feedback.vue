@@ -87,7 +87,7 @@
             this.rider = ride.rider.name;
             this.driver = ride.driver.name;
             
-            this.date = this.moment(ride.cost_meta_data.ride_end_time).format('YYYY-MM-DD, HH:mm');
+            this.date = this.moment.utc(ride.cost_meta_data.ride_end_time).local().format('YYYY-MM-DD, HH:mm');
           } else {
             this.$router.push('/');
           }

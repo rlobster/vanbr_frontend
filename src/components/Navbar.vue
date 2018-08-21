@@ -89,7 +89,7 @@
   import Routes from '@/router/routes';
   import MobileTablet from '@/components/MediaQuery/MobileTablet';
   import Desktop from '@/components/MediaQuery/Desktop';
-  import AppURL from '@/constants';
+  import { AppURL } from '@/constants';
 
   export default {
     name: 'Navbar',

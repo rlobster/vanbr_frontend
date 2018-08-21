@@ -13,7 +13,7 @@
           <!-- for 0 1 2 -->
           <router-link :to="{name: 'Ride', params: {id: history.id}}" v-if="history.ride_status === 0 || history.ride_status === 1 || history.ride_status === 2">
             <div class="d-flex justify-content-between ride-going">
-              <div class="ride-going"><span>{{ history.ride_create_time }}</span></div>
+              <div class="ride-going"><span>{{ moment.utc(history.ride_create_time).local().format('YYYY-MM-DD, HH:mm') }}</span></div>
               <div><span class="history-card-detail">${{ history.cost }}</span></div>
             </div>
             <div class="d-flex ride-going">
@@ -23,7 +23,7 @@
           </router-link>
           <router-link :to="{name: 'HistoryDetail', params: {id: history.id}}" v-if="role === 'rider' && (history.ride_status === 3 || history.ride_status === 4 || history.ride_status === 5)">
             <div class="d-flex justify-content-between">
-              <span>{{ history.ride_create_time }}</span>
+              <span>{{ moment.utc(history.ride_create_time).local().format('YYYY-MM-DD, HH:mm') }}</span>
               <span class="history-card-detail">${{ history.cost }}</span>
             </div>
             <div class="d-flex">
@@ -32,7 +32,7 @@
           </router-link>
           <router-link :to="{name: 'DriverHistoryDetail', params: {id: history.id}}" v-if="role === 'driver' && (history.ride_status === 3 || history.ride_status === 4 || history.ride_status === 5)">
             <div class="d-flex justify-content-between">
-              <span>{{ history.ride_create_time }}</span>
+              <span>{{ moment.utc(history.ride_create_time).local().format('YYYY-MM-DD, HH:mm') }}</span>
               <span class="history-card-detail">${{ history.cost }}</span>
             </div>
             <div class="d-flex">
