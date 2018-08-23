@@ -4,4 +4,3 @@ const AppURL = 'https://vanbr.ca/api';
 const STRIPE_PUBLISHABLE_KEY = 'pk_test_8wgmvT01TU27qZFaMbAny3UF';
 
 export { AppURL, STRIPE_PUBLISHABLE_KEY };
-
