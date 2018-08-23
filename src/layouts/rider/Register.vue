@@ -44,7 +44,7 @@
             <label><strong>Enter Card details:</strong></label>
             <StripeCard class='stripe-card'
               :class='{ complete }'
-              stripe={STRIPE_PUBLISHABLE_KEY}
+              stripe='pk_live_sdXOBGnhdpvzV9QOpTWnJgij'
               :options='stripeOptions'
               @change='complete = $event.complete'
             />
