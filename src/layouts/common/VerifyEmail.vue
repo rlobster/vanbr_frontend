@@ -31,7 +31,6 @@
             }
             const data = { token };
             try {
-                console.log(`${this.AppURL}/verify-email`);
                 await this.axios.post(`${this.AppURL}/verify-email`, data);
                 this.status = 'verified';
                 setTimeout(() =>{

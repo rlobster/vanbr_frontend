@@ -134,8 +134,6 @@
         return new Promise( (resolve, reject) => {
           navigator.geolocation.getCurrentPosition(
             (success) => {
-              console.log('success.coords');
-              console.log(success.coords);
               const lat = success.coords.latitude;
               const long = success.coords.longitude;
               resolve(OpenLocationCode.encode(lat,long));

@@ -58,7 +58,7 @@
               <label><strong>Enter Card details:</strong></label>
               <StripeCard class='stripe-card'
                 :class='{ complete }'
-                stripe='pk_live_sdXOBGnhdpvzV9QOpTWnJgij'
+                :stripe='STRIPE_PUBLISHABLE_KEY'
                 :options='stripeOptions'
                 @change='complete = $event.complete'
               />
@@ -94,6 +94,7 @@
       return {
         AppURL,
         Routes,
+        STRIPE_PUBLISHABLE_KEY,
         name: '',
         dob: '',
         gender: '',
@@ -161,7 +162,6 @@
       async updateCardDetails(event) {
         event.preventDefault();
         const stripeToken = await createToken();
-        console.log(stripeToken);
         if (!stripeToken) {
           alert('Enter Valid Card Details');
         }
