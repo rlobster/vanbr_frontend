@@ -57,12 +57,12 @@
       };
     },
     components: { Card },
-    mounted() {
-      this.getDriverProfile();
+    async mounted() {
+      await this.getDriverProfile();
       if (window.localStorage.getItem('status') === 'true') {
         this.status = true;
         this.statusContent = 'You are now Online';
-        this.$socket.emit('isOnline', true);
+        this.$socket.emit('isOnline', true, this.carType);
       } else {
         this.status = false;
         this.statusContent = 'You are currently Offline';
