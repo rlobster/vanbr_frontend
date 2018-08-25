@@ -62,6 +62,15 @@
             <label>Insurance Expiry Date:</label>
             <input type="date" class="form-control" v-model="insuranceExpiry" placeholder="Insurance Expiry Date" id="insuranceExpiry"/>
           </div>
+
+          <div class="form-group main-app-section-xs">
+            <label>Car Type<label>
+              <select name="car_id">
+                <option name="sedan" value="0">Sedan</option>
+                <option name="miniVan" value="1">Mini-Van</option>
+              </select>
+          </div>  
+
           <!-- <div class="form-group main-app-section-xs">
             <label>Driver Image:</label>
             <input type="file" class="form-control" @change="onDriverFileChange" ref="files" id="files" name="driverimage" accept="image/png, image/jpg, image/jpeg, image/svg"/>
