@@ -64,12 +64,12 @@
           </div>
 
           <div class="form-group main-app-section-xs">
-            <label>Car Type<label>
-              <select name="car_id">
-                <option value="0">Sedan</option>
-                <option value="1">Mini-Van</option>
-              </select>
-          </div>  
+            <label>Car Type:</label>
+            <select v-model="carId" class="form-control">
+              <option value="0">Sedan</option>
+              <option value="1">Mini Van</option>
+            </select>
+          </div>
 
           <!-- <div class="form-group main-app-section-xs">
             <label>Driver Image:</label>
@@ -88,119 +88,123 @@
 </template>
 
 <script>
-  /* eslint-disable */
-  import Routes from '@/router/routes';
-  import Card from '@/components/Card';
-  import { AppURL } from '@/constants';
+/* eslint-disable */
+import Routes from "@/router/routes";
+import Card from "@/components/Card";
+import { AppURL } from "@/constants";
 
-  export default {
-    name: 'AddDriver',
-    components: { Card },
-    data() {
-      return {
-        AppURL,
-        Routes,
-        name: '',
-        dob: '',
-        gender: '',
-        mobile_no: '',
-        email: '',
-        address: '',
-        carModel: '',
-        carNumber: '',
-        licenseNumber: '',
-        licenseExpiry: '',
-        insuranceNo: '',
-        insuranceExpiry: '',
-        driverImage: '',
-        driverCarImage: '',
-        files: '',
-      };
+export default {
+  name: "AddDriver",
+  components: { Card },
+  data() {
+    return {
+      AppURL,
+      Routes,
+      name: "",
+      dob: "",
+      gender: "",
+      mobile_no: "",
+      email: "",
+      address: "",
+      carId: "",
+      carModel: "",
+      carNumber: "",
+      licenseNumber: "",
+      licenseExpiry: "",
+      insuranceNo: "",
+      insuranceExpiry: "",
+      driverImage: "",
+      driverCarImage: "",
+      files: ""
+    };
+  },
+  methods: {
+    async onCarFileChange(e) {
+      const carImage = e.target.files || e.dataTransfer.files;
+      this.driverCarImage = carImage[0];
+      console.log("onCarFileChange", this.driverCarImage);
     },
-    methods: {
-      async onCarFileChange(e) {
-        const carImage = e.target.files || e.dataTransfer.files;
-        this.driverCarImage = carImage[0];
-        console.log("onCarFileChange",this.driverCarImage);        
-      }, 
-      async onDriverFileChange(e) {
-        return new Promise ( (resolve, reject) => {
-          this.driverImage = e.target.files || e.dataTransfer.files;
-          this.driverImage = files[0];
-          console.log("here!!!",this.driverImage);
-          resolve(this.driverImage);
-        })
-      },
-      async addDriver(event) {
-        event.preventDefault();
-        try {
-          document.querySelector("#submit").disabled = true
-          console.log("car",this.driverCarImage);                  
-          console.log("driver",this.driverImage);          
-          const data = {
-            name: this.name,
-            dob: this.dob,
-            gender: this.gender,
-            mobile_no: this.mobile_no,
-            email: this.email,
-            address: this.address,
-            car_model: this.carModel,
-            city: this.city,
-            car_number: this.carNumber,
-            license_number: this.licenseNumber,
-            license_expiry_date: this.licenseExpiry,
-            insurance_number: this.insuranceNo,
-            insurance_expiry_date: this.insuranceExpiry,
-            driver_image: this.driverImage,
-            car_image: this.driverCarImage,
-          };
-          const response = await this.axios.post(`${this.AppURL}/admin/driver/create`, data);
-          console.log(response);
-          if(response.data.data && response.data.data.id) {
-            uploadImage(response.data.data.id);    
-          }
-          alert('Successfully Driver Added');
-        } catch (e) {
-          this.checkError(e.response.status);
-          console.log(e);
-        } finally {
-          document.querySelector("#submit").disabled = false
+    async onDriverFileChange(e) {
+      return new Promise((resolve, reject) => {
+        this.driverImage = e.target.files || e.dataTransfer.files;
+        this.driverImage = files[0];
+        console.log("here!!!", this.driverImage);
+        resolve(this.driverImage);
+      });
+    },
+    async addDriver(event) {
+      event.preventDefault();
+      try {
+        document.querySelector("#submit").disabled = true;
+        console.log("car", this.driverCarImage);
+        console.log("driver", this.driverImage);
+        const data = {
+          name: this.name,
+          dob: this.dob,
+          gender: this.gender,
+          mobile_no: this.mobile_no,
+          email: this.email,
+          address: this.address,
+          car_id: this.carId,
+          car_model: this.carModel,
+          city: this.city,
+          car_number: this.carNumber,
+          license_number: this.licenseNumber,
+          license_expiry_date: this.licenseExpiry,
+          insurance_number: this.insuranceNo,
+          insurance_expiry_date: this.insuranceExpiry,
+          driver_image: this.driverImage,
+          car_image: this.driverCarImage
+        };
+        const response = await this.axios.post(
+          `${this.AppURL}/admin/driver/create`,
+          data
+        );
+        console.log(response);
+        if (response.data.data && response.data.data.id) {
+          uploadImage(response.data.data.id);
         }
-      },
-      // uploadImage(id) {
-      //   console.log('here');
-      //   const formData = new FormData();
-        
-      //   // formData.append('file', this.file); -for single file
-      //   for (let i = 0; i < this.files.length; i++) {
-      //     const file = this.files[i];
-      //     formData.append('files[' + i + ']', file);
-      //   }
-      //   console.log(formData);
-      //   axios.post( `${this.AppURL}/admin/upload/image`,
-      //     {
-      //       media: formData,
-      //       resource_id: id,
-      //       tags: image,
-      //       resource_type: driver,
-      //     },
-      //     {
-      //       headers: {
-      //         'Content-Type': 'multipart/form-data',
+        alert("Successfully Driver Added");
+      } catch (e) {
+        this.checkError(e.response.status);
+        console.log(e);
+      } finally {
+        document.querySelector("#submit").disabled = false;
+      }
+    }
+    // uploadImage(id) {
+    //   console.log('here');
+    //   const formData = new FormData();
 
-      //       }
-      //     }
-      //   ).then(function(){
-      //     console.log('SUCCESS!!');
-      //   })
-      //   .catch(function(){
-      //     console.log('FAILURE!!');
-      //   });
-      // },
-    },
-  };
+    //   // formData.append('file', this.file); -for single file
+    //   for (let i = 0; i < this.files.length; i++) {
+    //     const file = this.files[i];
+    //     formData.append('files[' + i + ']', file);
+    //   }
+    //   console.log(formData);
+    //   axios.post( `${this.AppURL}/admin/upload/image`,
+    //     {
+    //       media: formData,
+    //       resource_id: id,
+    //       tags: image,
+    //       resource_type: driver,
+    //     },
+    //     {
+    //       headers: {
+    //         'Content-Type': 'multipart/form-data',
+
+    //       }
+    //     }
+    //   ).then(function(){
+    //     console.log('SUCCESS!!');
+    //   })
+    //   .catch(function(){
+    //     console.log('FAILURE!!');
+    //   });
+    // },
+  }
+};
 </script>
 
 <style scoped>
-
 </style>
