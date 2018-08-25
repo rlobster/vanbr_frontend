@@ -66,8 +66,8 @@
           <div class="form-group main-app-section-xs">
             <label>Car Type<label>
               <select name="car_id">
-                <option name="sedan" value="0">Sedan</option>
-                <option name="miniVan" value="1">Mini-Van</option>
+                <option value="0">Sedan</option>
+                <option value="1">Mini-Van</option>
               </select>
           </div>  
 
