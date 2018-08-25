@@ -119,7 +119,7 @@
         } catch (e) {
           this.checkError(e.response.status, e.response.data.message);
         } finally {
-          document.querySelector("#cancel").disabled = false;
+          document.querySelector("#submit").disabled = false;
         }
       },
     },
