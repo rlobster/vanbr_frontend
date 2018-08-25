@@ -122,7 +122,7 @@
           const response = await this.axios.get(`${this.AppURL}/rider/get-reference`);
           this.references = response.data.data;
         } catch (e) {
-          this.checkError(e.response.status);
+          this.checkError(e.response.status, e.response.data.message);
         }
       },
       async getCars() {
@@ -130,7 +130,7 @@
           const response = await this.axios.get(`${this.AppURL}/get-cars`);
           this.car_data = response.data.data;
         } catch (e) {
-          this.checkError(e.response.status);
+          this.checkError(e.response.status, e.response.data.message);
         }
       },
       async book(event) {
@@ -157,7 +157,7 @@
             if (e.response.status === 406) {
               alert('Please verify your email!');
             }
-            this.checkError(e.response.status);
+            this.checkError(e.response.status, e.response.data.message);
           }
         } finally {
           document.querySelector("#book").disabled = false

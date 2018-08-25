@@ -98,7 +98,7 @@
           this.driver = profile.data.data;
           this.role = profile.data.data.user.role;
         } catch (e) {
-          this.checkError(e.response.status);
+          this.checkError(e.response.status, e.response.data.message);
         }
       },
     },

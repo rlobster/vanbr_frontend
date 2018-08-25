@@ -135,8 +135,7 @@
           console.log(driver);
           this.driverObj = driver.data.data;
         } catch (e) {
-          this.checkError(e.response.status);
-          console.log(e);
+          this.checkError(e.response.status, e.response.data.message);
         }
       },
       async deleteDriver(id) {
@@ -146,8 +145,7 @@
             const driverDel = await this.axios.delete(`${this.AppURL}/admin/driver/${id}/delete`);
             console.log(driverDel);
           } catch (e) {
-            this.checkError(e.response.status);
-            console.log(e);
+            this.checkError(e.response.status, e.response.data.message);
           }
         }
       },
@@ -161,8 +159,7 @@
           console.log(paymentToDriver);
           this.getDrivers();
         } catch (e) {
-          this.checkError(e.response.status);
-          console.log(e);
+          this.checkError(e.response.status, e.response.data.message);
         }
       },
       async editDriver(driver) {

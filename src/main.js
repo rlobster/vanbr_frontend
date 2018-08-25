@@ -99,15 +99,15 @@ Vue.mixin({
       }
       return false;
     },
-    async checkError(status) {
+    async checkError(status, error) {
       if (status === 401) {
         delete axios.defaults.headers.common.Authorization;
         await localStorage.clear();
         window.location = Routes.Login;
-        return;
-      }
-      if (status === 404) {
+      } else if (status === 404) {
         window.location = Routes.Booking;
+      } else {
+        alert(error);
       }
     },
     playNotificationAudio() {

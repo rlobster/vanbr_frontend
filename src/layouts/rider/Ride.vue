@@ -115,9 +115,8 @@
           }
         } catch (e) {
           if(e.response) {
-            this.checkError(e.response.status);
+            this.checkError(e.response.status, e.response.data.message);
           }
-          console.log(e)
         }
       },
       async cancelRide() {
@@ -135,7 +134,7 @@
           }
           this.$socket.emit('cancelRide', response.data.data.driver_user_id);
         } catch (e) {
-          this.checkError(e.response.status);
+          this.checkError(e.response.status, e.response.data.message);
         } finally {
           document.querySelector("#cancel").disabled = false;
         }

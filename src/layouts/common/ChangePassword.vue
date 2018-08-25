@@ -59,9 +59,8 @@
           } else if (this.role === 'admin') {
             this.$router.push(Routes.Dashboard);
           }
-          console.log(response);
         } catch (e) {
-          console.warn(e);
+          this.checkError(e.response.status, e.response.data.message);
         } finally {
           document.querySelector("#submit").disabled = false
         }

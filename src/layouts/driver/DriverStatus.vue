@@ -88,7 +88,7 @@
           this.carNumber = response.data.data.car_number;
           this.carType = response.data.data.car_model;
         } catch (e) {
-          console.log(e);
+          this.checkError(e.response.status, e.response.data.message);
         }
       },
     },

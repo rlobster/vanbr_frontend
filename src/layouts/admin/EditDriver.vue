@@ -113,7 +113,6 @@
         try {
           document.querySelector("#submit").disabled = true
           const driver = await this.axios.get(`${this.AppURL}/admin/users/Driver/${this.$route.params.id}`);
-          console.log(driver);
           this.name = driver.data.data.driver.name;
           this.dob = driver.data.data.driver.dob;
           this.gender = driver.data.data.driver.gender;
@@ -127,8 +126,7 @@
           this.insuranceNo = driver.data.data.driver.insurance_number;
           this.insuranceExpiry = driver.data.data.driver.insurance_expiry_date;
         } catch (e) {
-          this.checkError(e.response.status);
-          console.log(e);
+          this.checkError(e.response.status, e.response.data.message);          
         } finally {
           document.querySelector("#submit").disabled = false
         }
@@ -180,8 +178,7 @@
           const response = await this.axios.put(`${this.AppURL}/admin/driver/${this.$route.params.id}/update`, data);
           console.log(response);
         } catch (e) {
-          this.checkError(e.response.status);
-          console.log(e);
+          this.checkError(e.response.status, e.response.data.message);          
         }
       },
     },

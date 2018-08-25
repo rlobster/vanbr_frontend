@@ -84,7 +84,7 @@
           this.setData(response.data.data);
         } catch (e) {
           if(e.response) {
-            this.checkError(e.response.status);
+            this.checkError(e.response.status, e.response.data.message);
           }
         }
       },
@@ -125,7 +125,7 @@
             localStorage.setItem('status', true);
             this.$router.push(this.Routes.DriverStatus);
         } catch (e) {
-            this.checkError(e.response.status);
+            this.checkError(e.response.status, e.response.data.message);
         } finally {
           document.querySelector("#cancel").disabled = false;
         }
@@ -185,9 +185,8 @@
           this.approx_start_point_code = ride.ride_meta_data.final_start_point_code || ride.ride_meta_data.approx_start_point_code;
         } catch (e) {
           if (e.response) {
-            this.checkError(e.response.status);
+            this.checkError(e.response.status, e.response.data.message);
           }
-          console.log(e);
         } finally {
           document.querySelector("#startRide").disabled = false;
         }
@@ -212,7 +211,7 @@
 
           this.$router.push({name: 'Feedback', params: {id: response.data.data.id}});
         } catch (e) {
-          this.checkError(e.response.status);
+          this.checkError(e.response.status, e.response.data.message);
         } finally {
           document.querySelector("#endRide").disabled = false;
         }

@@ -193,7 +193,7 @@
             this.total_tax = 0;
           }
         } catch (e) {
-          this.checkError(e.response.status);
+          this.checkError(e.response.status, e.response.data.message);
         }
       },
     },

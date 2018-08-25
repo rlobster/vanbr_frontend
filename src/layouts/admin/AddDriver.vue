@@ -160,14 +160,12 @@ export default {
           `${this.AppURL}/admin/driver/create`,
           data
         );
-        console.log(response);
         if (response.data.data && response.data.data.id) {
           uploadImage(response.data.data.id);
         }
         alert("Successfully Driver Added");
       } catch (e) {
-        this.checkError(e.response.status);
-        console.log(e);
+        this.checkError(e.response.status, e.response.data.message);
       } finally {
         document.querySelector("#submit").disabled = false;
       }

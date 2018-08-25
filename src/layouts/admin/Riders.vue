@@ -117,27 +117,22 @@
       async getRiders() {
         try {
           const rider = await this.axios.get(`${this.AppURL}/admin/users/Rider`);
-          console.log(rider.data.data);
           this.riderObj = rider.data.data;
         } catch (e) {
-          this.checkError(e.response.status);
-          console.log(e);
+          this.checkError(e.response.status, e.response.data.message);
         }
       },
       doFilter() {
-        console.log('doFilter:', this.filterText);
         this.$events.fire('filter-set', this.filterText);
       },
       resetFilter() {
         this.filterText = '';
-        console.log('resetFilter');
         this.$events.fire('filter-reset');
       },
       onPaginationData(paginationData) {
         this.$refs.pagination.setPaginationData(paginationData);
       },
       onChangePage(page) {
-        console.log(page);
         this.$refs.vuetable.changePage(page);
       },
       onLoading() {

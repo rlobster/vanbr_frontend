@@ -133,7 +133,7 @@
           this.mobile_no = profile.data.data.mobile_no;
           this.role = profile.data.data.user.role;
         } catch (e) {
-          this.checkError(e.response.status);
+          this.checkError(e.response.status, e.response.data.message);
         }
       },
       async profile(event) {
@@ -150,7 +150,7 @@
           await this.axios.post(`${this.AppURL}/rider/profile`, data);
           alert('Your profile updated successfully!');
         } catch (e) {
-          this.checkError(e.response.status);
+          this.checkError(e.response.status, e.response.data.message);
         } finally {
           document.querySelector("#submit").disabled = false;
         }
@@ -178,7 +178,7 @@
           this.paymentCard = cardResponse.data.card.sources.data[0];
           alert('Your Payment Card updated successfully!');
         } catch (e) {
-          this.checkError(e.response.status);
+          this.checkError(e.response.status, e.response.data.message);
         } finally {
           document.querySelector("#editCard").disabled = false;
         }
