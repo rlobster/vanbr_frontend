@@ -11,12 +11,12 @@
           <div class="form-group main-app-section-xs">
             <label for="dob">Date of Birth:</label>
             <input v-validate="'required'" name="dob" type="date" class="form-control" id="dob" v-model="dob"/>
-            <p class="error-msg">{{ errors.first('dob') }}</p>          
+            <p class="error-msg">{{ errors.first('dob') }}</p>
           </div>
           <div class="form-group main-app-section-xs">
             <label for="dob">Phone Number:</label>
             <input v-validate="'required|numeric|length:10'" name="mobile" type="number" placeholder="Phone Number" class="form-control" id="mobile" v-model="mobile_no"/>
-            <p class="error-msg">{{ errors.first('mobile') }}</p>          
+            <p class="error-msg">{{ errors.first('mobile') }}</p>
           </div>
           <div class="form-group main-app-section-xs">
             <label>Gender:</label>
@@ -42,12 +42,12 @@
           <div class="form-group main-app-section-xs">
             <label>Car Number:</label>
             <input v-validate="'required|alpha_num'" name="car" type="text" class="form-control" v-model="carNumber" placeholder="Car Number" id="number"/>
-            <p class="error-msg">{{ errors.first('car') }}</p>          
+            <p class="error-msg">{{ errors.first('car') }}</p>
           </div>
           <div class="form-group main-app-section-xs">
             <label>License Number:</label>
             <input v-validate="'required|alpha_num'" name="license" type="text" class="form-control" v-model="licenseNumber" placeholder="License Number" id="license"/>
-            <p class="error-msg">{{ errors.first('license') }}</p>                    
+            <p class="error-msg">{{ errors.first('license') }}</p>
           </div>
           <div class="form-group main-app-section-xs">
             <label>License Expiry Date:</label>
@@ -56,7 +56,7 @@
           <div class="form-group main-app-section-xs">
             <label>Insurance Number:</label>
             <input v-validate="'required|alpha_num'" name="insurance" type="text" class="form-control" v-model="insuranceNo" placeholder="Insurance Number" id="insuranceNo"/>
-            <p class="error-msg">{{ errors.first('insurance') }}</p>                    
+            <p class="error-msg">{{ errors.first('insurance') }}</p>
           </div>
           <div class="form-group main-app-section-xs">
             <label>Insurance Expiry Date:</label>
@@ -66,8 +66,8 @@
           <div class="form-group main-app-section-xs">
             <label>Car Type:</label>
             <select v-model="carId" class="form-control">
-              <option value="0">Sedan</option>
-              <option value="1">Mini Van</option>
+              <option value="1">Sedan</option>
+              <option value="2">Mini Van</option>
             </select>
           </div>
 
