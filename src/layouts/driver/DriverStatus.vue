@@ -45,6 +45,7 @@
         name: '',
         carNumber: '',
         carType: '',
+        carId: '',
         rideRequest: {
           newRide: false,
           rideId: '',
@@ -62,7 +63,7 @@
       if (window.localStorage.getItem('status') === 'true') {
         this.status = true;
         this.statusContent = 'You are now Online';
-        this.$socket.emit('isOnline', true, this.carType);
+        this.$socket.emit('isOnline', true, this.carId);
       } else {
         this.status = false;
         this.statusContent = 'You are currently Offline';
@@ -84,9 +85,11 @@
       async getDriverProfile() {
         try {
           const response = await this.axios.get(`${this.AppURL}/driver/profile`);
+          console.log(response.data.data);
           this.name = response.data.data.name;
           this.carNumber = response.data.data.car_number;
           this.carType = response.data.data.car_model;
+          this.carId = response.data.data.car_id;
         } catch (e) {
           this.checkError(e.response.status, e.response.data.message);
         }

@@ -11,12 +11,12 @@
           <div class="form-group main-app-section-xs">
             <label for="dob">Date of Birth:</label>
             <input type="date" v-validate="'required'" v-model="dob" name="dob" class="form-control" id="dob"/>
-            <p class="error-msg">{{ errors.first('dob') }}</p>            
+            <p class="error-msg">{{ errors.first('dob') }}</p>
           </div>
           <div class="form-group main-app-section-xs">
             <label for="name">Mobile Number:</label>
             <input v-validate="'required|length:10'" name="mobile" v-model="mobile_no" type="number" class="form-control" placeholder="Mobile" id="mobile"/>
-            <p class="error-msg">{{ errors.first('mobile') }}</p>          
+            <p class="error-msg">{{ errors.first('mobile') }}</p>
           </div>
           <div class="form-group main-app-section-xs">
             <label for="name">Gender:</label>
