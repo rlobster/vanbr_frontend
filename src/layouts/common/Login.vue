@@ -70,11 +70,7 @@
             this.$router.push(Routes.Dashboard);
           }
         } catch (e) {
-          if (e.response.status === 401) {
-            alert('Invalid Credentials');
-          } else {
-            alert('Invalid Data');
-          }
+          this.checkError(e.response.status, e.response.data.message);
         } finally {
           document.querySelector("#login").disabled = false
         }
