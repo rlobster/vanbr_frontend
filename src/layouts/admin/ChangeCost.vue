@@ -108,7 +108,8 @@
             vanbr_charges: this.vanbrCharges,
             vanbr_commission: this.vanbrCommision,
           };
-          const response = await this.axios.put(`${this.AppURL}/admin/price/1/update`, data);          
+          const response = await this.axios.put(`${this.AppURL}/admin/price/1/update`, data);
+          alert('Cost updated successfully!');       
         } catch (e) {
           this.checkError(e.response.status, e.response.data.message);          
         } finally {
@@ -127,7 +128,8 @@
             vanbr_charges: this.vanbrCharges,
             vanbr_commission: this.vanbrCommision,
           };
-          const response = await this.axios.put(`${this.AppURL}/admin/price/2/update`, data);          
+          const response = await this.axios.put(`${this.AppURL}/admin/price/2/update`, data);
+          alert('Cost updated successfully!');
         } catch (e) {
           this.checkError(e.response.status, e.response.data.message);          
         }

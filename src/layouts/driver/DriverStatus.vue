@@ -85,7 +85,6 @@
       async getDriverProfile() {
         try {
           const response = await this.axios.get(`${this.AppURL}/driver/profile`);
-          console.log(response.data.data);
           this.name = response.data.data.name;
           this.carNumber = response.data.data.car_number;
           this.carType = response.data.data.car_model;

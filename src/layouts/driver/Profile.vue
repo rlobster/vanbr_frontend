@@ -97,7 +97,6 @@
           this.email = profile.data.data.user.email;
           this.driver = profile.data.data;
           this.role = profile.data.data.user.role;
-          console.log(profile, this.driver, this.role);
         } catch (e) {
           this.checkError(e.response.status, e.response.data.message);
         }
