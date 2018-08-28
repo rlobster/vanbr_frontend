@@ -127,10 +127,9 @@
       async getFeedbacks() {
         try {
           const feedback = await this.axios.get(`${this.AppURL}/admin/feedbacks/list`);
-          console.log(feedback);
           this.feedbackObj = feedback.data.data;
         } catch (e) {
-          this.checkError(e.response.status);
+          this.checkError(e.response.status, e.response.data.message);
           console.log(e);
         }
       },

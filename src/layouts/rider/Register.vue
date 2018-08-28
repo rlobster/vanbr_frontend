@@ -117,9 +117,9 @@
           this.axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           this.$router.push(Routes.Booking);
         } catch (e) {
-          this.checkError(e.response.status);
+          this.checkError(e.response.status, e.response.data.message);
         } finally {
-          document.querySelector("#cancel").disabled = false;
+          document.querySelector("#submit").disabled = false;
         }
       },
     },

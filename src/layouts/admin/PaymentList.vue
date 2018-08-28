@@ -148,19 +148,16 @@
           const ride = await this.axios.get(`${this.AppURL}/admin/rides/list`);
           
           this.rideObj = ride.data.data;
-          console.log(rideObj);
 
           this.paymentStatus = this.rideObj.payment_status;
           const pickupObj = OpenLocationCode.decode(this.rideObj.pick_up_point);
           this.pickup = await this.getLocation(pickupObj);
           this.rideObj.pick_up_point = this.pickup;
-          console.log(this.rideObj.pick_up_point);
 
           const dropObj = OpenLocationCode.decode(this.rideObj.drop_point);
           this.drop = await this.getLocation(dropObj);
-          console.log(this.drop);
         } catch (e) {
-          this.checkError(e.response.status);
+          this.checkError(e.response.status, e.response.data.message);
           console.log(e);
         }
       },

@@ -121,7 +121,6 @@
         try {
           document.querySelector("#submit").disabled = true
           const driver = await this.axios.get(`${this.AppURL}/admin/users/Driver/${this.$route.params.id}`);
-          console.log(driver);
           this.name = driver.data.data.driver.name;
           this.dob = driver.data.data.driver.dob;
           this.gender = driver.data.data.driver.gender;
@@ -136,39 +135,38 @@
           this.insuranceExpiry = driver.data.data.driver.insurance_expiry_date;
           this.carId = driver.data.data.driver.car_id;
         } catch (e) {
-          this.checkError(e.response.status);
-          console.log(e);
+          this.checkError(e.response.status, e.response.data.message);          
         } finally {
           document.querySelector("#submit").disabled = false
         }
       },
-      async onFileChange(e) {
-        const files = e.target.files || e.dataTransfer.files;
-        console.log(files);
-        if (files && files.length) {
-          const reader = new FileReader();
-          reader.onload = (event) => {
-            console.log(event.target.result);
-            if (event.target.result) {
-              console.log('happened');
-              this.createImage(event.target.result);
-              const output = reader.readAsDataURL(event.target.result);
-              console.log(output);
-            }
-          };
-        }
-      },
-      createImage(file) {
-        console.log(file);
-        // const image = new Image();
-        const reader = new FileReader();
+      // async onFileChange(e) {
+      //   const files = e.target.files || e.dataTransfer.files;
+      //   console.log(files);
+      //   if (files && files.length) {
+      //     const reader = new FileReader();
+      //     reader.onload = (event) => {
+      //       console.log(event.target.result);
+      //       if (event.target.result) {
+      //         console.log('happened');
+      //         this.createImage(event.target.result);
+      //         const output = reader.readAsDataURL(event.target.result);
+      //         console.log(output);
+      //       }
+      //     };
+      //   }
+      // },
+      // createImage(file) {
+      //   console.log(file);
+      //   // const image = new Image();
+      //   const reader = new FileReader();
 
-        // reader.onload = (e) => {
-        //   const image = e.target.result;
-        // };
-        const output = reader.readAsDataURL(file);
-        console.log(output);
-      },
+      //   // reader.onload = (e) => {
+      //   //   const image = e.target.result;
+      //   // };
+      //   const output = reader.readAsDataURL(file);
+      //   console.log(output);
+      // },
       async editDriver(event) {
         event.preventDefault();
         try {
@@ -188,10 +186,9 @@
             car_id: this.carId,
           };
           const response = await this.axios.put(`${this.AppURL}/admin/driver/${this.$route.params.id}/update`, data);
-          console.log(response);
+          alert('Successfully Driver Updated!');          
         } catch (e) {
-          this.checkError(e.response.status);
-          console.log(e);
+          this.checkError(e.response.status, e.response.data.message);          
         }
       },
     },

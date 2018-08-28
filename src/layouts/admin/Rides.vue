@@ -158,19 +158,16 @@
       async getRides() {
         try {
           const ride = await this.axios.get(`${this.AppURL}/admin/rides/list`);
-          console.log(ride);
           this.rideObj = ride.data.data;
 
           const pickupObj = OpenLocationCode.decode(this.rideObj.pick_up_point);
           this.pickup = await this.getLocation(pickupObj);
           this.rideObj.pick_up_point = this.pickup;
-          console.log(this.rideObj.pick_up_point);
 
           const dropObj = OpenLocationCode.decode(this.rideObj.drop_point);
           this.drop = await this.getLocation(dropObj);
-          console.log(this.drop);
         } catch (e) {
-          this.checkError(e.response.status);
+          this.checkError(e.response.status, e.response.data.message);
         }
       },
       setFilter(filterText) {
@@ -207,7 +204,6 @@
         this.$refs.pagination.setPaginationData(paginationData);
       },
       onChangePage(page) {
-        console.log(page);
         this.$refs.vuetable.changePage(page);
       },
       onLoading() {

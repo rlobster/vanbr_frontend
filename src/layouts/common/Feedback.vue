@@ -92,7 +92,7 @@
             this.$router.push('/');
           }
         } catch (e) {
-          this.checkError(e.response.status);
+          this.checkError(e.response.status, e.response.data.message);
         } finally {
           document.querySelector('#submit').disabled = false;
         }
@@ -112,7 +112,7 @@
           const response = await this.axios.post(`${this.AppURL}/${this.role}/feedback`, data);
           this.$router.push({name: 'Booking'});
         } catch (e) {
-          this.checkError(e.response.status);
+          this.checkError(e.response.status, e.response.data.message);
         }
       },
     },

@@ -15,7 +15,7 @@
           </div>
           <div class="form-group main-app-section-xs">
             <label for="dob">Phone Number:</label>
-            <input v-validate="'required|numeric|length:10'" name="mobile" type="number" placeholder="Phone Number" class="form-control" id="mobile" v-model="mobile_no"/>
+            <input v-validate="'numeric|length:10|required'" name="mobile" type="number" placeholder="Phone Number" class="form-control" id="mobile" v-model="mobile_no"/>
             <p class="error-msg">{{ errors.first('mobile') }}</p>
           </div>
           <div class="form-group main-app-section-xs">
@@ -119,25 +119,23 @@ export default {
     };
   },
   methods: {
-    async onCarFileChange(e) {
-      const carImage = e.target.files || e.dataTransfer.files;
-      this.driverCarImage = carImage[0];
-      console.log("onCarFileChange", this.driverCarImage);
-    },
-    async onDriverFileChange(e) {
-      return new Promise((resolve, reject) => {
-        this.driverImage = e.target.files || e.dataTransfer.files;
-        this.driverImage = files[0];
-        console.log("here!!!", this.driverImage);
-        resolve(this.driverImage);
-      });
-    },
+    // async onCarFileChange(e) {
+    //   const carImage = e.target.files || e.dataTransfer.files;
+    //   this.driverCarImage = carImage[0];
+    //   console.log("onCarFileChange", this.driverCarImage);
+    // },
+    // async onDriverFileChange(e) {
+    //   return new Promise((resolve, reject) => {
+    //     this.driverImage = e.target.files || e.dataTransfer.files;
+    //     this.driverImage = files[0];
+    //     console.log("here!!!", this.driverImage);
+    //     resolve(this.driverImage);
+    //   });
+    // },
     async addDriver(event) {
       event.preventDefault();
       try {
         document.querySelector("#submit").disabled = true;
-        console.log("car", this.driverCarImage);
-        console.log("driver", this.driverImage);
         const data = {
           name: this.name,
           dob: this.dob,
@@ -160,14 +158,12 @@ export default {
           `${this.AppURL}/admin/driver/create`,
           data
         );
-        console.log(response);
-        if (response.data.data && response.data.data.id) {
-          uploadImage(response.data.data.id);
-        }
-        alert("Successfully Driver Added");
+        // if (response.data.data && response.data.data.id) {
+        //   uploadImage(response.data.data.id);
+        // }
+        alert('Successfully Driver Added');
       } catch (e) {
-        this.checkError(e.response.status);
-        console.log(e);
+        this.checkError(e.response.status, e.response.data.message);
       } finally {
         document.querySelector("#submit").disabled = false;
       }

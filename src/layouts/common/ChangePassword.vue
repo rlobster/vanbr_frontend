@@ -5,12 +5,12 @@
       <form>
         <div class="form-group main-app-section-xs">
           <label for="oldPassword">Old Password:</label>
-          <input v-validate="'required|confirmed:confirmation'" name="password" type="password" id="oldPassword" class="form-control" placeholder="Old Password" v-model="oldPassword"/>
+          <input v-validate="'required'" name="password" type="password" id="oldPassword" class="form-control" placeholder="Old Password" v-model="oldPassword"/>
           <p class="error-msg">{{ errors.first('password') }}</p>
         </div>
         <div class="form-group main-app-section-xs">
           <label for="newPassword">New Password:</label>
-          <input v-validate="'required'" ref="confirmation" name="passwordNew" type="password" id="newPassword" class="form-control" placeholder="New Password" v-model="newPassword"/>
+          <input v-validate="'required'" name="passwordNew" type="password" id="newPassword" class="form-control" placeholder="New Password" v-model="newPassword"/>
           <p class="error-msg">{{ errors.first('passwordNew') }}</p>
         </div>
         <div class="form-group main-app-section-md">
@@ -59,9 +59,8 @@
           } else if (this.role === 'admin') {
             this.$router.push(Routes.Dashboard);
           }
-          console.log(response);
         } catch (e) {
-          console.warn(e);
+          this.checkError(e.response.status, e.response.data.message);
         } finally {
           document.querySelector("#submit").disabled = false
         }

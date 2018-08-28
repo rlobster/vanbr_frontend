@@ -132,22 +132,20 @@
       async getDrivers() {
         try {
           const driver = await this.axios.get(`${this.AppURL}/admin/users/Driver`);
-          console.log(driver);
           this.driverObj = driver.data.data;
         } catch (e) {
-          this.checkError(e.response.status);
-          console.log(e);
+          this.checkError(e.response.status, e.response.data.message);
         }
       },
       async deleteDriver(id) {
         const choice = confirm('Are you sure you want to delete this driver?');
         if (choice === true) {
           try {
-            const driverDel = await this.axios.delete(`${this.AppURL}/admin/driver/${id}/delete`);
-            console.log(driverDel);
+            await this.axios.delete(`${this.AppURL}/admin/driver/${id}/delete`);
+            alert('Successfully Driver Deleted!');
+            this.getDrivers();
           } catch (e) {
-            this.checkError(e.response.status);
-            console.log(e);
+            this.checkError(e.response.status, e.response.data.message);
           }
         }
       },
@@ -157,31 +155,28 @@
             month: 0,
             status: true,
           };
-          const paymentToDriver = await this.axios.put(`${this.AppURL}/admin/ride/driver/${id}/payment/update`, paymentObj);
-          console.log(paymentToDriver);
+          await this.axios.put(`${this.AppURL}/admin/ride/driver/${id}/payment/update`, paymentObj);
           this.getDrivers();
         } catch (e) {
-          this.checkError(e.response.status);
-          console.log(e);
+          this.checkError(e.response.status, e.response.data.message);
         }
       },
       async editDriver(driver) {
         this.$router.push({ name: 'EditDriver', params: { id: driver } });
       },
       doFilter() {
-        console.log('doFilter:', this.filterText);
+        // console.log('doFilter:', this.filterText);
         this.$events.fire('filter-set', this.filterText);
       },
       resetFilter() {
         this.filterText = '';
-        console.log('resetFilter');
+        // console.log('resetFilter');
         this.$events.fire('filter-reset');
       },
       onPaginationData(paginationData) {
         this.$refs.pagination.setPaginationData(paginationData);
       },
       onChangePage(page) {
-        console.log(page);
         this.$refs.vuetable.changePage(page);
       },
       editRow(rowData) {
@@ -191,10 +186,10 @@
         alert(JSON.stringify(rowData));
       },
       onLoading() {
-        console.log('loading... show your spinner here');
+        // console.log('loading... show your spinner here');
       },
       onLoaded() {
-        console.log('loaded! .. hide your spinner here');
+        // console.log('loaded! .. hide your spinner here');
       },
     },
   };
