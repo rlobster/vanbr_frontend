@@ -105,8 +105,8 @@
       },
       rideConfirmation(data) {
         if (this.getRole() === 'driver') {
-          this.playNotificationAudio();
-          window.navigator.vibrate(200);
+          // this.playNotificationAudio();
+          // window.navigator.vibrate(200);
           console.log(data);
           this.rideRequest.newRide = true;
           this.rideRequest.rideId = data.id;
@@ -127,8 +127,8 @@
       },
       confirmRide(value) {
         if (this.getRole() === 'driver') {
-          this.playNotificationAudio();
-          window.navigator.vibrate(200);
+          // this.playNotificationAudio();
+          // window.navigator.vibrate(200);
           console.log(value);
           this.$router.push({ name: 'Ride', params: { id: value.id } });
         }
