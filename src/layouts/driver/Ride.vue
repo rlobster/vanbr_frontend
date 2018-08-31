@@ -133,7 +133,7 @@
         } catch (e) {
           this.checkError(e.response.status, e.response.data.message);
         } finally {
-          document.querySelector("#endRide").disabled = false;
+          document.querySelector("#cancel").disabled = false;
         }
       },
       getLocationPosition() {
