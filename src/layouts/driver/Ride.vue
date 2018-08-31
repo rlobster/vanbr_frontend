@@ -199,9 +199,9 @@
               final_end_point_code: this.approx_end_point_code,
               final_end_point_address: this.approx_end_point_address
           }
-          // data['final_end_point_code'] = await this.getLocationPosition();
-          // const end_point_obj = OpenLocationCode.decode(data['final_end_point_code']);
-          // data['final_end_point_address'] = await this.getLocation(end_point_obj);
+          data['final_end_point_code'] = await this.getLocationPosition();
+          const end_point_obj = OpenLocationCode.decode(data['final_end_point_code']);
+          data['final_end_point_address'] = await this.getLocation(end_point_obj);
           
           const response = await this.axios.post(`${this.AppURL}/driver/end-ride`, data);
 
