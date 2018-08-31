@@ -42,6 +42,10 @@
               <td><strong>Ride Status</strong>:</td>
               <td class="text-right">{{ rideStatusText }}</td>
             </tr>
+            <tr>
+              <td><strong>Estimated Wait</strong>:</td>
+              <td class="text-right">{{ estimatedWait }}</td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -72,6 +76,7 @@
         rideStatus: '',
         mobile_no: '',
         rideStatusText: '',
+        estimatedWait: ''
       };
     },
     mounted() {
@@ -89,12 +94,16 @@
             switch (ride.ride_status) {
               case 1:
                 this.rideStatusText = 'Driver is coming...';
+                // Estimated wait calculation goes here
+                this.estimatedWait = '';
                 break;
               case 2:
                 this.rideStatusText = 'You are riding...';
+                this.estimatedWait = 'N/A';
                 break;
               default:
                 this.rideStatusText = 'Searching Driver...';
+                this.estimatedWait = 'Calculating...';
                 break;
             }
             this.rideStatus = ride.ride_status;
