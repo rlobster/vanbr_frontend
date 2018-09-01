@@ -207,10 +207,10 @@
         this.$refs.vuetable.changePage(page);
       },
       onLoading() {
-        console.log('loading... show your spinner here');
+        // console.log('loading... show your spinner here');
       },
       onLoaded() {
-        console.log('loaded! .. hide your spinner here');
+        // console.log('loaded! .. hide your spinner here');
       },
     },
   };

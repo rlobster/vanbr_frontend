@@ -116,7 +116,9 @@
           this.sedan = car_data[0];
           this.mini_van = car_data[1];
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         } finally {
           document.querySelector("#submit").disabled = false;
           document.querySelector("#submit1").disabled = false;

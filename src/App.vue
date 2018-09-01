@@ -69,7 +69,7 @@
       handlePermission() {
         navigator.geolocation.watchPosition(
           (success) => {
-            console.log(success.coords);
+            // console.log(success.coords);
             const lat = success.coords.latitude;
             const long = success.coords.longitude;
             // eslint-disable-next-line
@@ -100,14 +100,13 @@
         const token = localStorage.getItem('token');
         if (token) {
           this.$socket.emit('join', token);
+          console.log('socket connected');
         }
-        console.log('socket connected');
       },
       rideConfirmation(data) {
         if (this.getRole() === 'driver') {
           // this.playNotificationAudio();
           // window.navigator.vibrate(200);
-          console.log(data);
           this.rideRequest.newRide = true;
           this.rideRequest.rideId = data.id;
           this.rideRequest.pickupCode = data.ride_meta_data.approx_start_point_code;
@@ -129,7 +128,6 @@
         if (this.getRole() === 'driver') {
           // this.playNotificationAudio();
           // window.navigator.vibrate(200);
-          console.log(value);
           this.$router.push({ name: 'Ride', params: { id: value.id } });
         }
       },

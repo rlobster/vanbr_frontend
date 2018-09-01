@@ -119,7 +119,9 @@
           const rider = await this.axios.get(`${this.AppURL}/admin/users/Rider`);
           this.riderObj = rider.data.data;
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         }
       },
       doFilter() {
@@ -136,10 +138,10 @@
         this.$refs.vuetable.changePage(page);
       },
       onLoading() {
-        console.log('loading... show your spinner here');
+        // console.log('loading... show your spinner here');
       },
       onLoaded() {
-        console.log('loaded! .. hide your spinner here');
+        // console.log('loaded! .. hide your spinner here');
       },
     },
   };

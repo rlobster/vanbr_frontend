@@ -131,7 +131,9 @@
           localStorage.setItem('status', true);
           this.$router.push({name: 'Feedback', params: {id: response.data.data.id}});
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         } finally {
           document.querySelector("#cancel").disabled = false;
         }
@@ -217,7 +219,9 @@
 
           this.$router.push({name: 'Feedback', params: {id: response.data.data.id}});
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         } finally {
           document.querySelector("#endRide").disabled = false;
         }

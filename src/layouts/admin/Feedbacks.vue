@@ -129,31 +129,29 @@
           const feedback = await this.axios.get(`${this.AppURL}/admin/feedbacks/list`);
           this.feedbackObj = feedback.data.data;
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);
-          console.log(e);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         }
       },
       doFilter() {
-        console.log('doFilter:', this.filterText);
         this.$events.fire('filter-set', this.filterText);
       },
       resetFilter() {
         this.filterText = '';
-        console.log('resetFilter');
         this.$events.fire('filter-reset');
       },
       onPaginationData(paginationData) {
         this.$refs.pagination.setPaginationData(paginationData);
       },
       onChangePage(page) {
-        console.log(page);
         this.$refs.vuetable.changePage(page);
       },
       onLoading() {
-        console.log('loading... show your spinner here');
+        // console.log('loading... show your spinner here');
       },
       onLoaded() {
-        console.log('loaded! .. hide your spinner here');
+        // console.log('loaded! .. hide your spinner here');
       },
     },
   };

@@ -135,7 +135,9 @@
           this.insuranceExpiry = driver.data.data.driver.insurance_expiry_date;
           this.carId = driver.data.data.driver.car_id;
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);          
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }    
         } finally {
           document.querySelector("#submit").disabled = false
         }
@@ -188,7 +190,9 @@
           const response = await this.axios.put(`${this.AppURL}/admin/driver/${this.$route.params.id}/update`, data);
           alert('Successfully Driver Updated!');          
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);          
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }    
         }
       },
     },

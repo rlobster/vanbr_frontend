@@ -120,7 +120,9 @@
           this.$root.$emit('auth');
           this.$router.push(Routes.Login);
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         }
       },
       logoutHandler() {
