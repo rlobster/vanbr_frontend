@@ -67,10 +67,6 @@
     },
     methods: {
       handlePermission() {
-        const options = {
-          timeout: 5000,
-          maximumAge: Infinity,
-        };
         navigator.geolocation.watchPosition(
           (success) => {
             // console.log(success.coords);
@@ -84,7 +80,6 @@
             console.log(failure);
             // window.location = 'https://google.com/';
           },
-          options,
         );
       },
       sendResponse(response) {

@@ -138,11 +138,7 @@
           document.querySelector("#cancel").disabled = false;
         }
       },
-      getLocationPosition() {
-        const options = {
-          timeout: 5000,
-          maximumAge: Infinity,
-        };
+      getLocationPosition(options = { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true }) {
         return new Promise( (resolve, reject) => {
           navigator.geolocation.getCurrentPosition(
             (success) => {
@@ -151,8 +147,11 @@
               resolve(OpenLocationCode.encode(lat,long));
             },
             (failure) => {
-              reject(failure);
-              // window.location = 'https://google.com/';
+              if(failure.code === 3) {
+                this.getLocationPosition({ maximumAge: 3000, timeout: 20000, enableHighAccuracy: false })
+              } else {
+                reject(failure);
+              }
             },
             options,
           );
