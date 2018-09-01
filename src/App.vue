@@ -49,10 +49,10 @@
         },
       };
     },
-    created() {
+    async created() {
       const token = localStorage.getItem('token');
       if (token) {
-        this.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+        await (this.axios.defaults.headers.common.Authorization = `Bearer ${token}`);
       }
       this.handlePermission();
     },
@@ -67,6 +67,10 @@
     },
     methods: {
       handlePermission() {
+        const options = {
+          timeout: 5000,
+          maximumAge: Infinity,
+        };
         navigator.geolocation.watchPosition(
           (success) => {
             // console.log(success.coords);
@@ -80,6 +84,7 @@
             console.log(failure);
             // window.location = 'https://google.com/';
           },
+          options,
         );
       },
       sendResponse(response) {
@@ -131,12 +136,13 @@
           this.$router.push({ name: 'Ride', params: { id: value.id } });
         }
       },
-      cancelRideListener(value) {
-        alert(value);
+      async cancelRideListener(value) {
+        await alert(value);
         window.location.reload();
       },
-      logout() {
-        window.localStorage.clear();
+      async logout() {
+        await window.localStorage.clear();
+        delete this.axios.defaults.headers.common.Authorization;
         this.$router.push(this.Routes.Login);
       },
     },

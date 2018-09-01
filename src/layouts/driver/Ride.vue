@@ -139,6 +139,10 @@
         }
       },
       getLocationPosition() {
+        const options = {
+          timeout: 5000,
+          maximumAge: Infinity,
+        };
         return new Promise( (resolve, reject) => {
           navigator.geolocation.getCurrentPosition(
             (success) => {
@@ -150,6 +154,7 @@
               reject(failure);
               // window.location = 'https://google.com/';
             },
+            options,
           );
         });
       },
@@ -175,12 +180,12 @@
           document.querySelector("#startRide").disabled = true;
           const data = {
             ride_id: this.$route.params.id,
-            final_start_point_code: this.approx_start_point_code,
-            final_start_point_address: this.approx_start_point_address
+            // final_start_point_code: this.approx_start_point_code,
+            // final_start_point_address: this.approx_start_point_address
           };
-          // data['final_start_point_code'] = await this.getLocationPosition();
-          // const start_point_obj = OpenLocationCode.decode(data['final_start_point_code']);
-          // data['final_start_point_address'] = await this.getLocation(start_point_obj);
+          data['final_start_point_code'] = await this.getLocationPosition();
+          const start_point_obj = OpenLocationCode.decode(data['final_start_point_code']);
+          data['final_start_point_address'] = await this.getLocation(start_point_obj);
 
           const response = await this.axios.post(`${this.AppURL}/driver/start-ride`, data);
 
@@ -204,8 +209,8 @@
           document.querySelector("#endRide").disabled = true;
           const data = {
               ride_id: this.$route.params.id,
-              final_end_point_code: this.approx_end_point_code,
-              final_end_point_address: this.approx_end_point_address
+              // final_end_point_code: this.approx_end_point_code,
+              // final_end_point_address: this.approx_end_point_address
           }
           data['final_end_point_code'] = await this.getLocationPosition();
           const end_point_obj = OpenLocationCode.decode(data['final_end_point_code']);
