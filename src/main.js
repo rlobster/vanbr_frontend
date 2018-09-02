@@ -103,7 +103,7 @@ Vue.mixin({
       if (status === 401) {
         await delete axios.defaults.headers.common.Authorization;
         await localStorage.clear();
-        this.auth = this.authStatus();
+        await this.$root.$emit('auth');
         this.$router.push(Routes.Login);
       } else if (status === 404) {
         this.$router.push(Routes.Booking);
