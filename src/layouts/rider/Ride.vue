@@ -88,7 +88,7 @@
           const response = await this.axios.get(`${this.AppURL}/rider/get-single-ride?ride_id=${this.$route.params.id}`);
 
           const ride = response.data.data;
-
+          console.log(ride);
           if (ride.ride_status === 0 || ride.ride_status === 1 || ride.ride_status === 2) {
 
             switch (ride.ride_status) {
@@ -108,7 +108,7 @@
             }
             this.rideStatus = ride.ride_status;
             this.carType = ride.car.type;
-            const { approx_start_point_address, approx_end_point_address, final_start_point_address, final_end_point_address  } = ride.ride_meta
+            const { approx_start_point_address, approx_end_point_address, final_start_point_address, final_end_point_address  } = ride.ride_meta_data;
             this.start_point_address = final_start_point_address || approx_start_point_address;
             this.end_point_address = final_end_point_address || approx_end_point_address;
 
