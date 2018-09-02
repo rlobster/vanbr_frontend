@@ -54,7 +54,7 @@
       if (token) {
         await (this.axios.defaults.headers.common.Authorization = `Bearer ${token}`);
       }
-      this.handlePermission();
+      // this.handlePermission();
     },
     mounted() {
       if (this.getRole() === 'driver') {
@@ -66,22 +66,22 @@
       }
     },
     methods: {
-      handlePermission() {
-        navigator.geolocation.watchPosition(
-          (success) => {
-            // console.log(success.coords);
-            const lat = success.coords.latitude;
-            const long = success.coords.longitude;
-            // eslint-disable-next-line
-            this.$socket.emit('getLocation', OpenLocationCode.encode(lat,long));
-            this.$socket.emit('isOnline', true);
-          },
-          (failure) => {
-            console.log(failure);
-            // window.location = 'https://google.com/';
-          },
-        );
-      },
+      // handlePermission() {
+      //   navigator.geolocation.watchPosition(
+      //     (success) => {
+      //       // console.log(success.coords);
+      //       const lat = success.coords.latitude;
+      //       const long = success.coords.longitude;
+      //       // eslint-disable-next-line
+      //       this.$socket.emit('getLocation', OpenLocationCode.encode(lat,long));
+      //       this.$socket.emit('isOnline', true);
+      //     },
+      //     (failure) => {
+      //       console.log(failure);
+      //       // window.location = 'https://google.com/';
+      //     },
+      //   );
+      // },
       sendResponse(response) {
         if (response) {
           this.$socket.emit('getDriverResponse', true, this.rideRequest.rideId, this.rideRequest.riderId);
