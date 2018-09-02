@@ -17,11 +17,11 @@
             </tr>
             <tr>
               <td><strong>Pickup</strong>:</td>
-              <td class="text-right">{{ approx_start_point_address }}</td>
+              <td class="text-right">{{ start_point_address }}</td>
             </tr>
             <tr>
               <td><strong>Drop</strong>:</td>
-              <td class="text-right">{{ approx_end_point_address }}</td>
+              <td class="text-right">{{ end_point_address }}</td>
             </tr>
             <tr v-if="rideStatus !== 0">
               <td><strong>Driver</strong>:</td>
@@ -42,10 +42,10 @@
               <td><strong>Ride Status</strong>:</td>
               <td class="text-right">{{ rideStatusText }}</td>
             </tr>
-            <tr>
+            <!-- <tr>
               <td><strong>Estimated Wait</strong>:</td>
               <td class="text-right">{{ estimatedWait }}</td>
-            </tr>
+            </tr> -->
             </tbody>
           </table>
         </div>
@@ -69,8 +69,8 @@
       return {
         AppURL,
         carType: '',
-        approx_start_point_address: '',
-        approx_end_point_address: '',
+        start_point_address: '',
+        end_point_address: '',
         driver: '',
         carDetail: '',
         rideStatus: '',
@@ -108,8 +108,9 @@
             }
             this.rideStatus = ride.ride_status;
             this.carType = ride.car.type;
-            this.approx_start_point_address = ride.ride_meta_data.approx_start_point_address;
-            this.approx_end_point_address = ride.ride_meta_data.approx_end_point_address;
+            const { approx_start_point_address, approx_end_point_address, final_start_point_address, final_end_point_address  } = ride.ride_meta
+            this.start_point_address = final_start_point_address || approx_start_point_address;
+            this.end_point_address = final_end_point_address || approx_end_point_address;
 
             if (ride.driver.name) {
               this.driver = ride.driver.name;
