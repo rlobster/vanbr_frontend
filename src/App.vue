@@ -135,11 +135,6 @@
         await alert(value);
         window.location.reload();
       },
-      async logout() {
-        await window.localStorage.clear();
-        delete this.axios.defaults.headers.common.Authorization;
-        this.$router.push(this.Routes.Login);
-      },
     },
   };
 </script>
