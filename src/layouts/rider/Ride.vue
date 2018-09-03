@@ -142,15 +142,21 @@
     },
     sockets: {
       noDriverFound(value) {
-        // this.playNotificationAudio();
-        // window.navigator.vibrate(200);
         alert(value);
         this.cancelRide();
+        this.playNotificationAudio();
+        navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+        if (navigator.vibrate) {
+          navigator.vibrate(200);
+        }
       },
       confirmRide() {
-        // this.playNotificationAudio();
-        // window.navigator.vibrate(200);
         this.getRide();
+        this.playNotificationAudio();
+        navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+        if (navigator.vibrate) {
+          navigator.vibrate(200);
+        }
       },
     }
   };

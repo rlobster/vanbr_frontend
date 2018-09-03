@@ -105,8 +105,6 @@
       },
       rideConfirmation(data) {
         if (this.getRole() === 'driver') {
-          // this.playNotificationAudio();
-          // window.navigator.vibrate(200);
           console.log(data);
           this.rideRequest.newRide = true;
           this.rideRequest.rideId = data.id;
@@ -123,14 +121,25 @@
               document.getElementById('rejectButton').click();
             }
           }, 15000);
+
+          this.playNotificationAudio();
+
+          navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+          if (navigator.vibrate) {
+            navigator.vibrate(200);
+          }
         }
       },
       confirmRide(value) {
         if (this.getRole() === 'driver') {
-          // this.playNotificationAudio();
-          // window.navigator.vibrate(200);
           console.log(value);
           this.$router.push({ name: 'Ride', params: { id: value.id } });
+
+          this.playNotificationAudio();
+          navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+          if (navigator.vibrate) {
+            navigator.vibrate(200);
+          }
         }
       },
       cancelRideListener(value) {
