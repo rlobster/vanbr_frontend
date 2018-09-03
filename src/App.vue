@@ -105,12 +105,6 @@
       },
       rideConfirmation(data) {
         if (this.getRole() === 'driver') {
-<<<<<<< HEAD
-          console.log(data);
-=======
-          // this.playNotificationAudio();
-          // window.navigator.vibrate(200);
->>>>>>> ccf12b534b6bbd9078e47b36d2e5419e0161f99c
           this.rideRequest.newRide = true;
           this.rideRequest.rideId = data.id;
           this.rideRequest.pickupCode = data.ride_meta_data.approx_start_point_code;
@@ -129,7 +123,11 @@
 
           this.playNotificationAudio();
 
-          navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+          navigator.vibrate =
+            navigator.vibrate
+            || navigator.webkitVibrate
+            || navigator.mozVibrate
+            || navigator.msVibrate;
           if (navigator.vibrate) {
             navigator.vibrate(200);
           }
@@ -140,7 +138,11 @@
           this.$router.push({ name: 'Ride', params: { id: value.id } });
 
           this.playNotificationAudio();
-          navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+          navigator.vibrate =
+            navigator.vibrate
+            || navigator.webkitVibrate
+            || navigator.mozVibrate
+            || navigator.msVibrate;
           if (navigator.vibrate) {
             navigator.vibrate(200);
           }
