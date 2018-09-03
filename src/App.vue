@@ -150,6 +150,10 @@
       },
       async cancelRideListener(value) {
         await alert(value);
+        if (this.getRole() === 'driver') {
+          this.$socket.emit('isOnline', true);
+          window.localStorage.setItem('status', true);
+        }
         window.location.reload();
       },
     },
