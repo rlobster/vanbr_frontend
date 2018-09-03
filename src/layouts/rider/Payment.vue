@@ -117,8 +117,8 @@
             this.total_tax = (Number(this.total_cost) * Number(this.cost_meta_data.tax) / 100).toFixed(2);
           } else {
             this.is_ride_end = false;
-            this.total_cost = Number(this.cost_meta_data.vanbr_charges);
-            this.total_tax = 0;
+            this.total_cost = Number(this.cost_meta_data.vanbr_charges + this.cost_meta_data.service_charges);
+            this.total_tax = ((this.total_cost * Number(this.cost_meta_data.tax))/100).toFixed(2);
           }
         } catch (e) {
           this.checkError(e);
