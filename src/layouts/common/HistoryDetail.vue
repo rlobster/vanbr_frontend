@@ -97,7 +97,7 @@
                   <div><strong>${{cost_meta_data.vanbr_charges}}</strong></div>
                 </div>
               </div>
-              <div v-if="ride.ride_status === 3">
+              <div>
                 <div class="d-flex justify-content-between">
                   <div>Service charge:</div>
                   <div><strong>${{cost_meta_data.service_charges}}</strong></div>
