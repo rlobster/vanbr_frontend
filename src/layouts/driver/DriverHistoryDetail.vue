@@ -190,7 +190,10 @@
             this.total_tax = (Number(this.total_cost) * Number(this.cost_meta_data.tax) / 100).toFixed(2);
           } else {
             this.total_cost = this.ride.cost;
-            this.total_tax = (Number(this.total_cost) * Number(this.cost_meta_data.tax) / 100).toFixed(2);
+            
+            this.total_tax = (((Number(this.cost_meta_data.service_charges)+Number(this.cost_meta_data.vanbr_charges))*Number(this.cost_meta_data.tax)) /100).toFixed(2);
+            
+            (Number(this.total_cost) * Number(this.cost_meta_data.tax) / 100).toFixed(2);
           }
         } catch (e) {
           if (e.response) {
