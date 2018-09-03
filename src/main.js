@@ -57,7 +57,7 @@ Vue.mixin({
       auth: false,
     };
   },
-  beforeMount() {
+  mounted() {
     this.auth = this.authStatus();
   },
   methods: {
@@ -101,11 +101,12 @@ Vue.mixin({
     },
     async checkError(status, error) {
       if (status === 401) {
-        delete axios.defaults.headers.common.Authorization;
+        await delete axios.defaults.headers.common.Authorization;
         await localStorage.clear();
-        window.location = Routes.Login;
+        await this.$root.$emit('auth');
+        this.$router.push(Routes.Login);
       } else if (status === 404) {
-        window.location = Routes.Booking;
+        this.$router.push(Routes.Booking);
       } else {
         alert(error);
       }

@@ -55,7 +55,9 @@
           };
           const responseData = await this.axios.post(`${this.AppURL}/admin/send/email`, data);
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         } finally {
           this.email = '';
           this.subject = '';

@@ -92,7 +92,9 @@
           this.vanKm = costResponse.data.data[1].cost_per_kilometer;
           this.vanMin = costResponse.data.data[1].cost_per_minute;
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);          
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }       
         }
       },
       async changeCostSedan(event) {
@@ -111,7 +113,9 @@
           const response = await this.axios.put(`${this.AppURL}/admin/price/1/update`, data);
           alert('Cost updated successfully!');       
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);          
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }      
         } finally {
           document.querySelector("#sedanSubmit").disabled = false
           document.querySelector("#vanSubmit").disabled = false          
@@ -131,7 +135,9 @@
           const response = await this.axios.put(`${this.AppURL}/admin/price/2/update`, data);
           alert('Cost updated successfully!');
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);          
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }   
         }
       },
     },

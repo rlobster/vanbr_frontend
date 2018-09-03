@@ -79,7 +79,9 @@
           const history = await this.axios.get(`${this.AppURL}/${this.role}/get-all-rides`);
           this.historyItem = history.data.data;
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         }
       },
     },

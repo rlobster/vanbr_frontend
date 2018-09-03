@@ -102,10 +102,8 @@
         role: '',
       };
     },
-    beforeMount() {
-      this.role = this.getRole();
-    },
     mounted() {
+      this.role = this.getRole();
       this.$root.$on('auth', () => { this.auth = this.authStatus(); });
     },
     methods: {
@@ -115,12 +113,14 @@
       async logout() {
         try {
           await this.axios.post(`${this.AppURL}/logout`);
-          delete this.axios.defaults.headers.common.Authorization;
+          await delete this.axios.defaults.headers.common.Authorization;
           await localStorage.clear();
-          this.$root.$emit('auth');
+          await this.$root.$emit('auth');
           this.$router.push(Routes.Login);
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         }
       },
       logoutHandler() {

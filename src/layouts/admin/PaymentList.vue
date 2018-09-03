@@ -157,8 +157,9 @@
           const dropObj = OpenLocationCode.decode(this.rideObj.drop_point);
           this.drop = await this.getLocation(dropObj);
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);
-          console.log(e);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         }
       },
       getLocation(locationObj) {
@@ -212,14 +213,13 @@
         this.$refs.pagination.setPaginationData(paginationData);
       },
       onChangePage(page) {
-        console.log(page);
         this.$refs.vuetable.changePage(page);
       },
       onLoading() {
-        console.log('loading... show your spinner here');
+        // console.log('loading... show your spinner here');
       },
       onLoaded() {
-        console.log('loaded! .. hide your spinner here');
+        // console.log('loaded! .. hide your spinner here');
       },
     },
   };

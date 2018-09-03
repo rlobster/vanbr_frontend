@@ -49,12 +49,12 @@
         },
       };
     },
-    created() {
+    async created() {
       const token = localStorage.getItem('token');
       if (token) {
-        this.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+        await (this.axios.defaults.headers.common.Authorization = `Bearer ${token}`);
       }
-      this.handlePermission();
+      // this.handlePermission();
     },
     mounted() {
       if (this.getRole() === 'driver') {
@@ -66,22 +66,22 @@
       }
     },
     methods: {
-      handlePermission() {
-        navigator.geolocation.watchPosition(
-          (success) => {
-            console.log(success.coords);
-            const lat = success.coords.latitude;
-            const long = success.coords.longitude;
-            // eslint-disable-next-line
-            this.$socket.emit('getLocation', OpenLocationCode.encode(lat,long));
-            this.$socket.emit('isOnline', true);
-          },
-          (failure) => {
-            console.log(failure);
-            // window.location = 'https://google.com/';
-          },
-        );
-      },
+      // handlePermission() {
+      //   navigator.geolocation.watchPosition(
+      //     (success) => {
+      //       // console.log(success.coords);
+      //       const lat = success.coords.latitude;
+      //       const long = success.coords.longitude;
+      //       // eslint-disable-next-line
+      //       this.$socket.emit('getLocation', OpenLocationCode.encode(lat,long));
+      //       this.$socket.emit('isOnline', true);
+      //     },
+      //     (failure) => {
+      //       console.log(failure);
+      //       // window.location = 'https://google.com/';
+      //     },
+      //   );
+      // },
       sendResponse(response) {
         if (response) {
           this.$socket.emit('getDriverResponse', true, this.rideRequest.rideId, this.rideRequest.riderId);
@@ -100,12 +100,17 @@
         const token = localStorage.getItem('token');
         if (token) {
           this.$socket.emit('join', token);
+          console.log('socket connected');
         }
-        console.log('socket connected');
       },
       rideConfirmation(data) {
         if (this.getRole() === 'driver') {
+<<<<<<< HEAD
           console.log(data);
+=======
+          // this.playNotificationAudio();
+          // window.navigator.vibrate(200);
+>>>>>>> ccf12b534b6bbd9078e47b36d2e5419e0161f99c
           this.rideRequest.newRide = true;
           this.rideRequest.rideId = data.id;
           this.rideRequest.pickupCode = data.ride_meta_data.approx_start_point_code;
@@ -132,7 +137,6 @@
       },
       confirmRide(value) {
         if (this.getRole() === 'driver') {
-          console.log(value);
           this.$router.push({ name: 'Ride', params: { id: value.id } });
 
           this.playNotificationAudio();
@@ -142,13 +146,9 @@
           }
         }
       },
-      cancelRideListener(value) {
-        alert(value);
+      async cancelRideListener(value) {
+        await alert(value);
         window.location.reload();
-      },
-      logout() {
-        window.localStorage.clear();
-        this.$router.push(this.Routes.Login);
       },
     },
   };

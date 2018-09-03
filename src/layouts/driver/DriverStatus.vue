@@ -6,7 +6,7 @@
         <div class="lead" :class="[status ? 'text-success' : 'text-danger']">{{ statusContent }}</div>
         <div>
           <label class="switch">
-            <input v-validate="'required'" name="status" type="checkbox" @change="changeStatus" :checked="status">
+            <input name="status" type="checkbox" @change="changeStatus" :checked="status">
             <span class="slider round"></span>
             <p class="error-msg">{{ errors.first('status') }}</p>
           </label>
@@ -90,7 +90,9 @@
           this.carType = response.data.data.car_model;
           this.carId = response.data.data.car_id;
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         }
       },
     },

@@ -70,7 +70,9 @@
             this.$router.push(Routes.Dashboard);
           }
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         } finally {
           document.querySelector("#login").disabled = false
         }

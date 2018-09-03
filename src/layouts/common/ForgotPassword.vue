@@ -47,7 +47,9 @@
           const response = await this.axios.post(`${this.AppURL}/${this.role}/forgot-password`, data);
           alert('Reset-Password email sent!')
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         } finally {
           document.querySelector("#submit").disabled = false;
         }

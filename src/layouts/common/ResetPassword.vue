@@ -63,7 +63,9 @@
           await this.axios.post(`${this.AppURL}/${this.role}/reset-password`, data);
           this.$router.push(Routes.Login);
         } catch (e) {
-          console.warn(e);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         } finally {
           document.querySelector("#submit").disabled = false;
         }

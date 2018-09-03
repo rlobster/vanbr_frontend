@@ -134,7 +134,9 @@
           const driver = await this.axios.get(`${this.AppURL}/admin/users/Driver`);
           this.driverObj = driver.data.data;
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         }
       },
       async deleteDriver(id) {
@@ -145,7 +147,9 @@
             alert('Successfully Driver Deleted!');
             this.getDrivers();
           } catch (e) {
-            this.checkError(e.response.status, e.response.data.message);
+            if (e.response) {
+              this.checkError(e.response.status, e.response.data.message);
+            }
           }
         }
       },
@@ -158,19 +162,19 @@
           await this.axios.put(`${this.AppURL}/admin/ride/driver/${id}/payment/update`, paymentObj);
           this.getDrivers();
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         }
       },
       async editDriver(driver) {
         this.$router.push({ name: 'EditDriver', params: { id: driver } });
       },
       doFilter() {
-        // console.log('doFilter:', this.filterText);
         this.$events.fire('filter-set', this.filterText);
       },
       resetFilter() {
         this.filterText = '';
-        // console.log('resetFilter');
         this.$events.fire('filter-reset');
       },
       onPaginationData(paginationData) {

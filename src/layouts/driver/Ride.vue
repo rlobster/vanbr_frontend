@@ -115,41 +115,48 @@
       },
       async cancelRide() {
         try {
-            document.querySelector("#cancel").disabled = true;
-            const data = {
-                ride_id: this.$route.params.id,
-            };
-            const response = await this.axios.post(`${this.AppURL}/driver/cancel-ride`, data);
-            this.$socket.emit('cancelRide', response.data.data.rider_user_id);
-            this.$socket.emit('isOnline', true);
-            localStorage.setItem('status', true);
-            this.$router.push(this.Routes.DriverStatus);
+          document.querySelector("#endRide").disabled = true;
+          const data = {
+              ride_id: this.$route.params.id,
+              final_end_point_code: this.approx_end_point_code,
+              final_end_point_address: this.approx_end_point_address
+        }
+          data['final_end_point_code'] = await this.getLocationPosition();
+          const end_point_obj = OpenLocationCode.decode(data['final_end_point_code']);
+          data['final_end_point_address'] = await this.getLocation(end_point_obj);
+          
+          const response = await this.axios.post(`${this.AppURL}/driver/cancel-ride`, data);
+          this.$socket.emit('changeRideStatus', response.data.data.rider_user_id);
+          this.$socket.emit('isOnline', true);
+          localStorage.setItem('status', true);
+          this.$router.push({name: 'Feedback', params: {id: response.data.data.id}});
         } catch (e) {
+          if (e.response) {
             this.checkError(e.response.status, e.response.data.message);
+          }
         } finally {
           document.querySelector("#cancel").disabled = false;
         }
       },
-      getLocationPosition() {
+      getLocationPosition(options = { maximumAge: 10, timeout: 5000 }) {
         return new Promise( (resolve, reject) => {
           navigator.geolocation.getCurrentPosition(
             (success) => {
-              const lat = success.coords.latitude;
-              const long = success.coords.longitude;
-              resolve(OpenLocationCode.encode(lat,long));
+              resolve(success.coords);
             },
             (failure) => {
               reject(failure);
-              // window.location = 'https://google.com/';
             },
+            options,
           );
         });
       },
-      getLocation(locationObj) {
+      getLocation(latitude, longitude) {
         return new Promise( ( resolve => {
           const geocoder = new google.maps.Geocoder;
-          geocoder.geocode({ location: { lat: locationObj.latitudeCenter, lng: locationObj.longitudeCenter } }, function(results, status) {
+          geocoder.geocode({ location: { lat: latitude, lng: longitude } }, function(results, status) {
             if (status === 'OK') {
+              console.log(results);
               if (results[0]) {
                 const address = `${results[0].formatted_address.split(',')[0]} , ${results[0].formatted_address.split(',')[1]}`;
                 resolve(address);
@@ -167,12 +174,13 @@
           document.querySelector("#startRide").disabled = true;
           const data = {
             ride_id: this.$route.params.id,
-            final_start_point_code: this.approx_start_point_code,
-            final_start_point_address: this.approx_start_point_address
+            // final_start_point_code: this.approx_start_point_code,
+            // final_start_point_address: this.approx_start_point_address
           };
-          // data['final_start_point_code'] = await this.getLocationPosition();
-          // const start_point_obj = OpenLocationCode.decode(data['final_start_point_code']);
-          // data['final_start_point_address'] = await this.getLocation(start_point_obj);
+          const coords = await this.getLocationPosition();
+          const { latitude, longitude } = coords;
+          data['final_start_point_code'] = OpenLocationCode.encode(latitude, longitude);
+          data['final_start_point_address'] = await this.getLocation(latitude, longitude);
 
           const response = await this.axios.post(`${this.AppURL}/driver/start-ride`, data);
 
@@ -196,13 +204,13 @@
           document.querySelector("#endRide").disabled = true;
           const data = {
               ride_id: this.$route.params.id,
-              final_end_point_code: this.approx_end_point_code,
-              final_end_point_address: this.approx_end_point_address
+              // final_end_point_code: this.approx_end_point_code,
+              // final_end_point_address: this.approx_end_point_address
           }
-          // data['final_end_point_code'] = await this.getLocationPosition();
-          // const end_point_obj = OpenLocationCode.decode(data['final_end_point_code']);
-          // data['final_end_point_address'] = await this.getLocation(end_point_obj);
-          
+          const coords = await this.getLocationPosition();
+          const { latitude, longitude } = coords;
+          data['final_end_point_code'] = OpenLocationCode.encode(latitude, longitude);
+          data['final_end_point_address'] = await this.getLocation(latitude, longitude);
           const response = await this.axios.post(`${this.AppURL}/driver/end-ride`, data);
 
           this.$socket.emit('changeRideStatus', response.data.data.rider_user_id);
@@ -211,7 +219,9 @@
 
           this.$router.push({name: 'Feedback', params: {id: response.data.data.id}});
         } catch (e) {
-          this.checkError(e.response.status, e.response.data.message);
+          if (e.response) {
+            this.checkError(e.response.status, e.response.data.message);
+          }
         } finally {
           document.querySelector("#endRide").disabled = false;
         }
