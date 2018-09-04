@@ -126,9 +126,10 @@
           data['final_end_point_address'] = await this.getLocation(end_point_obj);
           
           const response = await this.axios.post(`${this.AppURL}/driver/cancel-ride`, data);
-          this.$socket.emit('changeRideStatus', response.data.data.rider_user_id);
+          this.$socket.emit('cancelRide', response.data.data.rider_user_id);
           this.$socket.emit('isOnline', true);
           localStorage.setItem('status', true);
+          his.$router.push(this.Routes.DriverStatus);
           this.$router.push({name: 'Feedback', params: {id: response.data.data.id}});
         } catch (e) {
           if (e.response) {
