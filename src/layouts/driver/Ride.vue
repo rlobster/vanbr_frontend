@@ -117,20 +117,14 @@
         try {
           document.querySelector("#endRide").disabled = true;
           const data = {
-              ride_id: this.$route.params.id,
-              final_end_point_code: this.approx_end_point_code,
-              final_end_point_address: this.approx_end_point_address
+              ride_id: this.$route.params.id
         }
-          data['final_end_point_code'] = await this.getLocationPosition();
-          const end_point_obj = OpenLocationCode.decode(data['final_end_point_code']);
-          data['final_end_point_address'] = await this.getLocation(end_point_obj);
           
           const response = await this.axios.post(`${this.AppURL}/driver/cancel-ride`, data);
           this.$socket.emit('cancelRide', response.data.data.rider_user_id);
           this.$socket.emit('isOnline', true);
           localStorage.setItem('status', true);
-          his.$router.push(this.Routes.DriverStatus);
-          this.$router.push({name: 'Feedback', params: {id: response.data.data.id}});
+          this.$router.push(this.Routes.DriverStatus);
         } catch (e) {
           if (e.response) {
             this.checkError(e.response.status, e.response.data.message);
