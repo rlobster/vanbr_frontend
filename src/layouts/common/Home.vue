@@ -9,7 +9,7 @@
     </div> -->
     <header class="business-header">
       <div style="background:#aaa">
-        <h1 class="display-3 text-center text-white mt-5 mb-5">Welcome to Vanbr.</h1>
+        <h1 class="display-3 text-center text-white pt-5 pb-5 mb-5">Welcome to Vanbr.</h1>
       </div>
     </header>
 
