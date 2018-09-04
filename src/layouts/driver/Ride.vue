@@ -115,7 +115,7 @@
       },
       async cancelRide() {
         try {
-          document.querySelector("#endRide").disabled = true;
+          // document.querySelector("#endRide").disabled = true;
           const data = {
               ride_id: this.$route.params.id
         }
@@ -130,7 +130,7 @@
             this.checkError(e.response.status, e.response.data.message);
           }
         } finally {
-          document.querySelector("#cancel").disabled = false;
+          // document.querySelector("#cancel").disabled = false;
         }
       },
       getLocationPosition(options = { maximumAge: 10, timeout: 5000 }) {
