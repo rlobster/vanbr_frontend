@@ -66,7 +66,7 @@
     <!-- Footer -->
     <footer class="py-3 bg-dark mt-5">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+        <p class="m-0 text-center text-white">Copyright &copy; Vanbr 2018</p>
       </div>
       <!-- /.container -->
     </footer>
