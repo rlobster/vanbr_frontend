@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import Home from '@/layouts/Home'; // Home Layout
+import Terms from '@/layouts/Terms';
 import Login from '@/layouts/Login';
 import Pricing from '@/layouts/Pricing';
 import Feedback from '@/layouts/Feedback';
@@ -43,6 +44,11 @@ const routes = [
     path: Routes.Home,
     name: 'Home',
     component: Home,
+  },
+  {
+    path: Routes.Terms,
+    name: 'Terms',
+    component: Terms,
   },
   {
     path: Routes.Pricing,
