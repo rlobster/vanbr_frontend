@@ -37,7 +37,7 @@
           <div class="card">
             <img class="card-img-top" src="@/assets/sedan.jpeg" alt="Vanbr sedan" height="300" width="200">
             <div class="card-body">
-              <h4 class="card-title">Vanbr Sedan</h4>
+              <h4 class="card-title">Rider</h4>
               <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus.</p>
             </div>
             <div class="card-footer">
@@ -50,7 +50,7 @@
           <div class="card">
             <img class="card-img-top" src="@/assets/mini_van.jpeg" alt="Vanbr Mini van" height="300" width="200">
             <div class="card-body">
-              <h4 class="card-title">Vanbr Mini Van</h4>
+              <h4 class="card-title">Driver</h4>
               <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
             </div>
             <div class="card-footer">
