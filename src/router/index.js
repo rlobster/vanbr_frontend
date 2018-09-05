@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import Home from '@/layouts/Home'; // Home Layout
-import Terms from '@/layouts/Terms';
+import Terms from '@/layouts/common/Terms';
 import Login from '@/layouts/Login';
 import Pricing from '@/layouts/Pricing';
 import Feedback from '@/layouts/Feedback';
