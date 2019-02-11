@@ -121,8 +121,6 @@
             }
           }, 15000);
 
-          this.playNotificationAudio();
-
           navigator.vibrate =
             navigator.vibrate
             || navigator.webkitVibrate
@@ -131,13 +129,14 @@
           if (navigator.vibrate) {
             navigator.vibrate(200);
           }
+
+          this.playNotificationAudio();
         }
       },
       confirmRide(value) {
         if (this.getRole() === 'driver') {
           this.$router.push({ name: 'Ride', params: { id: value.id } });
 
-          this.playNotificationAudio();
           navigator.vibrate =
             navigator.vibrate
             || navigator.webkitVibrate
@@ -146,6 +145,7 @@
           if (navigator.vibrate) {
             navigator.vibrate(200);
           }
+          this.playNotificationAudio();
         }
       },
       async cancelRideListener(value) {

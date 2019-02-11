@@ -156,19 +156,20 @@
       noDriverFound(value) {
         alert(value);
         this.cancelRide();
-        this.playNotificationAudio();
+        
         navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
         if (navigator.vibrate) {
           navigator.vibrate(200);
         }
+        this.playNotificationAudio();
       },
       confirmRide() {
         this.getRide();
-        this.playNotificationAudio();
         navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
         if (navigator.vibrate) {
           navigator.vibrate(200);
         }
+        this.playNotificationAudio();
       },
     }
   };
