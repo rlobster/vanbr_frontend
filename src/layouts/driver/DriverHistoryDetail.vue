@@ -105,6 +105,10 @@
                 <div><strong>${{ride.driver_cost}}</strong></div>
               </div>
               <div class="d-flex main-app-section-sm justify-content-between car-details">
+                <div><strong>Vanbr Cost</strong></div>
+                <div><strong>${{ ((Number(total_cost) + Number(total_tax)).toFixed(2)) - ride.driver_cost}}</strong></div>
+              </div>
+              <div class="d-flex main-app-section-sm justify-content-between car-details">
                 <div><strong>Driver Paid</strong></div>
                 <div><strong>{{driverPayment}}</strong></div>
               </div>
